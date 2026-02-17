@@ -37,7 +37,7 @@ table{border-collapse:collapse;width:100%}
 <script type="text/babel">
 const { useState, useMemo } = React;
 
-const LAST_UPDATED = "Feb 17, 2026";
+const LAST_UPDATED = "February 13, 2026";
 
 const competitors = [
   {
@@ -365,14 +365,125 @@ const featureLabels = { usNexus:"US Nexus & Jurisdiction", taxCalc:"Tax Calculat
 const threatColors = { high: "#EF4444", medium: "#F59E0B", low: "#10B981" };
 const threatLabels = { high: "High Threat", medium: "Medium Threat", low: "Low Threat" };
 
-function FeatureBar({ label, anrokScore, compScore }) {
+const scoreExplanations = {
+  anrok: {
+    usNexus: { score: 5, why: "HRIS-connected nexus monitoring (Rippling, Gusto, BambooHR) auto-detects physical + economic nexus across all US jurisdictions. Only vendor that tracks employee/contractor locations for physical nexus. Real-time threshold monitoring with proactive alerts." },
+    taxCalc: { score: 5, why: "Purpose-built SaaS tax engine handles subscriptions, usage-based billing, hybrid models, and mid-cycle upgrades/downgrades natively. Deep product taxability rules for digital goods, SaaS, and services. Real-time API with sub-100ms response." },
+    filing: { score: 5, why: "1-click filing across all registered states. Automated return preparation, review, and submission. Handles amendments, credits, and penalty abatement. Files in all 50 states + DC + territories." },
+    exemptionCerts: { score: 4, why: "AI-powered exemption certificate management with automated collection workflows. Validates certificates against state requirements. Doesn\u2019t yet match Avalara\u2019s ECM Pro/Premium depth for high-volume enterprise cert management." },
+    internationalVat: { score: 4, why: "Native coverage for 100+ countries with VAT/GST calculation and registration guidance. Strong but not as deep as Fonoa\u2019s 190+ country direct-authority connections or Sphere\u2019s global-first architecture." },
+    saasSpecific: { score: 5, why: "Only vendor built from ground up for SaaS. Handles subscription billing, usage-based pricing, seat-based models, hybrid billing, mid-cycle changes, and SaaS-specific product taxability out of the box. Native Stripe, Chargebee, Recurly integrations." },
+    aiFeatures: { score: 3, why: "AI used for exemption cert processing and product taxability classification. Practical but not as prominent as Sphere\u2019s TRAM model, Kintsugi\u2019s TaxGPT, or Avalara\u2019s Avi agent. AI roadmap is expanding." },
+    easeOfUse: { score: 4, why: "Modern, clean UI praised in G2 reviews. Self-serve onboarding possible in days. Some users note minor learning curve for advanced config, but overall far simpler than legacy tools." },
+    support: { score: 4, why: "Highly rated on G2 for responsive support. Dedicated CSMs for mid-market accounts. Users praise getting \u2018actual humans\u2019 quickly. Not 24/7 like some competitors claim." },
+    integrations: { score: 4, why: "Strong SaaS billing integrations (Stripe, Chargebee, Recurly, Zuora). Native ERP connectors (NetSuite, QBO). HRIS integrations unique in market. Fewer total integrations than Avalara\u2019s 1,400+ but deeper where it matters for SaaS." },
+    pricing: { score: 3, why: "Transparent starting at $499/mo, but includes ~0.4% of taxable revenue component that scales with growth. Free integration tier before nexus thresholds. More transparent than Avalara/Vertex but not as simple as Numeral\u2019s flat per-action fees." }
+  },
+  avalara: {
+    usNexus: { score: 5, why: "13,000+ US jurisdiction coverage \u2014 the most comprehensive in market. Robust economic nexus monitoring. However, no HRIS connection for physical nexus detection like Anrok." },
+    taxCalc: { score: 5, why: "Mature, battle-tested tax engine processing billions of calculations. Broad product taxability database. Strong for general commerce but SaaS-specific billing models require workarounds." },
+    filing: { score: 4, why: "Automated returns across all US jurisdictions. Managed Returns service available. Some users report manual effort still required and slow resolution of filing errors." },
+    exemptionCerts: { score: 5, why: "ECM Pro/Premium is industry-leading. Automated collection, validation, renewal tracking. Handles high-volume enterprise cert management at scale. This is Avalara\u2019s strongest differentiator." },
+    internationalVat: { score: 3, why: "International coverage exists but fragmented. Relies on local advisors and partners for many countries. E-invoicing expanding (Iceland, Indonesia, Oman, Taiwan) but not natively global like Fonoa or Sphere." },
+    saasSpecific: { score: 2, why: "Built for general commerce and retail. SaaS subscription billing, usage-based models, and mid-cycle changes require significant configuration or workarounds. Not native to recurring revenue." },
+    aiFeatures: { score: 3, why: "Launched Avi \u2014 agentic AI compliance assistant in Q4 2025. Conversational interface for tax queries. Still early and focused on enterprise workflows, not yet deeply embedded in product." },
+    easeOfUse: { score: 2, why: "Clunky reporting UI. Adding manual transactions is difficult. Implementation requires 85% internal effort per customer reports. Multiple users cite steep learning curve and confusing navigation." },
+    support: { score: 2, why: "Universally criticized on G2 and TrustRadius. Weeks-long response times, support tickets that \u2018go nowhere.\u2019 Sales team pushes $15K/year support packages. Post-sale support drops dramatically." },
+    integrations: { score: 5, why: "1,400+ pre-built integrations \u2014 broadest in market. SAP, Oracle, NetSuite, Shopify, WooCommerce, Magento, and hundreds more. 29 newly certified integrations in Q1 2025." },
+    pricing: { score: 2, why: "Opaque custom quotes. Hidden expansion fees. Per-transaction plus module-based pricing. $5K-$100K+/yr range with little transparency. Sales team pushes expensive support add-ons." }
+  },
+  vertex: {
+    usNexus: { score: 5, why: "19,000+ jurisdiction coverage globally \u2014 most comprehensive. Deep US state and local tax rules maintained by dedicated research team with monthly content updates." },
+    taxCalc: { score: 5, why: "Enterprise-grade tax engine trusted by Fortune 1000. Handles complex multi-entity, multi-jurisdictional calculations. Monthly tax content updates ensure accuracy. Not optimized for SaaS billing models." },
+    filing: { score: 4, why: "Returns automation for US and international. Strong audit documentation. Professional services often required for complex filing setups. Not as self-serve as newer competitors." },
+    exemptionCerts: { score: 4, why: "Solid exemption certificate management for enterprise. Not as feature-rich as Avalara\u2019s ECM Pro but handles enterprise-scale cert management well." },
+    internationalVat: { score: 4, why: "Strong global indirect tax coverage. European VAT, APAC GST well-supported. On-prem deployment option for data sovereignty requirements. Kintsugi partnership expanding AI-native international." },
+    saasSpecific: { score: 1, why: "Built for manufacturers, retailers, and Fortune 1000. No native support for SaaS subscription billing, usage-based pricing, or token-based billing. Would require extensive custom configuration for SaaS." },
+    aiFeatures: { score: 3, why: "Vertex Copilot launched Q4 2025 \u2014 conversational AI for tax determination queries. Strategic $15M investment in Kintsugi adds AI-native capabilities. Early but investing heavily." },
+    easeOfUse: { score: 2, why: "Complex enterprise UI. 3-6 month implementation timelines. Requires dedicated IT resources and professional services. G2 reviews cite \u2018not intuitive or user friendly.\u2019" },
+    support: { score: 3, why: "Enterprise support tiers available. Dedicated account managers for large clients. Some users report slow ticket resolution and \u2018mediocre answers.\u2019 Better than Avalara but not best-in-class." },
+    integrations: { score: 5, why: "Deep SAP and Oracle ERP integration (embedded). Flexible deployment: on-prem, cloud, hybrid. Strong enterprise ecosystem but fewer modern SaaS billing integrations." },
+    pricing: { score: 1, why: "Revenue-based percentage pricing \u2014 costs scale with company revenue, not usage or value. Prohibitively expensive for mid-market. Opaque quoting. G2 reviewers call it \u2018wrong\u2019 that tax software scales with revenue." }
+  },
+  sphere: {
+    usNexus: { score: 3, why: "US nexus monitoring exists but less mature than Anrok or Avalara. No HRIS integration for physical nexus. Global-first architecture means US-specific depth is secondary. Still building out US jurisdiction coverage." },
+    taxCalc: { score: 4, why: "AI-powered TRAM model monitors and auto-applies global tax law changes in real-time. Strong calculation engine but younger platform with less battle-testing than Avalara/Vertex." },
+    filing: { score: 4, why: "End-to-end: registration, calculation, filing, AND remittance natively. 100+ tax authority direct connections. Global remittance infrastructure still scaling, not complete everywhere." },
+    exemptionCerts: { score: 2, why: "Basic exemption handling. No dedicated ECM product. Not a focus area given Sphere\u2019s global-first positioning \u2014 exemption certs are primarily a US concern." },
+    internationalVat: { score: 5, why: "Global-native from day one. 100+ direct tax authority connections. TRAM AI auto-applies law changes across jurisdictions. Best-in-class for companies expanding internationally." },
+    saasSpecific: { score: 4, why: "Strong SaaS support with native Stripe Billing/Checkout integration (1 of 3 vendors globally). Built for digital businesses. Slightly less US SaaS depth than Anrok\u2019s purpose-built approach." },
+    aiFeatures: { score: 5, why: "Proprietary TRAM AI model is core to the product \u2014 not bolted on. Monitors global tax law changes and auto-applies in real-time. Most advanced AI-native approach in market. a16z-backed AI thesis." },
+    easeOfUse: { score: 4, why: "Implementation in <24 hours \u2014 fastest in market. Modern UI. Some areas reported as needing improvement. Overall strong for a young platform." },
+    support: { score: 4, why: "24/7 Slack-based support with real tax experts. High-touch for current customer base. Smaller team (~27) may limit capacity as they scale." },
+    integrations: { score: 3, why: "Native Stripe Billing integration is excellent. Fewer total integrations given platform age. Building out ecosystem but can\u2019t match Avalara\u2019s 1,400+ or Vertex\u2019s ERP depth." },
+    pricing: { score: 5, why: "Flat $100/region/month. No revenue percentages, no per-transaction fees, no hidden costs. Most predictable pricing model in market." }
+  },
+  numeral: {
+    usNexus: { score: 4, why: "Solid US nexus monitoring for economic nexus thresholds. Automated registration service. No HRIS physical nexus tracking like Anrok. Strong for ecommerce sellers with multi-state obligations." },
+    taxCalc: { score: 4, why: "AI-native calculation engine built from ground up. Handles ecommerce and SaaS tax calculation well. Less specialized for complex SaaS billing models than Anrok." },
+    filing: { score: 5, why: "Core strength \u2014 error-free filing guarantee covers penalties/interest up to 2x annual fees. 150K+ returns filed. Virtual mailbox for state correspondence. However, some customers report missed filings (4+ months unfiled)." },
+    exemptionCerts: { score: 3, why: "Basic exemption certificate handling. Not a primary focus area. Adequate for SMB needs but not enterprise-grade like Avalara\u2019s ECM." },
+    internationalVat: { score: 3, why: "Expanded to 60+ countries in 2025. Growing international coverage but not as deep as Fonoa\u2019s 190+ or Sphere\u2019s global-native approach." },
+    saasSpecific: { score: 3, why: "Serves SaaS customers but DNA is ecommerce-first. SaaS subscription billing and usage-based model support less mature than Anrok\u2019s purpose-built approach." },
+    aiFeatures: { score: 4, why: "AI-native architecture built from ground up. Strong automation in filing and compliance workflows. CPA-backed service adds human expertise layer." },
+    easeOfUse: { score: 5, why: "Highest G2 rating (4.9/5) in category. Users love the simplicity. Self-serve onboarding. Some report onboarding delays that contradict the easy promise." },
+    support: { score: 4, why: "24/7 CPA-backed support. High satisfaction among happy customers. However, reports of onboarding mess, missed timelines, and unauthorized bank account actions raise concerns." },
+    integrations: { score: 4, why: "Good integration breadth for ecommerce platforms (Shopify, WooCommerce, BigCommerce). Growing SaaS integrations. Stripe and billing platform connectors available." },
+    pricing: { score: 5, why: "Simplest pricing in market: $150/registration, $75/filing flat fees. No percentages, no hidden costs. Gets expensive at scale (30+ states) but very predictable." }
+  },
+  kintsugi: {
+    usNexus: { score: 4, why: "Free tier includes nexus monitoring and address validation. Scans tax regulation pages every 15 minutes. Good US coverage but primarily ecommerce-focused jurisdictions." },
+    taxCalc: { score: 4, why: "AI-powered tax engine with real-time compliance scanning. Accurate for ecommerce. SaaS-specific tax rules less mature \u2014 45% SaaS customer base is growing segment." },
+    filing: { score: 4, why: "Automated filing included in paid tiers. Some users report hiccups in early filings though team course-corrects quickly. Solid for SMB/mid-market volume." },
+    exemptionCerts: { score: 3, why: "Basic exemption handling. Not a standout feature. Adequate for SMB ecommerce needs but limited compared to Avalara\u2019s enterprise ECM." },
+    internationalVat: { score: 2, why: "Primarily US-focused. International expansion to EU, Canada, South America, Africa announced but still early. Not viable for global-first companies." },
+    saasSpecific: { score: 3, why: "45% of customers are SaaS (growing). \u2018Kintsugi Powered by Vertex\u2019 adds enterprise SaaS capabilities. Still catching up to Anrok\u2019s purpose-built SaaS depth." },
+    aiFeatures: { score: 5, why: "TaxGPT is 24/7 AI tax consultant via Slack \u2014 real-time conversational tax queries. Scans regulations every 15 minutes. AI is core to product identity. Strong marketing around AI-native." },
+    easeOfUse: { score: 5, why: "No-code setup, most companies live in under 1 hour. Free tier to get started. #1 tax software on Shopify marketplace. Exceptional onboarding experience." },
+    support: { score: 4, why: "TaxGPT provides instant AI support. Human support team responsive. Smaller company but high-touch for current customer base." },
+    integrations: { score: 3, why: "Strong Shopify integration (#1 on marketplace). Stripe integration exists but \u2018sometimes doesn\u2019t work as intended\u2019 per G2 reviews. Fewer total integrations than mature competitors." },
+    pricing: { score: 4, why: "Free tier is genuine (nexus monitoring + address validation). $100/mo Growth tier is affordable. Flat-rate tiers are transparent. Slightly more expensive than Numeral\u2019s per-action model at scale." }
+  },
+  fonoa: {
+    usNexus: { score: 2, why: "Weak US domestic sales tax coverage. Built for global digital platforms, not US-focused SaaS companies. Would not be competitive for US-only nexus monitoring needs." },
+    taxCalc: { score: 4, why: "Strong global tax calculation engine with AI-powered rule monitoring. Excellent for cross-border digital services. Less specialized for US state-level tax calculation nuances." },
+    filing: { score: 4, why: "End-to-end: tax ID validation \u2192 calculation \u2192 invoicing \u2192 e-invoicing \u2192 filing \u2192 reporting. PwC GITC acquisition adds depth. Strongest for global compliance workflows." },
+    exemptionCerts: { score: 2, why: "Not a focus area. US exemption certificates are less relevant for Fonoa\u2019s global digital platform ICP. Minimal functionality compared to Avalara or Anrok." },
+    internationalVat: { score: 5, why: "Strongest native global VAT/GST coverage: 190+ countries, 100+ direct authority connections. Marquee customers (Uber, Zoom, Spotify, Netflix) validate platform at scale. E-invoicing in 30+ countries." },
+    saasSpecific: { score: 3, why: "API-first modular design works for digital platforms. Built for marketplace/platform economy more than traditional SaaS subscription billing. Less relevant for US mid-market SaaS." },
+    aiFeatures: { score: 4, why: "AI monitors global tax rule changes and auto-applies to workflows. Strong automation for cross-border compliance. Practical AI rather than marketed AI." },
+    easeOfUse: { score: 4, why: "API-first modular design praised by developer teams. Clean documentation. Enterprise customers report smooth integration. Not self-serve for smaller companies." },
+    support: { score: 3, why: "Enterprise support for large customers. Limited public reviews (no G2 presence). Lower brand awareness outside tech/startup community." },
+    integrations: { score: 3, why: "API-first design is flexible but limited pre-built integrations vs Avalara\u2019s 700+ connectors. Best for custom enterprise integrations, not plug-and-play." },
+    pricing: { score: 3, why: "Custom/commitment-based pricing with limited transparency. Enterprise-focused quoting. $5.4M ARR (Oct 2024) is modest given $85M raised. Not transparent or SMB-friendly." }
+  },
+  stripetax: {
+    usNexus: { score: 3, why: "Basic nexus monitoring for Stripe-processed transactions only. Cannot detect nexus from non-Stripe channels. No physical nexus tracking via HRIS. Adequate for simple Stripe-only businesses." },
+    taxCalc: { score: 4, why: "Solid tax calculation within Stripe ecosystem. 100+ country coverage. Performs well for straightforward transactions. Cannot handle complex SaaS billing (usage-based, hybrid, mid-cycle changes)." },
+    filing: { score: 3, why: "TaxJar provides US filing but only for Stripe transactions. Non-Stripe revenue requires separate filing solution. NetSuite integration discontinued for new users. Incomplete compliance story." },
+    exemptionCerts: { score: 2, why: "Lack of tools for capturing tax-exempt certificates per Capterra reviews. Basic handling at best. Not a product focus for Stripe." },
+    internationalVat: { score: 4, why: "100+ country coverage via Stripe Tax. Broader than TaxJar\u2019s US-only. Strong for Stripe-processed international transactions but blind to non-Stripe channels." },
+    saasSpecific: { score: 2, why: "Handles basic subscriptions within Stripe Billing. No support for usage-based billing, complex SaaS models, or multi-channel subscription management. Inflexible tax-inclusive/exclusive settings." },
+    aiFeatures: { score: 1, why: "No meaningful AI features. Pure rules-based calculation engine. No AI-powered taxability, no conversational interface, no automated compliance intelligence." },
+    easeOfUse: { score: 4, why: "Seamless if already on Stripe \u2014 zero-friction activation. Toggle-on simplicity is unmatched for Stripe users. Completely useless for non-Stripe transactions." },
+    support: { score: 2, why: "Post-acquisition team instability (CEO, CRO, 45-55 employees lost). Merchants report longer wait times and lack of specialized tax knowledge. TaxJar support declining." },
+    integrations: { score: 2, why: "Only works with Stripe. NetSuite integration discontinued for new users. No ERP, no competing billing platforms. By design, locks you into Stripe ecosystem." },
+    pricing: { score: 4, why: "5\u00A2 per API call (Tax Basic) is simple and affordable for low-volume. Attractive entry point. But only covers Stripe transactions \u2014 you need a second solution for everything else." }
+  }
+};
+
+function FeatureBar({ label, featureKey, anrokScore, compScore, compId, onClickBar }) {
   const delta = anrokScore - compScore;
   const deltaColor = delta > 0 ? "#10B981" : delta < 0 ? "#EF4444" : "#6B7280";
   const deltaText = delta > 0 ? `Anrok +${delta}` : delta < 0 ? `Behind ${Math.abs(delta)}` : "Even";
   return (
-    <div style={{marginBottom:12}}>
+    <div style={{marginBottom:12,cursor:"pointer",padding:6,borderRadius:6,transition:"background 0.2s"}}
+      onClick={() => onClickBar && onClickBar(featureKey)}
+      onMouseOver={e => e.currentTarget.style.background="rgba(59,130,246,0.08)"}
+      onMouseOut={e => e.currentTarget.style.background="transparent"}
+      title="Click for detailed scoring rationale">
       <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
-        <span style={{fontSize:12,color:"#d1d5db"}}>{label}</span>
+        <span style={{fontSize:12,color:"#d1d5db"}}>{label} <span style={{fontSize:10,color:"#4b5563"}}>{"\u{1F50D}"}</span></span>
         <span style={{fontSize:12,fontWeight:700,color:deltaColor}}>{deltaText}</span>
       </div>
       <div style={{display:"flex",alignItems:"center",gap:4}}>
@@ -394,6 +505,7 @@ function App() {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [detailTab, setDetailTab] = useState("wins");
+  const [scoreModal, setScoreModal] = useState(null);
 
   const filteredComps = useMemo(() => {
     if (!searchQuery) return competitors;
@@ -405,7 +517,7 @@ function App() {
   const anrokAdv = featureKeys.filter(k => anrokData.features[k] > selectedComp.features[k]).length;
   const compAdv = featureKeys.filter(k => selectedComp.features[k] > anrokData.features[k]).length;
 
-  const tabs = [{id:"overview",label:"Overview"},{id:"deepdive",label:"Deep Dive"},{id:"heatmap",label:"Feature Heatmap"},{id:"battlecard",label:"Quick Battlecard"},{id:"voices",label:"Customer Voices"}];
+  const tabs = [{id:"overview",label:"Overview"},{id:"deepdive",label:"Deep Dive"},{id:"heatmap",label:"Feature Heatmap"},{id:"battlecard",label:"Quick Battlecard"}];
 
   const getHeatColor = (v) => (["#7F1D1D","#991B1B","#B45309","#CA8A04","#65A30D","#16A34A"])[v] || "#7F1D1D";
   const allForHeatmap = [{id:"anrok",name:"Anrok",features:anrokData.features,logo:"\u{1F7E6}"},...competitors];
@@ -548,15 +660,54 @@ function App() {
                   </div>
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"0 32px"}}>
-                  <div>{featureKeys.slice(0,6).map(k => <FeatureBar key={k} label={featureLabels[k]} anrokScore={anrokData.features[k]} compScore={selectedComp.features[k]}/>)}</div>
-                  <div>{featureKeys.slice(6).map(k => <FeatureBar key={k} label={featureLabels[k]} anrokScore={anrokData.features[k]} compScore={selectedComp.features[k]}/>)}</div>
+                  <div>{featureKeys.slice(0,6).map(k => <FeatureBar key={k} featureKey={k} label={featureLabels[k]} anrokScore={anrokData.features[k]} compScore={selectedComp.features[k]} compId={selectedComp.id} onClickBar={(fk) => setScoreModal(fk)}/>)}</div>
+                  <div>{featureKeys.slice(6).map(k => <FeatureBar key={k} featureKey={k} label={featureLabels[k]} anrokScore={anrokData.features[k]} compScore={selectedComp.features[k]} compId={selectedComp.id} onClickBar={(fk) => setScoreModal(fk)}/>)}</div>
                 </div>
+                <p style={{fontSize:11,color:"#4b5563",margin:"12px 0 0",textAlign:"center"}}>{"\u{1F50D}"} Click any feature bar for detailed scoring rationale</p>
               </div>
+
+              {/* Score Detail Modal */}
+              {scoreModal && scoreExplanations.anrok[scoreModal] && scoreExplanations[selectedComp.id] && scoreExplanations[selectedComp.id][scoreModal] && (
+                <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.7)",zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center",padding:16}}
+                  onClick={() => setScoreModal(null)}>
+                  <div style={{background:"#1f2937",border:"1px solid #374151",borderRadius:12,maxWidth:640,width:"100%",maxHeight:"80vh",overflow:"auto",padding:24}}
+                    onClick={e => e.stopPropagation()}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+                      <h3 style={{fontSize:18,fontWeight:700,margin:0,color:"#fff"}}>{featureLabels[scoreModal]}</h3>
+                      <button onClick={() => setScoreModal(null)} style={{background:"#374151",border:"none",color:"#9ca3af",width:32,height:32,borderRadius:8,cursor:"pointer",fontSize:16}}>{"\u2715"}</button>
+                    </div>
+                    {/* Anrok score */}
+                    <div style={{background:"rgba(59,130,246,0.08)",border:"1px solid rgba(59,130,246,0.2)",borderRadius:8,padding:16,marginBottom:16}}>
+                      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:8}}>
+                        <span style={{fontSize:28,fontWeight:800,color:"#60a5fa"}}>{scoreExplanations.anrok[scoreModal].score}</span>
+                        <span style={{fontSize:11,color:"#60a5fa",fontWeight:600}}>/ 5</span>
+                        <span style={{fontSize:15,fontWeight:600,color:"#60a5fa",marginLeft:4}}>Anrok</span>
+                      </div>
+                      <p style={{fontSize:13,color:"#d1d5db",lineHeight:1.7,margin:0}}>{scoreExplanations.anrok[scoreModal].why}</p>
+                    </div>
+                    {/* Competitor score */}
+                    <div style={{background:"rgba(249,115,22,0.08)",border:"1px solid rgba(249,115,22,0.2)",borderRadius:8,padding:16}}>
+                      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:8}}>
+                        <span style={{fontSize:28,fontWeight:800,color:"#fb923c"}}>{scoreExplanations[selectedComp.id][scoreModal].score}</span>
+                        <span style={{fontSize:11,color:"#fb923c",fontWeight:600}}>/ 5</span>
+                        <span style={{fontSize:15,fontWeight:600,color:"#fb923c",marginLeft:4}}>{selectedComp.name}</span>
+                      </div>
+                      <p style={{fontSize:13,color:"#d1d5db",lineHeight:1.7,margin:0}}>{scoreExplanations[selectedComp.id][scoreModal].why}</p>
+                    </div>
+                    {(() => {
+                      const delta = scoreExplanations.anrok[scoreModal].score - scoreExplanations[selectedComp.id][scoreModal].score;
+                      const col = delta > 0 ? "#10B981" : delta < 0 ? "#EF4444" : "#6B7280";
+                      const txt = delta > 0 ? `Anrok leads by ${delta} point${delta>1?"s":""}` : delta < 0 ? `${selectedComp.name} leads by ${Math.abs(delta)} point${Math.abs(delta)>1?"s":""}` : "Tied on this dimension";
+                      return <p style={{fontSize:13,fontWeight:600,color:col,margin:"16px 0 0",textAlign:"center"}}>{txt}</p>;
+                    })()}
+                  </div>
+                </div>
+              )}
 
               {/* Detail tabs */}
               <div className="card">
-                <div style={{display:"flex",borderBottom:"1px solid #374151"}}>
-                  {[{id:"wins",label:"\u2713 How Anrok Wins"},{id:"strengths",label:"\u26A1 Their Strengths"},{id:"weaknesses",label:"\u{1F3AF} Their Weaknesses"},{id:"news",label:"\u{1F4E1} Recent Intel"}].map(t => (
+                <div style={{display:"flex",borderBottom:"1px solid #374151",flexWrap:"wrap"}}>
+                  {[{id:"wins",label:"\u2713 How Anrok Wins"},{id:"strengths",label:"\u26A1 Their Strengths"},{id:"weaknesses",label:"\u{1F3AF} Their Weaknesses"},{id:"news",label:"\u{1F4E1} Recent Intel"},{id:"voices",label:"\u{1F4AC} Customer Voices"}].map(t => (
                     <button key={t.id} onClick={() => setDetailTab(t.id)} className={detailTab===t.id?"detail-tab-active":"detail-tab-inactive"}
                       style={{padding:"12px 16px",fontSize:13,fontWeight:500,background:"transparent",cursor:"pointer",border:"none",borderBottom:undefined}}>
                       {t.label}
@@ -586,6 +737,54 @@ function App() {
                     <div>
                       <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Latest competitive intel</p>
                       {selectedComp.recentNews.map((n,i) => <div key={i} style={{display:"flex",gap:12,padding:"8px 0",borderBottom:"1px solid #1f2937"}}><span style={{fontSize:12,color:"#6b7280",width:80,flexShrink:0,fontFamily:"monospace"}}>{n.date}</span><p style={{fontSize:14,color:"#d1d5db",margin:0}}>{n.text}</p></div>)}
+                    </div>
+                  )}
+                  {detailTab === "voices" && (
+                    <div>
+                      {/* Anrok Praise */}
+                      <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Verified quotes to use in deal cycles against {selectedComp.name}</p>
+                      <h4 style={{fontSize:14,fontWeight:600,color:"#60a5fa",margin:"0 0 12px",display:"flex",alignItems:"center",gap:6}}>{"\u{1F4AC}"} What Customers Say About Anrok</h4>
+                      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:24}}>
+                        {anrokQuotes.map((q, i) => (
+                          <div key={i} style={{background:"rgba(17,24,39,0.6)",border:"1px solid rgba(55,65,81,0.5)",borderRadius:8,padding:12}}>
+                            <p style={{fontSize:13,color:"#e5e7eb",fontStyle:"italic",lineHeight:1.5,margin:0}}>"{q.quote}"</p>
+                            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:8,flexWrap:"wrap",gap:4}}>
+                              <div>
+                                <span style={{fontSize:11,color:"#60a5fa",fontWeight:500}}>{q.role}</span>
+                                <span style={{fontSize:11,color:"#374151",margin:"0 6px"}}>{"\u00B7"}</span>
+                                <span style={{fontSize:11,color:"#6b7280"}}>{q.source}</span>
+                              </div>
+                              <span style={{fontSize:10,padding:"2px 6px",borderRadius:4,background:"rgba(59,130,246,0.1)",color:"#60a5fa"}}>{q.theme}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Competitor Pain for selected comp */}
+                      {competitorPainQuotes.filter(q => q.competitor === selectedComp.id).length > 0 && (
+                        <div>
+                          <h4 style={{fontSize:14,fontWeight:600,color:"#f87171",margin:"0 0 12px",display:"flex",alignItems:"center",gap:6}}>{"\u{1F3AF}"} What Customers Say About {selectedComp.name}</h4>
+                          {competitorPainQuotes.filter(q => q.competitor === selectedComp.id).map((q, i) => (
+                            <div key={i} style={{background:"rgba(17,24,39,0.4)",borderLeft:"2px solid rgba(239,68,68,0.3)",borderRadius:"0 8px 8px 0",padding:12,marginBottom:10}}>
+                              <p style={{fontSize:13,color:"#d1d5db",fontStyle:"italic",margin:0}}>"{q.quote}"</p>
+                              <div style={{display:"flex",alignItems:"center",gap:12,marginTop:6}}>
+                                <span style={{fontSize:11,color:"#6b7280"}}>{q.source}</span>
+                                <span style={{fontSize:10,padding:"2px 6px",borderRadius:4,background:"rgba(239,68,68,0.1)",color:"#f87171"}}>{q.theme}</span>
+                                {q.verified && <span style={{fontSize:10,color:"rgba(34,197,94,0.7)"}}>{"\u2713"} Verified</span>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {competitorPainQuotes.filter(q => q.competitor === selectedComp.id).length === 0 && (
+                        <div style={{background:"rgba(17,24,39,0.4)",borderRadius:8,padding:16}}>
+                          <p style={{fontSize:13,color:"#6b7280",margin:0}}>No verified competitor complaints available for {selectedComp.name} yet. {selectedComp.g2Reviews === 0 ? "This competitor has no G2 presence." : "Check back after the next weekly refresh."}</p>
+                        </div>
+                      )}
+
+                      <div style={{background:"rgba(31,41,55,0.3)",border:"1px solid rgba(55,65,81,0.3)",borderRadius:6,padding:10,marginTop:16}}>
+                        <p style={{fontSize:11,color:"#4b5563",margin:0}}>Sources: G2, Capterra, TrustRadius, Shopify App Store, community reviews. All quotes marked verified. Last updated: {LAST_UPDATED}.</p>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -685,85 +884,6 @@ function App() {
           </div>
         )}
 
-        {/* CUSTOMER VOICES */}
-        {activeTab === "voices" && (
-          <div>
-            <p style={{fontSize:14,color:"#9ca3af",marginBottom:24}}>Real quotes from verified review platforms. Use in deal cycles to build credibility and highlight competitor weaknesses.</p>
-
-            {/* Anrok Praise */}
-            <div className="card" style={{padding:20,marginBottom:24}}>
-              <h3 style={{fontSize:18,fontWeight:600,margin:"0 0 4px",display:"flex",alignItems:"center",gap:8}}>
-                <span style={{color:"#60a5fa"}}>{"\u{1F4AC}"}</span> What Customers Say About Anrok
-              </h3>
-              <p style={{fontSize:12,color:"#6b7280",marginBottom:16}}>Verified G2 reviews and customer testimonials \u2014 use in proposals, emails, and live demos</p>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-                {anrokQuotes.map((q, i) => (
-                  <div key={i} style={{background:"rgba(17,24,39,0.6)",border:"1px solid rgba(55,65,81,0.5)",borderRadius:8,padding:16}}>
-                    <p style={{fontSize:14,color:"#e5e7eb",fontStyle:"italic",lineHeight:1.6,margin:0}}>"{q.quote}"</p>
-                    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:12}}>
-                      <div>
-                        <span style={{fontSize:12,color:"#60a5fa",fontWeight:500}}>{q.role}</span>
-                        <span style={{fontSize:12,color:"#374151",margin:"0 8px"}}>{"\u00B7"}</span>
-                        <span style={{fontSize:12,color:"#6b7280"}}>{q.source}</span>
-                      </div>
-                      <span style={{fontSize:11,padding:"2px 6px",borderRadius:4,background:"rgba(59,130,246,0.1)",color:"#60a5fa"}}>{q.theme}</span>
-                    </div>
-                    {q.verified && (
-                      <div style={{display:"flex",alignItems:"center",gap:4,marginTop:8}}>
-                        <span style={{color:"#22c55e",fontSize:12}}>{"\u2713"}</span>
-                        <span style={{fontSize:11,color:"rgba(34,197,94,0.7)"}}>Verified source</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Competitor Pain */}
-            <div className="card" style={{padding:20,marginBottom:24}}>
-              <h3 style={{fontSize:18,fontWeight:600,margin:"0 0 4px",display:"flex",alignItems:"center",gap:8}}>
-                <span style={{color:"#f87171"}}>{"\u{1F3AF}"}</span> What Customers Say About Competitors
-              </h3>
-              <p style={{fontSize:12,color:"#6b7280",marginBottom:16}}>Real complaints from review sites \u2014 use to plant seeds of doubt when prospects mention competitors</p>
-              {competitors.filter(c => competitorPainQuotes.some(q => q.competitor === c.id)).map(comp => {
-                const quotes = competitorPainQuotes.filter(q => q.competitor === comp.id);
-                if (quotes.length === 0) return null;
-                return (
-                  <div key={comp.id} style={{marginBottom:24}}>
-                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
-                      <span style={{fontSize:18}}>{comp.logo}</span>
-                      <span style={{fontWeight:600,color:"#fff"}}>{comp.name}</span>
-                      <span className={"threat-"+comp.threatLevel} style={{padding:"2px 8px",borderRadius:4,fontSize:12,fontWeight:500}}>{threatLabels[comp.threatLevel]}</span>
-                    </div>
-                    <div style={{marginLeft:28}}>
-                      {quotes.map((q, i) => (
-                        <div key={i} style={{background:"rgba(17,24,39,0.4)",borderLeft:"2px solid rgba(239,68,68,0.3)",borderRadius:"0 8px 8px 0",padding:12,marginBottom:12}}>
-                          <p style={{fontSize:14,color:"#d1d5db",fontStyle:"italic",margin:0}}>"{q.quote}"</p>
-                          <div style={{display:"flex",alignItems:"center",gap:12,marginTop:8}}>
-                            <span style={{fontSize:12,color:"#6b7280"}}>{q.source}</span>
-                            <span style={{fontSize:11,padding:"2px 6px",borderRadius:4,background:"rgba(239,68,68,0.1)",color:"#f87171"}}>{q.theme}</span>
-                            {q.verified && (
-                              <span style={{fontSize:11,color:"rgba(34,197,94,0.7)",display:"flex",alignItems:"center",gap:4}}>
-                                <span style={{color:"#22c55e"}}>{"\u2713"}</span> Verified
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Source Attribution */}
-            <div style={{background:"rgba(31,41,55,0.3)",border:"1px solid rgba(55,65,81,0.5)",borderRadius:8,padding:16}}>
-              <p style={{fontSize:12,color:"#6b7280",margin:0}}>
-                <span style={{color:"#9ca3af",fontWeight:500}}>Sources:</span> All quotes sourced from G2, Capterra, TrustRadius, Trustpilot, Shopify App Store, and verified community reviews. Quotes marked with {"\u2713"} have been verified against their original source. Last verification: {LAST_UPDATED}.
-              </p>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Footer */}
