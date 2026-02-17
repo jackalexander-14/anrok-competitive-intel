@@ -35,7 +35,61 @@ table{border-collapse:collapse;width:100%}
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const { useState, useMemo } = React;
+const { useState, useMemo, useEffect } = React;
+
+const AUTH_HASH = "a]3f9c7b2e8d1a4f6b0c5e9d2a7f8b3c";
+async function hashPassword(pw) {
+  const enc = new TextEncoder().encode(pw);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
+const PASS_HASH = "7e0a1f3d6c9b2e5a8f4d7c0b3e6a9d2c";
+
+function PasswordGate({ onAuth }) {
+  const [pw, setPw] = useState("");
+  const [error, setError] = useState(false);
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem("anrok_ci_auth");
+    if (stored === "granted") { onAuth(); }
+    setChecking(false);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (pw === "beatsphere2026") {
+      sessionStorage.setItem("anrok_ci_auth", "granted");
+      onAuth();
+    } else {
+      setError(true);
+      setPw("");
+    }
+  };
+
+  if (checking) return null;
+
+  return (
+    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#030712"}}>
+      <div style={{background:"#1f2937",border:"1px solid #374151",borderRadius:12,padding:32,width:380,textAlign:"center"}}>
+        <div style={{fontSize:32,marginBottom:8}}>{"\u2694\uFE0F"}</div>
+        <h2 style={{fontSize:20,fontWeight:700,color:"#fff",margin:"0 0 4px"}}>Anrok Competitive Intel</h2>
+        <p style={{fontSize:13,color:"#6b7280",margin:"0 0 24px"}}>Internal access only. Enter the team password.</p>
+        <form onSubmit={handleSubmit}>
+          <input type="password" value={pw} onChange={e => {setPw(e.target.value);setError(false)}}
+            placeholder="Enter password"
+            style={{width:"100%",background:"#111827",border:error?"1px solid #ef4444":"1px solid #374151",borderRadius:8,padding:"10px 14px",fontSize:14,color:"#fff",marginBottom:12}}
+            autoFocus />
+          {error && <p style={{fontSize:12,color:"#ef4444",margin:"0 0 12px"}}>Incorrect password. Try again.</p>}
+          <button type="submit" style={{width:"100%",background:"#3b82f6",color:"#fff",border:"none",borderRadius:8,padding:"10px 14px",fontSize:14,fontWeight:600,cursor:"pointer"}}>
+            Access Dashboard
+          </button>
+        </form>
+        <p style={{fontSize:11,color:"#4b5563",margin:"16px 0 0"}}>Contact Jack Alexander for access</p>
+      </div>
+    </div>
+  );
+}
 
 const LAST_UPDATED = "February 13, 2026";
 
@@ -897,7 +951,13 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+function AuthenticatedApp() {
+  const [authed, setAuthed] = useState(false);
+  if (!authed) return <PasswordGate onAuth={() => setAuthed(true)} />;
+  return <App />;
+}
+
+ReactDOM.render(<AuthenticatedApp />, document.getElementById('root'));
 </script>
 </body>
 </html>
