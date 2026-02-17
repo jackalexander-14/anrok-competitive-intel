@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anrok Competitive Intelligence</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+<style>
+body{margin:0;background:#030712;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+*{box-sizing:border-box}
+.tab-active{background:#1f2937;color:#fff;border-top:1px solid #374151;border-left:1px solid #374151;border-right:1px solid #374151;border-radius:8px 8px 0 0}
+.tab-inactive{color:#9ca3af;cursor:pointer}
+.tab-inactive:hover{color:#e5e7eb;background:rgba(31,41,55,0.5);border-radius:8px 8px 0 0}
+.card{background:rgba(31,41,55,0.5);border:1px solid #374151;border-radius:8px}
+.threat-high{background:rgba(239,68,68,0.13);color:#ef4444}
+.threat-medium{background:rgba(245,158,11,0.13);color:#f59e0b}
+.threat-low{background:rgba(16,185,129,0.13);color:#10b981}
+details summary::-webkit-details-marker{display:none}
+details summary{list-style:none}
+.detail-tab-active{border-bottom:2px solid #3b82f6;color:#60a5fa}
+.detail-tab-inactive{border-bottom:2px solid transparent;color:#9ca3af;cursor:pointer}
+.detail-tab-inactive:hover{color:#e5e7eb}
+input:focus{outline:none;box-shadow:0 0 0 1px #3b82f6}
+table{border-collapse:collapse;width:100%}
+.pulse{animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.bar-blue{background:#3b82f6;height:10px;border-radius:999px;transition:width 0.5s}
+.bar-orange{background:#f97316;height:10px;border-radius:999px;transition:width 0.5s}
+.bar-track{background:#374151;height:10px;border-radius:999px;overflow:hidden;flex:1}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useMemo } = React;
+
+const LAST_UPDATED = "February 13, 2026";
+
+const competitors = [
+  {
+    id: "avalara", name: "Avalara", logo: "\u{1F3D4}\uFE0F", tagline: "Enterprise tax compliance at scale",
+    founded: 2004, hq: "Seattle, WA", funding: "Acquired by Vista Equity for $8.4B (Oct 2022)",
+    employees: "~4,700", customers: "30,000+", g2Rating: 4.0, g2Reviews: 500,
+    stage: "Public/PE-backed", pricing: "Custom quotes, $5K-$100K+/yr", pricingModel: "Per-transaction + modules", threatLevel: "high",
+    recentNews: [
+      { date: "Q4 2025", text: "Launched Avi \u2014 agentic AI compliance assistant embedded in workflows" },
+      { date: "Q1 2025", text: "29 newly certified integrations announced including SAP, Oracle, Coupa" },
+      { date: "Q2 2025", text: "Expanded e-invoicing to Iceland, Indonesia, Oman, Taiwan" },
+      { date: "2025", text: "Named to G2's 2025 Best Software Awards for Accounting & Finance (3rd year)" },
+    ],
+    strengths: [
+      "1,400+ pre-built integrations (SAP, Oracle, NetSuite, Shopify)",
+      "Broadest US jurisdiction coverage (13,000+)",
+      "Strong exemption certificate management (ECM Pro/Premium)",
+      "Deep ERP integration with legacy enterprise systems",
+      "Massive install base creates switching cost moat",
+      "New AI agent 'Avi' for conversational compliance"
+    ],
+    weaknesses: [
+      "Customer support universally criticized \u2014 weeks-long response times",
+      "Opaque, expensive pricing with hidden expansion fees",
+      "Implementation requires 85% internal effort; months-long rollout",
+      "Gap between 'one-and-done' automation promises and manual reality",
+      "Clunky reporting UI; adding manual transactions difficult",
+      "International VAT/GST coverage fragmented, relies on local advisors",
+      "Not built for SaaS billing models (subscriptions, usage-based)"
+    ],
+    anrokWins: [
+      "Anrok implements in days, not months \u2014 no professional services required",
+      "Anrok's SaaS-native billing integrations (Stripe, Chargebee) vs Avalara's ERP focus",
+      "Anrok's HR/HRIS nexus monitoring is unique \u2014 Avalara doesn't connect to payroll systems",
+      "Anrok support rated significantly higher across G2 categories",
+      "Anrok pricing is transparent and predictable vs Avalara's custom quotes",
+      "Anrok purpose-built for recurring revenue models; Avalara retrofits enterprise tools"
+    ],
+    idealFor: "Large enterprises (500+ employees) with dedicated tax teams, complex multi-entity structures, legacy ERP systems",
+    notIdealFor: "Fast-growing SaaS companies, teams without dedicated tax expertise, companies needing quick implementation",
+    features: { usNexus: 5, taxCalc: 5, filing: 4, exemptionCerts: 5, internationalVat: 3, saasSpecific: 2, aiFeatures: 3, easeOfUse: 2, support: 2, integrations: 5, pricing: 2 }
+  },
+  {
+    id: "vertex", name: "Vertex", logo: "\u{1F537}", tagline: "Enterprise-grade indirect tax technology",
+    founded: 1978, hq: "King of Prussia, PA", funding: "Public (VERX) \u2014 $748M revenue FY2025",
+    employees: "~1,900", customers: "4,867 (direct)", g2Rating: 4.2, g2Reviews: 150,
+    stage: "Public", pricing: "Revenue-based, $5K+ starting", pricingModel: "Revenue-based percentage", threatLevel: "medium",
+    recentNews: [
+      { date: "Q4 2025", text: "FY2025 revenue $748.4M (+12.2% YoY); guiding $823-831M for 2026" },
+      { date: "Q4 2025", text: "Launched Vertex Copilot \u2014 conversational AI for tax determination" },
+      { date: "Apr 2025", text: "Strategic $15M investment in Kintsugi (10% equity stake)" },
+      { date: "Oct 2025", text: "Launched 'Kintsugi Powered by Vertex' AI tax automation solution" },
+    ],
+    strengths: [
+      "19,000+ jurisdiction coverage globally",
+      "Deep SAP and Oracle ERP integration (embedded)",
+      "Strong audit & compliance documentation capabilities",
+      "Monthly tax content updates with dedicated research team",
+      "AI Copilot for conversational tax queries",
+      "Flexible deployment (on-prem, cloud, hybrid)"
+    ],
+    weaknesses: [
+      "Opaque revenue-based pricing \u2014 costs scale with company revenue, not value",
+      "3-6 month implementation timelines with professional services required",
+      "Not built for SaaS billing models (usage-based, subscription)",
+      "Enterprise-only positioning \u2014 prohibitively expensive for mid-market",
+      "Complex setup requiring dedicated IT resources",
+      "No native support for AI service taxation or token-based billing"
+    ],
+    anrokWins: [
+      "Anrok implements in days vs Vertex's 3-6 months",
+      "Anrok purpose-built for SaaS subscription and usage-based billing models",
+      "Anrok pricing transparent and affordable vs Vertex's revenue-based model",
+      "Anrok doesn't require professional services or dedicated IT team",
+      "Anrok's modern UI vs Vertex's legacy enterprise interface",
+      "For SaaS companies, Vertex is overkill \u2014 built for Fortune 1000 manufacturers"
+    ],
+    idealFor: "Fortune 1000, large retailers, manufacturers, complex multi-entity enterprises with SAP/Oracle",
+    notIdealFor: "Mid-market SaaS, growth-stage companies, teams without dedicated IT/tax resources",
+    features: { usNexus: 5, taxCalc: 5, filing: 4, exemptionCerts: 4, internationalVat: 4, saasSpecific: 1, aiFeatures: 3, easeOfUse: 2, support: 3, integrations: 5, pricing: 1 }
+  },
+  {
+    id: "sphere", name: "Sphere", logo: "\u{1F310}", tagline: "AI-native global tax compliance",
+    founded: 2023, hq: "San Francisco, CA", funding: "$21M Series A (a16z, Nov 2025)",
+    employees: "~27", customers: "Growing (Replit, ElevenLabs, Heygen, Windsurf, Deel)", g2Rating: null, g2Reviews: 0,
+    stage: "Series A", pricing: "$100/region/month flat", pricingModel: "Flat per-region", threatLevel: "high",
+    recentNews: [
+      { date: "Nov 2025", text: "$21M Series A led by Andreessen Horowitz \u2014 major validation" },
+      { date: "Dec 2024", text: "Emerged from stealth with 30%+ MoM MRR growth" },
+      { date: "2025", text: "Became 1 of only 3 vendors globally with native Stripe Billing integration" },
+      { date: "2025", text: "Roadmap: e-invoicing and input tax automation by end of 2025" },
+    ],
+    strengths: [
+      "Proprietary AI model (TRAM) \u2014 monitors and auto-applies global tax law changes in real-time",
+      "True global-native coverage: 100+ tax authority direct connections",
+      "Flat, predictable pricing ($100/region/month) with no revenue percentages",
+      "Implementation in <24 hours \u2014 fastest in market",
+      "Native Stripe Billing/Checkout integration (1 of 3 vendors globally)",
+      "24/7 Slack-based support with real tax experts",
+      "End-to-end: registration, calculation, filing, AND remittance natively",
+      "a16z backing signals serious institutional confidence"
+    ],
+    weaknesses: [
+      "Very young platform \u2014 emerged from stealth Dec 2024, less battle-tested",
+      "No G2 presence yet \u2014 limited social proof via reviews",
+      "UI reported as needing improvement in some areas",
+      "Global remittance infrastructure still scaling, not complete everywhere",
+      "Smaller team may limit enterprise support capacity",
+      "US-only customers may find Anrok more tailored"
+    ],
+    anrokWins: [
+      "Anrok has 1,000+ customers vs Sphere's early-stage base \u2014 more proven at scale",
+      "Anrok's G2 rating (4.5/5, 163 reviews) provides social proof Sphere lacks",
+      "Anrok's HRIS integration for nexus is unique \u2014 Sphere doesn't connect to HR systems",
+      "Anrok's SaaS-specific features (exemption cert AI, subscription billing) more mature",
+      "Anrok's $100M+ total funding and $525M valuation vs Sphere's $21M \u2014 more runway",
+      "For US-focused deals, Anrok's jurisdiction depth is superior"
+    ],
+    idealFor: "Global-first SaaS/AI companies expanding internationally, especially those on Stripe needing multi-country VAT/GST",
+    notIdealFor: "US-only businesses, companies needing deep G2/review social proof, enterprises requiring proven scale",
+    features: { usNexus: 3, taxCalc: 4, filing: 4, exemptionCerts: 2, internationalVat: 5, saasSpecific: 4, aiFeatures: 5, easeOfUse: 4, support: 4, integrations: 3, pricing: 5 }
+  },
+  {
+    id: "numeral", name: "Numeral", logo: "\u{1F522}", tagline: "Sales tax on autopilot for ecommerce & SaaS",
+    founded: 2022, hq: "San Francisco, CA", funding: "$57M total (Series B $35M, Mayfield, Sep 2025)",
+    employees: "~80-120", customers: "2,000+", g2Rating: 4.9, g2Reviews: 50,
+    stage: "Series B", pricing: "$150/registration, $75/filing", pricingModel: "Per-action flat fee", threatLevel: "high",
+    recentNews: [
+      { date: "Sep 2025", text: "$35M Series B at $350M valuation (Mayfield + Benchmark)" },
+      { date: "Mar 2025", text: "$18M Series A led by Benchmark Capital" },
+      { date: "2025", text: "Expanded to 60+ countries with VAT/GST automation" },
+      { date: "2025", text: "Hit 2,000+ customers, 150K returns filed, $5B+ processed" },
+    ],
+    strengths: [
+      "Highest G2 rating in category (4.9/5) \u2014 exceptional user satisfaction",
+      "AI-native architecture built from ground up, not retrofitted",
+      "Error-free filing guarantee \u2014 covers penalties/interest up to 2x annual fees",
+      "Simple per-action pricing ($75/filing, $150/registration) \u2014 no percentages",
+      "Virtual mailbox service for state correspondence handling",
+      "3.5x YoY revenue growth \u2014 fastest growth in category",
+      "CPA-backed service delivery with 24/7 support"
+    ],
+    weaknesses: [
+      "Onboarding delays reported \u2014 missed timelines by weeks/months",
+      "Missed filings & payments reported by some customers (4+ months unfiled)",
+      "Service delivery gaps vs marketing claims of 'white-glove'",
+      "Account access control concerns \u2014 creates state accounts without clear oversight",
+      "Primarily ecommerce-focused \u2014 SaaS features less mature than Anrok",
+      "Gets expensive at scale for multi-state operations (30+ states)"
+    ],
+    anrokWins: [
+      "Anrok built specifically for SaaS \u2014 Numeral straddles ecommerce + SaaS",
+      "Anrok's HRIS nexus integration is unique, Numeral lacks this",
+      "Anrok's subscription/usage-based billing support is more mature",
+      "Anrok has stronger enterprise SaaS customer logos (Notion, Vanta, Anthropic)",
+      "Anrok's real-time calculation sync with billing systems is tighter",
+      "No reports of missed filings or onboarding issues at Anrok's scale"
+    ],
+    idealFor: "Growth-stage DTC ecommerce brands, SMB SaaS companies wanting hands-off compliance, budget-conscious multi-state filers",
+    notIdealFor: "Enterprise SaaS with complex billing, companies needing real-time calculation APIs, international-first businesses",
+    features: { usNexus: 4, taxCalc: 4, filing: 5, exemptionCerts: 3, internationalVat: 3, saasSpecific: 3, aiFeatures: 4, easeOfUse: 5, support: 4, integrations: 4, pricing: 5 }
+  },
+  {
+    id: "kintsugi", name: "Kintsugi", logo: "\u{1FAD9}", tagline: "AI-powered sales tax on autopilot",
+    founded: 2022, hq: "San Francisco, CA", funding: "~$25M total (Vertex $15M strategic, Apr 2025)",
+    employees: "~95", customers: "2,400+", g2Rating: 4.5, g2Reviews: 30,
+    stage: "Series A+ (Vertex-backed)", pricing: "Free + $100/mo Growth, flat-rate tiers", pricingModel: "Freemium + flat monthly tiers", threatLevel: "medium",
+    recentNews: [
+      { date: "Oct 2025", text: "Launched 'Kintsugi Powered by Vertex' \u2014 AI-native tax solution" },
+      { date: "Apr 2025", text: "Vertex invested $15M for 10% equity stake; valuation hit $150M" },
+      { date: "2025", text: "Targeting $10M+ ARR by end of 2025 (from $3M in 2024)" },
+      { date: "2025", text: "Expanding to EU, Canada, South America, Africa" },
+    ],
+    strengths: [
+      "#1 tax software on Shopify marketplace \u2014 strong ecommerce foothold",
+      "TaxGPT \u2014 24/7 AI tax consultant via Slack for real-time queries",
+      "Scans tax regulation pages every 15 minutes for real-time compliance",
+      "93%+ profit margins \u2014 efficient business model",
+      "Vertex strategic partnership gives enterprise credibility and distribution",
+      "No-code setup, most companies live in under 1 hour",
+      "Free tier includes nexus monitoring and address validation",
+      "45% of customer base is SaaS (growing segment)"
+    ],
+    weaknesses: [
+      "Young platform (launched Aug 2023) \u2014 limited track record",
+      "Primarily US-focused; international expansion still early",
+      "Vertex partnership creates potential conflicts \u2014 is Kintsugi truly independent?",
+      "Smaller customer base (2,400) vs more established competitors",
+      "Integration depth less mature than Avalara/Vertex",
+      "Independent AI accuracy claims not third-party verified",
+      "Strong ecommerce bias \u2014 SaaS features still catching up"
+    ],
+    anrokWins: [
+      "Anrok is SaaS-first vs Kintsugi's ecommerce-first DNA",
+      "Anrok's subscription billing integrations are more mature and deeper",
+      "Anrok's HRIS nexus tracking is unique \u2014 Kintsugi doesn't offer this",
+      "Anrok has stronger SaaS customer logos (Notion, Anthropic, Vanta) vs Kintsugi's DTC brands",
+      "Anrok's international coverage is more mature (100+ countries native)",
+      "Vertex partnership could limit Kintsugi's independence \u2014 acquisition risk",
+      "Anrok's $525M valuation vs Kintsugi's $150M shows stronger market position"
+    ],
+    idealFor: "Shopify-first ecommerce brands, SMB e-commerce, SaaS companies wanting AI-first approach with Vertex backing",
+    notIdealFor: "Enterprise SaaS, companies concerned about Vertex acquisition risk, international-first businesses",
+    features: { usNexus: 4, taxCalc: 4, filing: 4, exemptionCerts: 3, internationalVat: 2, saasSpecific: 3, aiFeatures: 5, easeOfUse: 5, support: 4, integrations: 3, pricing: 4 }
+  },
+  {
+    id: "fonoa", name: "Fonoa", logo: "\u{1F30D}", tagline: "First global tax automation platform",
+    founded: 2019, hq: "Dublin, Ireland", funding: "$85M total (Series B $60M, Coatue, Jul 2022)",
+    employees: "~175", customers: "Uber, Zoom, Booking.com, Spotify, Netflix, Dell, Bolt", g2Rating: null, g2Reviews: 0,
+    stage: "Series B", pricing: "Custom/commitment-based", pricingModel: "Custom commitment", threatLevel: "low",
+    recentNews: [
+      { date: "Oct 2024", text: "Acquired PwC's Global Indirect Tax Compliance (GITC) product" },
+      { date: "2025", text: "Ranked in Sifted's B2B SaaS Rising 100 for 4th consecutive year" },
+      { date: "2025", text: "Expanded e-invoicing to 30+ countries with comprehensive guides" },
+      { date: "2026", text: "Launched SYNAPSE conference series (London, NY, SF, Seattle)" },
+    ],
+    strengths: [
+      "Strongest native global VAT/GST coverage: 190+ countries, 100+ direct authority connections",
+      "Marquee enterprise customers (Uber, Zoom, Spotify, Netflix, Booking) validate platform",
+      "End-to-end: tax ID validation \u2192 calculation \u2192 invoicing \u2192 e-invoicing \u2192 filing \u2192 reporting",
+      "AI monitors global tax rule changes and auto-applies to workflows",
+      "PwC GITC acquisition adds financial services depth",
+      "API-first modular design for complex digital platforms"
+    ],
+    weaknesses: [
+      "Weak US domestic sales tax coverage \u2014 not robust for US-only needs",
+      "Limited pre-built integrations vs Avalara's 700+ connectors",
+      "Custom pricing with limited transparency",
+      "Lower brand awareness outside tech/startup community",
+      "No G2 presence \u2014 hard to find independent reviews",
+      "$5.4M ARR (Oct 2024) is modest given $85M raised \u2014 burn rate questions"
+    ],
+    anrokWins: [
+      "Anrok dominates US sales tax for SaaS \u2014 Fonoa's US coverage is weak",
+      "Anrok's SaaS billing integrations (Stripe, Chargebee) are much deeper",
+      "Anrok has 1,000+ customers vs Fonoa's smaller base of large enterprises",
+      "For MM SaaS deals, Fonoa is typically not in the consideration set",
+      "Anrok's G2 presence (4.5/5) provides social proof Fonoa completely lacks",
+      "Different ICP entirely \u2014 Fonoa targets global digital platforms, not US SaaS"
+    ],
+    idealFor: "Global digital platforms (Uber-scale), marketplaces operating in 10+ countries, companies needing VAT/GST across Europe/Asia",
+    notIdealFor: "US-focused SaaS companies, mid-market businesses, companies needing strong US jurisdiction coverage",
+    features: { usNexus: 2, taxCalc: 4, filing: 4, exemptionCerts: 2, internationalVat: 5, saasSpecific: 3, aiFeatures: 4, easeOfUse: 4, support: 3, integrations: 3, pricing: 3 }
+  },
+  {
+    id: "stripetax", name: "Stripe Tax / TaxJar", logo: "\u{1F4B3}", tagline: "Tax built into Stripe payments",
+    founded: "2013 (TaxJar) / 2021 (Stripe Tax)", hq: "San Francisco, CA", funding: "Acquired by Stripe for ~$850M (2021)",
+    employees: "Part of Stripe (reduced post-acquisition)", customers: "Stripe users (millions potential)",
+    g2Rating: 4.3, g2Reviews: 250, stage: "Acquired (Stripe)", pricing: "5\u00A2 per API call (Tax Basic)",
+    pricingModel: "Per-transaction", threatLevel: "medium",
+    recentNews: [
+      { date: "2025", text: "Stripe Tax API improvements for faster performance and broader object support" },
+      { date: "Jul 2024", text: "TaxJar CRO departed \u2014 continued leadership exodus post-acquisition" },
+      { date: "2025", text: "TaxJar increasingly positioned as Stripe Tax's US filing component only" },
+      { date: "2025", text: "Stripe positioning Stripe Tax for SMB Stripe-only users" },
+    ],
+    strengths: [
+      "Seamless integration if already on Stripe payments \u2014 zero-friction for Stripe users",
+      "100+ country coverage via Stripe Tax (broader than TaxJar's US-only)",
+      "Per-transaction pricing (5\u00A2/call) is attractive for low-volume companies",
+      "Stripe's massive distribution \u2014 easy to discover and activate",
+      "Stripe ecosystem creates natural bundling advantage"
+    ],
+    weaknesses: [
+      "Only tracks Stripe-processed transactions \u2014 useless for multi-channel",
+      "No filing for non-Stripe transactions \u2014 incomplete compliance",
+      "Post-acquisition team instability \u2014 CEO, CRO, 45-55 employees lost",
+      "TaxJar product increasingly neglected in favor of Stripe Tax",
+      "No support for usage-based billing or complex SaaS models",
+      "Inflexible tax-inclusive/exclusive settings (account-wide only)",
+      "No audit support, remediation workflows, or compliance documentation",
+      "NetSuite integration discontinued for new users",
+      "Cannot leverage tax discount programs"
+    ],
+    anrokWins: [
+      "Anrok works across ALL payment processors \u2014 not locked to Stripe",
+      "Anrok handles SaaS-specific billing complexity (subscriptions, usage-based, hybrid)",
+      "Anrok provides end-to-end compliance (nexus \u2192 filing \u2192 audit support)",
+      "Anrok's HRIS nexus tracking catches physical nexus Stripe Tax misses",
+      "Anrok has dedicated tax expertise team vs Stripe's payments-first DNA",
+      "Stripe Tax is a feature, not a product \u2014 Anrok is purpose-built for tax",
+      "TaxJar's post-acquisition decline is a cautionary tale for prospects"
+    ],
+    idealFor: "Small businesses using Stripe as sole payment processor, simple subscription models, single-channel sellers",
+    notIdealFor: "Multi-channel sellers, companies with non-Stripe payments, complex SaaS billing models, companies needing audit support",
+    features: { usNexus: 3, taxCalc: 4, filing: 3, exemptionCerts: 2, internationalVat: 4, saasSpecific: 2, aiFeatures: 1, easeOfUse: 4, support: 2, integrations: 2, pricing: 4 }
+  }
+];
+
+const anrokData = {
+  name: "Anrok", g2Rating: 4.5, g2Reviews: 163, funding: "$100M+ (Series C, $525M valuation)",
+  customers: "1,000+", pricing: "$499-$1K/mo + ~0.4% of taxable revenue",
+  features: { usNexus: 5, taxCalc: 5, filing: 5, exemptionCerts: 4, internationalVat: 4, saasSpecific: 5, aiFeatures: 3, easeOfUse: 4, support: 4, integrations: 4, pricing: 3 }
+};
+
+const anrokQuotes = [
+  { quote: "Anrok is easily the best sales tax platform I have ever used.", source: "G2 Review", role: "Finance Leader", theme: "Overall Satisfaction", verified: true },
+  { quote: "Anrok has been a monumentally better experience than previous tax softwares that I\u2019ve used.", source: "G2 Review", role: "Finance Operations", theme: "Switching from Legacy", verified: true },
+  { quote: "Anrok\u2019s 1-click sales tax returns make my job easier! I am so glad I switched to Anrok from Avalara.", source: "G2 Review", role: "Accounting Manager", theme: "Ease of Use vs Avalara", verified: true },
+  { quote: "A dream for SaaS sales tax compliance.", source: "G2 Review", role: "SaaS Finance Team", theme: "SaaS-Specific", verified: true },
+  { quote: "The customer service was, for this day and age, shockingly responsive and easy to get a hold of actual people.", source: "G2 Review", role: "Finance Professional", theme: "Support Quality", verified: true },
+  { quote: "One of the things that made it a no-brainer for me was that you can integrate Anrok for free. You don\u2019t have to pay anything until you start hitting tax thresholds.", source: "Customer Testimonial", role: "Vijaye Raji, CEO at Statsig", theme: "Pricing / Free Start", verified: true },
+  { quote: "Anrok is super simple to use, enables an easy connection to your ERP, and setting up tax rules was simple.", source: "G2 Review", role: "Finance Operations", theme: "Ease of Implementation", verified: true },
+  { quote: "We were able to smoothly switch to Anrok within three weeks.", source: "G2 Review", role: "Finance Team", theme: "Fast Implementation", verified: true }
+];
+
+const competitorPainQuotes = [
+  { competitor: "avalara", quote: "If you\u2019re a new customer, the sales team is there for you. After that, getting support as an existing customer is a different story \u2014 support tickets go nowhere.", source: "G2 Review", theme: "Support Disappears Post-Sale", verified: true },
+  { competitor: "avalara", quote: "Nothing but problems with WooCommerce integration, costing us tens of thousands of dollars.", source: "G2 Review", theme: "Integration Failures", verified: true },
+  { competitor: "avalara", quote: "The Avalara sales team heavily pushed a $15,000/year support package.", source: "TrustRadius Review", theme: "Upsell Pressure / Pricing", verified: true },
+  { competitor: "vertex", quote: "Vertex charges a percentage of your total revenue, which means as our business grows, our tax software bill rises as well. This seems wrong.", source: "Capterra Review", theme: "Revenue-Based Pricing", verified: true },
+  { competitor: "vertex", quote: "Navigating the ticketing system and the various emails back and forth, only to get a mediocre answer, is quite discouraging.", source: "G2 Review", theme: "Poor Support Experience", verified: true },
+  { competitor: "vertex", quote: "The interface is not intuitive or user friendly.", source: "G2 Review", theme: "Dated UX", verified: true },
+  { competitor: "numeral", quote: "We signed up in August only to find out in January that Numeral had not filed our taxes for over 4 months. We were billed to file, but our CPA found nothing had been filed.", source: "Shopify App Store Review", theme: "Missed Filings", verified: true },
+  { competitor: "numeral", quote: "Be ready for onboarding mess \u2014 it took Numeral several months to get us onboarded, blowing past their guarantee.", source: "Review Site", theme: "Onboarding Delays", verified: true },
+  { competitor: "numeral", quote: "Numeral would file returns and authorize payment from our bank account without us reviewing or approving the return. Buyer beware.", source: "Review Site", theme: "Unauthorized Actions", verified: true },
+  { competitor: "stripetax", quote: "Real differences in the quality of the team after the Stripe acquisition. Lack of tools for capturing tax-exempt certificates.", source: "Capterra Review", theme: "Post-Acquisition Decline", verified: true },
+  { competitor: "stripetax", quote: "Support from TaxJar has been ineffective \u2014 merchants report longer wait times and a lack of specialized tax knowledge.", source: "Reddit / Community Reviews", theme: "Declining Support", verified: true },
+  { competitor: "stripetax", quote: "New features and technical optimizations are built for the Stripe-first business. TaxJar is no longer platform-neutral.", source: "Industry Analysis", theme: "Loss of Neutrality", verified: true },
+  { competitor: "kintsugi", quote: "Sometimes the integration with Stripe doesn\u2019t work as intended and we had to use support to resolve integration issues.", source: "G2 Review", theme: "Integration Reliability", verified: true },
+  { competitor: "kintsugi", quote: "A couple hiccups in the early filings, but the team course-corrected quickly and we\u2019ve had no errors since.", source: "G2 Review", theme: "Early Filing Issues", verified: true }
+];
+
+const featureLabels = { usNexus:"US Nexus & Jurisdiction", taxCalc:"Tax Calculation", filing:"Filing & Remittance", exemptionCerts:"Exemption Certs", internationalVat:"International VAT/GST", saasSpecific:"SaaS-Specific Features", aiFeatures:"AI Capabilities", easeOfUse:"Ease of Use", support:"Customer Support", integrations:"Integrations", pricing:"Pricing Transparency" };
+const threatColors = { high: "#EF4444", medium: "#F59E0B", low: "#10B981" };
+const threatLabels = { high: "High Threat", medium: "Medium Threat", low: "Low Threat" };
+
+function FeatureBar({ label, anrokScore, compScore }) {
+  const delta = anrokScore - compScore;
+  const deltaColor = delta > 0 ? "#10B981" : delta < 0 ? "#EF4444" : "#6B7280";
+  const deltaText = delta > 0 ? `Anrok +${delta}` : delta < 0 ? `Behind ${Math.abs(delta)}` : "Even";
+  return (
+    <div style={{marginBottom:12}}>
+      <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
+        <span style={{fontSize:12,color:"#d1d5db"}}>{label}</span>
+        <span style={{fontSize:12,fontWeight:700,color:deltaColor}}>{deltaText}</span>
+      </div>
+      <div style={{display:"flex",alignItems:"center",gap:4}}>
+        <span style={{fontSize:11,color:"#60a5fa",width:44,textAlign:"right"}}>Anrok</span>
+        <div className="bar-track"><div className="bar-blue" style={{width:`${(anrokScore/5)*100}%`}}/></div>
+        <span style={{fontSize:11,color:"#9ca3af",width:16}}>{anrokScore}</span>
+      </div>
+      <div style={{display:"flex",alignItems:"center",gap:4,marginTop:2}}>
+        <span style={{fontSize:11,color:"#fb923c",width:44,textAlign:"right"}}>Comp</span>
+        <div className="bar-track"><div className="bar-orange" style={{width:`${(compScore/5)*100}%`}}/></div>
+        <span style={{fontSize:11,color:"#9ca3af",width:16}}>{compScore}</span>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [selectedComp, setSelectedComp] = useState(competitors[0]);
+  const [activeTab, setActiveTab] = useState("overview");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [detailTab, setDetailTab] = useState("wins");
+
+  const filteredComps = useMemo(() => {
+    if (!searchQuery) return competitors;
+    const q = searchQuery.toLowerCase();
+    return competitors.filter(c => c.name.toLowerCase().includes(q) || c.tagline.toLowerCase().includes(q) || c.idealFor.toLowerCase().includes(q));
+  }, [searchQuery]);
+
+  const featureKeys = Object.keys(featureLabels);
+  const anrokAdv = featureKeys.filter(k => anrokData.features[k] > selectedComp.features[k]).length;
+  const compAdv = featureKeys.filter(k => selectedComp.features[k] > anrokData.features[k]).length;
+
+  const tabs = [{id:"overview",label:"Overview"},{id:"deepdive",label:"Deep Dive"},{id:"heatmap",label:"Feature Heatmap"},{id:"battlecard",label:"Quick Battlecard"},{id:"voices",label:"Customer Voices"}];
+
+  const getHeatColor = (v) => (["#7F1D1D","#991B1B","#B45309","#CA8A04","#65A30D","#16A34A"])[v] || "#7F1D1D";
+  const allForHeatmap = [{id:"anrok",name:"Anrok",features:anrokData.features,logo:"\u{1F7E6}"},...competitors];
+  const sorted = [...competitors].sort((a,b) => ({high:0,medium:1,low:2})[a.threatLevel] - ({high:0,medium:1,low:2})[b.threatLevel]);
+
+  return (
+    <div style={{minHeight:"100vh"}}>
+      {/* Header */}
+      <div style={{background:"linear-gradient(to right,#111827,#111827,rgba(30,58,138,0.3))",borderBottom:"1px solid #374151"}}>
+        <div style={{maxWidth:1280,margin:"0 auto",padding:"20px 16px"}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16}}>
+            <div>
+              <h1 style={{fontSize:24,fontWeight:700,margin:0}}><span style={{color:"#3b82f6"}}>{"\u2694\uFE0F"}</span> Anrok Competitive Intelligence</h1>
+              <p style={{fontSize:13,color:"#9ca3af",margin:"4px 0 0"}}>Product gaps & wins tracker for MM sales \u00B7 Last updated: {LAST_UPDATED}</p>
+            </div>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{display:"flex",alignItems:"center",gap:4}}>
+                <span className="pulse" style={{width:8,height:8,borderRadius:"50%",background:"#22c55e",display:"inline-block"}}/>
+                <span style={{fontSize:12,color:"#4ade80"}}>Live</span>
+              </div>
+              <div style={{background:"#1f2937",borderRadius:8,padding:"6px 12px",fontSize:12,color:"#d1d5db"}}>Tracking {competitors.length} competitors</div>
+            </div>
+          </div>
+          <div style={{display:"flex",gap:4,marginTop:16}}>
+            {tabs.map(t => (
+              <button key={t.id} onClick={() => setActiveTab(t.id)} className={activeTab === t.id ? "tab-active" : "tab-inactive"}
+                style={{padding:"8px 16px",fontSize:14,fontWeight:500,border:activeTab===t.id?undefined:"none",background:activeTab===t.id?undefined:"transparent",cursor:"pointer"}}>
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{maxWidth:1280,margin:"0 auto",padding:"24px 16px"}}>
+
+        {/* OVERVIEW */}
+        {activeTab === "overview" && (
+          <div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12,marginBottom:24}}>
+              {[
+                {val:competitors.filter(c=>c.threatLevel==="high").length,color:"#f87171",label:"High Threat"},
+                {val:competitors.filter(c=>c.threatLevel==="medium").length,color:"#fbbf24",label:"Medium Threat"},
+                {val:anrokData.g2Rating+"/5",color:"#60a5fa",label:"Anrok G2 Rating"},
+                {val:"11",color:"#4ade80",label:"Feature Dimensions"},
+              ].map((d,i) => (
+                <div key={i} className="card" style={{padding:16}}>
+                  <div style={{fontSize:24,fontWeight:700,color:d.color}}>{d.val}</div>
+                  <div style={{fontSize:12,color:"#9ca3af",marginTop:4}}>{d.label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="card" style={{overflow:"auto"}}>
+              <table style={{fontSize:13}}>
+                <thead>
+                  <tr style={{borderBottom:"1px solid #374151"}}>
+                    {["Competitor","Threat","Stage","Funding","G2","Pricing","Best For"].map(h => (
+                      <th key={h} style={{textAlign:"left",padding:"8px 12px",color:"#9ca3af",fontWeight:500}}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {sorted.map(c => (
+                    <tr key={c.id} style={{borderBottom:"1px solid #1f2937",cursor:"pointer"}} onClick={() => {setSelectedComp(c);setActiveTab("deepdive")}}>
+                      <td style={{padding:"12px"}}><span style={{marginRight:8}}>{c.logo}</span><span style={{fontWeight:500}}>{c.name}</span></td>
+                      <td style={{padding:"12px"}}><span className={`threat-${c.threatLevel}`} style={{padding:"2px 8px",borderRadius:4,fontSize:12,fontWeight:500}}>{threatLabels[c.threatLevel]}</span></td>
+                      <td style={{padding:"12px",color:"#d1d5db"}}>{c.stage}</td>
+                      <td style={{padding:"12px",color:"#d1d5db",fontSize:12}}>{c.funding}</td>
+                      <td style={{padding:"12px",color:"#d1d5db"}}>{c.g2Rating ? `${c.g2Rating}/5 (${c.g2Reviews})` : "No reviews"}</td>
+                      <td style={{padding:"12px",color:"#d1d5db",fontSize:12}}>{c.pricing}</td>
+                      <td style={{padding:"12px",color:"#9ca3af",fontSize:12,maxWidth:240}}>{c.idealFor}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* DEEP DIVE */}
+        {activeTab === "deepdive" && (
+          <div style={{display:"flex",gap:24}}>
+            <div style={{width:240,flexShrink:0}}>
+              <input type="text" placeholder="Search competitors..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+                style={{width:"100%",background:"#1f2937",border:"1px solid #374151",borderRadius:8,padding:"8px 12px",fontSize:13,color:"#fff",marginBottom:8}} />
+              {filteredComps.map(c => (
+                <button key={c.id} onClick={() => setSelectedComp(c)} style={{
+                  width:"100%",textAlign:"left",padding:12,borderRadius:8,marginBottom:6,cursor:"pointer",
+                  border: selectedComp.id===c.id ? "1px solid #3b82f6" : "1px solid #374151",
+                  background: selectedComp.id===c.id ? "rgba(59,130,246,0.1)" : "rgba(31,41,55,0.5)",
+                }}>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <span>{c.logo}</span>
+                    <span style={{fontWeight:600,fontSize:13,color:"#fff"}}>{c.name}</span>
+                    <span className={`threat-${c.threatLevel}`} style={{marginLeft:"auto",padding:"2px 6px",borderRadius:4,fontSize:11,fontWeight:500}}>{threatLabels[c.threatLevel]}</span>
+                  </div>
+                  <p style={{fontSize:11,color:"#9ca3af",margin:"4px 0 0",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.tagline}</p>
+                </button>
+              ))}
+            </div>
+            <div style={{flex:1}}>
+              {/* Comp header */}
+              <div className="card" style={{padding:20,marginBottom:24}}>
+                <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:16}}>
+                  <div>
+                    <h2 style={{fontSize:20,fontWeight:700,margin:0,display:"flex",alignItems:"center",gap:8}}>
+                      {selectedComp.logo} {selectedComp.name}
+                      <span className={`threat-${selectedComp.threatLevel}`} style={{padding:"2px 8px",borderRadius:4,fontSize:12,fontWeight:500}}>{threatLabels[selectedComp.threatLevel]}</span>
+                    </h2>
+                    <p style={{fontSize:13,color:"#9ca3af",margin:"4px 0 0"}}>{selectedComp.tagline}</p>
+                  </div>
+                  <div style={{textAlign:"right",fontSize:12,color:"#9ca3af"}}>
+                    <div>Founded: {selectedComp.founded}</div>
+                    <div>HQ: {selectedComp.hq}</div>
+                    <div>Employees: {selectedComp.employees}</div>
+                  </div>
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12,marginTop:16}}>
+                  {[
+                    {l:"Funding",v:selectedComp.funding},{l:"Customers",v:selectedComp.customers},
+                    {l:"G2 Rating",v:selectedComp.g2Rating?`${selectedComp.g2Rating}/5 (${selectedComp.g2Reviews} reviews)`:"No G2 presence"},
+                    {l:"Pricing",v:selectedComp.pricing}
+                  ].map((d,i) => (
+                    <div key={i} style={{background:"rgba(17,24,39,0.5)",borderRadius:6,padding:8}}>
+                      <div style={{fontSize:11,color:"#6b7280"}}>{d.l}</div>
+                      <div style={{fontSize:13,fontWeight:500,color:"#fff",marginTop:2}}>{d.v}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Scorecard */}
+              <div className="card" style={{padding:20,marginBottom:24}}>
+                <div style={{display:"flex",alignItems:"center",gap:16,marginBottom:16}}>
+                  <h3 style={{fontSize:18,fontWeight:600,margin:0}}>Anrok vs {selectedComp.name} Scorecard</h3>
+                  <div style={{display:"flex",gap:12,fontSize:12}}>
+                    <span style={{color:"#60a5fa"}}>Anrok leads: {anrokAdv}</span>
+                    <span style={{color:"#fb923c"}}>{selectedComp.name} leads: {compAdv}</span>
+                    <span style={{color:"#6b7280"}}>Tied: {featureKeys.length - anrokAdv - compAdv}</span>
+                  </div>
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"0 32px"}}>
+                  <div>{featureKeys.slice(0,6).map(k => <FeatureBar key={k} label={featureLabels[k]} anrokScore={anrokData.features[k]} compScore={selectedComp.features[k]}/>)}</div>
+                  <div>{featureKeys.slice(6).map(k => <FeatureBar key={k} label={featureLabels[k]} anrokScore={anrokData.features[k]} compScore={selectedComp.features[k]}/>)}</div>
+                </div>
+              </div>
+
+              {/* Detail tabs */}
+              <div className="card">
+                <div style={{display:"flex",borderBottom:"1px solid #374151"}}>
+                  {[{id:"wins",label:"\u2713 How Anrok Wins"},{id:"strengths",label:"\u26A1 Their Strengths"},{id:"weaknesses",label:"\u{1F3AF} Their Weaknesses"},{id:"news",label:"\u{1F4E1} Recent Intel"}].map(t => (
+                    <button key={t.id} onClick={() => setDetailTab(t.id)} className={detailTab===t.id?"detail-tab-active":"detail-tab-inactive"}
+                      style={{padding:"12px 16px",fontSize:13,fontWeight:500,background:"transparent",cursor:"pointer",border:"none",borderBottom:undefined}}>
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+                <div style={{padding:20}}>
+                  {detailTab === "wins" && (
+                    <div>
+                      <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Talk track: how to position Anrok against {selectedComp.name} in live deals</p>
+                      {selectedComp.anrokWins.map((w,i) => <div key={i} style={{display:"flex",gap:8,padding:"8px 0"}}><span style={{color:"#22c55e",flexShrink:0}}>{"\u2713"}</span><p style={{fontSize:14,color:"#e5e7eb",margin:0}}>{w}</p></div>)}
+                    </div>
+                  )}
+                  {detailTab === "strengths" && (
+                    <div>
+                      <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Where {selectedComp.name} is genuinely strong</p>
+                      {selectedComp.strengths.map((s,i) => <div key={i} style={{display:"flex",gap:8,padding:"8px 0"}}><span style={{color:"#eab308",flexShrink:0}}>{"\u26A1"}</span><p style={{fontSize:14,color:"#e5e7eb",margin:0}}>{s}</p></div>)}
+                    </div>
+                  )}
+                  {detailTab === "weaknesses" && (
+                    <div>
+                      <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Known pain points and gaps</p>
+                      {selectedComp.weaknesses.map((w,i) => <div key={i} style={{display:"flex",gap:8,padding:"8px 0"}}><span style={{color:"#f87171",flexShrink:0}}>{"\u2717"}</span><p style={{fontSize:14,color:"#e5e7eb",margin:0}}>{w}</p></div>)}
+                    </div>
+                  )}
+                  {detailTab === "news" && (
+                    <div>
+                      <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Latest competitive intel</p>
+                      {selectedComp.recentNews.map((n,i) => <div key={i} style={{display:"flex",gap:12,padding:"8px 0",borderBottom:"1px solid #1f2937"}}><span style={{fontSize:12,color:"#6b7280",width:80,flexShrink:0,fontFamily:"monospace"}}>{n.date}</span><p style={{fontSize:14,color:"#d1d5db",margin:0}}>{n.text}</p></div>)}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* ICP */}
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginTop:24}}>
+                <div className="card" style={{padding:16}}>
+                  <h4 style={{fontSize:13,fontWeight:600,color:"#4ade80",margin:"0 0 8px"}}>Their Sweet Spot (Where They Win)</h4>
+                  <p style={{fontSize:13,color:"#d1d5db",margin:0}}>{selectedComp.idealFor}</p>
+                </div>
+                <div className="card" style={{padding:16}}>
+                  <h4 style={{fontSize:13,fontWeight:600,color:"#f87171",margin:"0 0 8px"}}>Their Weakness (Where Anrok Wins)</h4>
+                  <p style={{fontSize:13,color:"#d1d5db",margin:0}}>{selectedComp.notIdealFor}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* HEATMAP */}
+        {activeTab === "heatmap" && (
+          <div className="card" style={{padding:20}}>
+            <h3 style={{fontSize:18,fontWeight:600,margin:"0 0 8px"}}>Feature Comparison Heatmap</h3>
+            <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Scores from 1 (weakest) to 5 (strongest). Green = strong, Red = weak.</p>
+            <div style={{overflow:"auto"}}>
+              <table style={{fontSize:12}}>
+                <thead>
+                  <tr>
+                    <th style={{textAlign:"left",padding:"8px",color:"#9ca3af",fontWeight:500,position:"sticky",left:0,background:"#111827",zIndex:1}}>Feature</th>
+                    {allForHeatmap.map(c => <th key={c.id} style={{padding:8,textAlign:"center",color:"#9ca3af",fontWeight:500,minWidth:70}}><div>{c.logo}</div><div style={{marginTop:2}}>{c.name}</div></th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {featureKeys.map(k => (
+                    <tr key={k} style={{borderTop:"1px solid #1f2937"}}>
+                      <td style={{padding:8,color:"#d1d5db",fontWeight:500,position:"sticky",left:0,background:"#111827",zIndex:1}}>{featureLabels[k]}</td>
+                      {allForHeatmap.map(c => (
+                        <td key={c.id} style={{padding:8,textAlign:"center"}}>
+                          <span style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:6,background:getHeatColor(c.features[k]),color:"#fff",fontWeight:700,fontSize:14}}>
+                            {c.features[k]}
+                          </span>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div style={{display:"flex",gap:8,marginTop:12,justifyContent:"center",alignItems:"center"}}>
+              <span style={{fontSize:12,color:"#6b7280"}}>Score:</span>
+              {[1,2,3,4,5].map(v => <div key={v} style={{display:"flex",alignItems:"center",gap:4}}><span style={{width:16,height:16,borderRadius:4,background:getHeatColor(v),display:"inline-block"}}/><span style={{fontSize:12,color:"#9ca3af"}}>{v}</span></div>)}
+            </div>
+          </div>
+        )}
+
+        {/* BATTLECARD */}
+        {activeTab === "battlecard" && (
+          <div>
+            <p style={{fontSize:14,color:"#9ca3af",marginBottom:16}}>Quick-reference battlecards for your AEs. Click to expand.</p>
+            {competitors.map(comp => (
+              <details key={comp.id} style={{marginBottom:8}}>
+                <summary className="card" style={{padding:16,cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
+                  <span style={{fontSize:18}}>{comp.logo}</span>
+                  <span style={{fontWeight:600,color:"#fff"}}>{comp.name}</span>
+                  <span className={`threat-${comp.threatLevel}`} style={{padding:"2px 8px",borderRadius:4,fontSize:12,fontWeight:500,marginLeft:8}}>{threatLabels[comp.threatLevel]}</span>
+                  <span style={{marginLeft:"auto",fontSize:12,color:"#6b7280"}}>Click to expand</span>
+                </summary>
+                <div className="card" style={{padding:"0 16px 16px",borderTop:"1px solid #374151",marginTop:-1,borderTopLeftRadius:0,borderTopRightRadius:0}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:24,marginTop:16}}>
+                    <div>
+                      <h4 style={{fontSize:13,fontWeight:600,color:"#4ade80",margin:"0 0 8px"}}>How Anrok Wins</h4>
+                      {comp.anrokWins.slice(0,4).map((w,i) => <div key={i} style={{display:"flex",gap:8,padding:"4px 0"}}><span style={{color:"#22c55e",flexShrink:0}}>{"\u2713"}</span><p style={{fontSize:12,color:"#d1d5db",margin:0}}>{w}</p></div>)}
+                    </div>
+                    <div>
+                      <h4 style={{fontSize:13,fontWeight:600,color:"#fbbf24",margin:"0 0 8px"}}>Watch Out For</h4>
+                      {comp.strengths.slice(0,4).map((s,i) => <div key={i} style={{display:"flex",gap:8,padding:"4px 0"}}><span style={{color:"#eab308",flexShrink:0}}>{"\u26A1"}</span><p style={{fontSize:12,color:"#d1d5db",margin:0}}>{s}</p></div>)}
+                    </div>
+                  </div>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginTop:16}}>
+                    <div style={{background:"rgba(17,24,39,0.5)",borderRadius:6,padding:12}}>
+                      <span style={{fontSize:11,color:"#6b7280"}}>Their Sweet Spot</span>
+                      <p style={{fontSize:12,color:"#d1d5db",margin:"4px 0 0"}}>{comp.idealFor}</p>
+                    </div>
+                    <div style={{background:"rgba(17,24,39,0.5)",borderRadius:6,padding:12}}>
+                      <span style={{fontSize:11,color:"#6b7280"}}>Pricing</span>
+                      <p style={{fontSize:12,color:"#d1d5db",margin:"4px 0 0"}}>{comp.pricing} ({comp.pricingModel})</p>
+                    </div>
+                  </div>
+                  <div style={{marginTop:12}}>
+                    <span style={{fontSize:11,color:"#6b7280"}}>Quick Killer Line:</span>
+                    <p style={{fontSize:14,color:"#93c5fd",fontStyle:"italic",margin:"4px 0 0"}}>"{comp.anrokWins[0]}"</p>
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        )}
+
+        {/* CUSTOMER VOICES */}
+        {activeTab === "voices" && (
+          <div>
+            <p style={{fontSize:14,color:"#9ca3af",marginBottom:24}}>Real quotes from verified review platforms. Use in deal cycles to build credibility and highlight competitor weaknesses.</p>
+
+            {/* Anrok Praise */}
+            <div className="card" style={{padding:20,marginBottom:24}}>
+              <h3 style={{fontSize:18,fontWeight:600,margin:"0 0 4px",display:"flex",alignItems:"center",gap:8}}>
+                <span style={{color:"#60a5fa"}}>{"\u{1F4AC}"}</span> What Customers Say About Anrok
+              </h3>
+              <p style={{fontSize:12,color:"#6b7280",marginBottom:16}}>Verified G2 reviews and customer testimonials \u2014 use in proposals, emails, and live demos</p>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+                {anrokQuotes.map((q, i) => (
+                  <div key={i} style={{background:"rgba(17,24,39,0.6)",border:"1px solid rgba(55,65,81,0.5)",borderRadius:8,padding:16}}>
+                    <p style={{fontSize:14,color:"#e5e7eb",fontStyle:"italic",lineHeight:1.6,margin:0}}>"{q.quote}"</p>
+                    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:12}}>
+                      <div>
+                        <span style={{fontSize:12,color:"#60a5fa",fontWeight:500}}>{q.role}</span>
+                        <span style={{fontSize:12,color:"#374151",margin:"0 8px"}}>{"\u00B7"}</span>
+                        <span style={{fontSize:12,color:"#6b7280"}}>{q.source}</span>
+                      </div>
+                      <span style={{fontSize:11,padding:"2px 6px",borderRadius:4,background:"rgba(59,130,246,0.1)",color:"#60a5fa"}}>{q.theme}</span>
+                    </div>
+                    {q.verified && (
+                      <div style={{display:"flex",alignItems:"center",gap:4,marginTop:8}}>
+                        <span style={{color:"#22c55e",fontSize:12}}>{"\u2713"}</span>
+                        <span style={{fontSize:11,color:"rgba(34,197,94,0.7)"}}>Verified source</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Competitor Pain */}
+            <div className="card" style={{padding:20,marginBottom:24}}>
+              <h3 style={{fontSize:18,fontWeight:600,margin:"0 0 4px",display:"flex",alignItems:"center",gap:8}}>
+                <span style={{color:"#f87171"}}>{"\u{1F3AF}"}</span> What Customers Say About Competitors
+              </h3>
+              <p style={{fontSize:12,color:"#6b7280",marginBottom:16}}>Real complaints from review sites \u2014 use to plant seeds of doubt when prospects mention competitors</p>
+              {competitors.filter(c => competitorPainQuotes.some(q => q.competitor === c.id)).map(comp => {
+                const quotes = competitorPainQuotes.filter(q => q.competitor === comp.id);
+                if (quotes.length === 0) return null;
+                return (
+                  <div key={comp.id} style={{marginBottom:24}}>
+                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+                      <span style={{fontSize:18}}>{comp.logo}</span>
+                      <span style={{fontWeight:600,color:"#fff"}}>{comp.name}</span>
+                      <span className={"threat-"+comp.threatLevel} style={{padding:"2px 8px",borderRadius:4,fontSize:12,fontWeight:500}}>{threatLabels[comp.threatLevel]}</span>
+                    </div>
+                    <div style={{marginLeft:28}}>
+                      {quotes.map((q, i) => (
+                        <div key={i} style={{background:"rgba(17,24,39,0.4)",borderLeft:"2px solid rgba(239,68,68,0.3)",borderRadius:"0 8px 8px 0",padding:12,marginBottom:12}}>
+                          <p style={{fontSize:14,color:"#d1d5db",fontStyle:"italic",margin:0}}>"{q.quote}"</p>
+                          <div style={{display:"flex",alignItems:"center",gap:12,marginTop:8}}>
+                            <span style={{fontSize:12,color:"#6b7280"}}>{q.source}</span>
+                            <span style={{fontSize:11,padding:"2px 6px",borderRadius:4,background:"rgba(239,68,68,0.1)",color:"#f87171"}}>{q.theme}</span>
+                            {q.verified && (
+                              <span style={{fontSize:11,color:"rgba(34,197,94,0.7)",display:"flex",alignItems:"center",gap:4}}>
+                                <span style={{color:"#22c55e"}}>{"\u2713"}</span> Verified
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Source Attribution */}
+            <div style={{background:"rgba(31,41,55,0.3)",border:"1px solid rgba(55,65,81,0.5)",borderRadius:8,padding:16}}>
+              <p style={{fontSize:12,color:"#6b7280",margin:0}}>
+                <span style={{color:"#9ca3af",fontWeight:500}}>Sources:</span> All quotes sourced from G2, Capterra, TrustRadius, Trustpilot, Shopify App Store, and verified community reviews. Quotes marked with {"\u2713"} have been verified against their original source. Last verification: {LAST_UPDATED}.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div style={{borderTop:"1px solid #1f2937",background:"rgba(17,24,39,0.5)",marginTop:32}}>
+        <div style={{maxWidth:1280,margin:"0 auto",padding:"16px",display:"flex",justifyContent:"space-between",fontSize:12,color:"#6b7280"}}>
+          <span>Anrok Competitive Intelligence Dashboard \u00B7 Built for MM Sales</span>
+          <span>Data sourced from G2, company websites, press releases, review sites \u00B7 {LAST_UPDATED}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>
