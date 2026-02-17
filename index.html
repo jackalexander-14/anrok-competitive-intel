@@ -415,6 +415,56 @@ const competitorPainQuotes = [
   { competitor: "kintsugi", quote: "A couple hiccups in the early filings, but the team course-corrected quickly and we\u2019ve had no errors since.", source: "G2 Review", theme: "Early Filing Issues", verified: true }
 ];
 
+const churnSignals = {
+  avalara: [
+    { date: "Q1 2025", signal: "Nutiliti (SaaS startup) switched from Avalara to Anrok after $42,000 in tax errors and 4 months of failed support calls", type: "named_churn", sourceUrl: "https://www.anrok.com/resources/customer-case-study-nutiliti", source: "Anrok Case Study" },
+    { date: "Apr 2025", signal: "Shopify deprecated legacy AvaTax integration \u2014 all merchants forced to choose between Shopify Tax or new Avalara app. Merchants who didn\u2019t act were auto-migrated to Shopify Tax", type: "forced_migration", sourceUrl: "https://changelog.shopify.com/posts/avatax-deprecation-us-only-shops", source: "Shopify Changelog" },
+    { date: "Dec 2024", signal: "Avalara retired Returns for Small Business (RSB) program \u2014 forced SMB customers to upgrade to expensive Managed Returns or leave", type: "product_retirement", sourceUrl: "https://taxcloud.com/blog/avalara-returns-for-small-business-rsb-ending/", source: "TaxCloud Analysis" },
+    { date: "2024", signal: "Avalara eliminated small business API-only pricing for BigCommerce integration \u2014 all BigCommerce customers now required to use $5,000+ full service", type: "pricing_change", sourceUrl: "https://www.ceretax.com/blog/avalara-alternatives-competitors-2025", source: "CereTax Analysis" },
+    { date: "2025", signal: "VP of Finance at Avanquest: \u2018We were moving away from Avalara mainly because of the pricing, but also due to bad customer service\u2019 \u2014 switched to TaxCloud, saving $70-120K/year", type: "named_churn", sourceUrl: "https://taxcloud.com/migrating-from-avalara/", source: "TaxCloud Migration Guide" },
+    { date: "2024", signal: "Telecom company switched from Avalara to TaxConnex due to inaccurate filings, lack of communication, unanswered support emails, and increasing return errors", type: "named_churn", sourceUrl: "https://www.taxconnex.com/case-study/telecom-company-switches-from-avalara", source: "TaxConnex Case Study" }
+  ],
+  vertex: [
+    { date: "Q2-Q3 2025", signal: "Two consecutive quarters of net customer loss reported in earnings. Net Revenue Retention declined to 105% from 109%, Gross Revenue Retention fell to 94% from 95%", type: "earnings_data", sourceUrl: "https://seekingalpha.com/article/4794309-vertex-expensive-losing-customers-and-shedding-margins-downgrade", source: "Seeking Alpha Analysis" },
+    { date: "FY 2025", signal: "Attrition concentrated in smaller accounts \u2014 lost accounts averaged <$50K ARR vs overall average of $138K. Vertex says M&A/bankruptcy was largest driver, competitive losses \u2018modest\u2019", type: "earnings_data", sourceUrl: "https://finance.yahoo.com/news/vertex-verx-q4-2025-earnings-144036567.html", source: "Vertex Q4 2025 Earnings Call" },
+    { date: "Feb 2026", signal: "Multiple analyst firms cut price targets (Citi: $22\u2192$15, Piper Sandler: $20\u2192$14) citing growth deceleration, customer losses, and shrinking margins", type: "analyst_signal", sourceUrl: "https://www.defenseworld.net/2026/02/13/vertex-nasdaqverx-price-target-lowered-to-15-00-at-citigroup.html", source: "Defense World / Analyst Reports" },
+    { date: "2025", signal: "CereTax published analysis citing \u2018slower implementation, higher TCO, lack of modern agility\u2019 as top reasons tax teams switching from Vertex", type: "competitive_intel", sourceUrl: "https://www.ceretax.com/blog/vertex-alternatives-switch-to-ceretax", source: "CereTax Blog" }
+  ],
+  sphere: [],
+  numeral: [
+    { date: "Feb-Jun 2025", signal: "Trustpilot reviewer: signed up in August, found in January that Numeral had not filed taxes for 4+ months. \u2018Billed to file, but CPA found nothing had been filed\u2019", type: "service_failure", sourceUrl: "https://www.trustpilot.com/review/numeralhq.com", source: "Trustpilot Review" },
+    { date: "2025", signal: "Multiple Trustpilot reviews report late/incorrect filings leading to delinquency notices from tax authorities, slow support response times", type: "service_failure", sourceUrl: "https://www.trustpilot.com/review/numeralhq.com", source: "Trustpilot Reviews" },
+    { date: "2025", signal: "Customer reported Numeral filing returns and authorizing bank payments without customer review or approval \u2014 \u2018Buyer beware\u2019", type: "service_failure", sourceUrl: "https://www.trustpilot.com/review/numeralhq.com", source: "Trustpilot Review" }
+  ],
+  kintsugi: [
+    { date: "2025", signal: "No significant churn signals found. Kintsugi claims 0.1% churn rate across 2,400+ customers. Minor complaints limited to occasional Stripe integration hiccups", type: "low_churn", sourceUrl: "https://techcrunch.com/2025/04/30/ai-sales-tax-startup-kintsugi-has-doubled-its-valuation-in-6-months/", source: "TechCrunch" }
+  ],
+  fonoa: [],
+  stripetax: [
+    { date: "Apr 2024", signal: "TaxJar terminated independent affiliate/referral program \u2014 cut ties with thousands of CPAs and tax consultants who were the backbone of the TaxJar community", type: "ecosystem_loss", sourceUrl: "https://trykintsugi.com/blog/taxjar-stripe-acquisition", source: "Kintsugi Analysis" },
+    { date: "Jul 2024", signal: "TaxJar CRO departed \u2014 all three co-founders have now left Stripe. CEO exited mid-2022, 45-55 employees laid off in 2022", type: "leadership_exodus", sourceUrl: "https://www.sunsethq.com/blog/taxjar-acquisition", source: "Sunset HQ" },
+    { date: "Jan 2025", signal: "Capterra reviewer: \u2018Real differences in the quality of the team after the Stripe acquisition. Lack of tools for capturing tax-exempt certificates\u2019", type: "review_complaint", sourceUrl: "https://www.capterra.com/p/163419/TaxJar/", source: "Capterra Review" },
+    { date: "2025", signal: "Multiple reviewers report support now \u2018self-service only\u2019 with no configuration assistance. CEO reviewer gave 1.0/5 rating: \u2018Can\u2019t get anyone to respond\u2019", type: "review_complaint", sourceUrl: "https://www.capterra.com/p/163419/TaxJar/", source: "Capterra Reviews" },
+    { date: "2025", signal: "Product neutrality eroding \u2014 TaxJar\u2019s roadmap replaced by Stripe\u2019s \u2018Global Revenue Management\u2019 strategy. Multi-platform merchants feel stranded as Stripe-first bias grows", type: "strategic_shift", sourceUrl: "https://trykintsugi.com/blog/taxjar-stripe-acquisition", source: "Kintsugi Analysis" }
+  ]
+};
+
+const churnTypeLabels = {
+  named_churn: { label: "Customer Left", color: "#EF4444" },
+  forced_migration: { label: "Forced Migration", color: "#F59E0B" },
+  product_retirement: { label: "Product Retired", color: "#F59E0B" },
+  pricing_change: { label: "Pricing Change", color: "#F97316" },
+  earnings_data: { label: "Earnings Data", color: "#8B5CF6" },
+  analyst_signal: { label: "Analyst Signal", color: "#8B5CF6" },
+  competitive_intel: { label: "Competitive Intel", color: "#6366F1" },
+  service_failure: { label: "Service Failure", color: "#EF4444" },
+  low_churn: { label: "Low Churn", color: "#10B981" },
+  review_complaint: { label: "Review Complaint", color: "#F87171" },
+  leadership_exodus: { label: "Leadership Exit", color: "#EC4899" },
+  ecosystem_loss: { label: "Ecosystem Loss", color: "#F59E0B" },
+  strategic_shift: { label: "Strategic Shift", color: "#A78BFA" }
+};
+
 const featureLabels = { usNexus:"US Nexus & Jurisdiction", taxCalc:"Tax Calculation", filing:"Filing & Remittance", exemptionCerts:"Exemption Certs", internationalVat:"International VAT/GST", saasSpecific:"SaaS-Specific Features", aiFeatures:"AI Capabilities", easeOfUse:"Ease of Use", support:"Customer Support", integrations:"Integrations", pricing:"Pricing Transparency" };
 const threatColors = { high: "#EF4444", medium: "#F59E0B", low: "#10B981" };
 const threatLabels = { high: "High Threat", medium: "Medium Threat", low: "Low Threat" };
@@ -761,7 +811,7 @@ function App() {
               {/* Detail tabs */}
               <div className="card">
                 <div style={{display:"flex",borderBottom:"1px solid #374151",flexWrap:"wrap"}}>
-                  {[{id:"wins",label:"\u2713 How Anrok Wins"},{id:"strengths",label:"\u26A1 Their Strengths"},{id:"weaknesses",label:"\u{1F3AF} Their Weaknesses"},{id:"news",label:"\u{1F4E1} Recent Intel"},{id:"voices",label:"\u{1F4AC} Customer Voices"}].map(t => (
+                  {[{id:"wins",label:"\u2713 How Anrok Wins"},{id:"strengths",label:"\u26A1 Their Strengths"},{id:"weaknesses",label:"\u{1F3AF} Their Weaknesses"},{id:"news",label:"\u{1F4E1} Recent Intel"},{id:"voices",label:"\u{1F4AC} Customer Voices"},{id:"churn",label:"\u{1F4C9} Churn Signals"}].map(t => (
                     <button key={t.id} onClick={() => setDetailTab(t.id)} className={detailTab===t.id?"detail-tab-active":"detail-tab-inactive"}
                       style={{padding:"12px 16px",fontSize:13,fontWeight:500,background:"transparent",cursor:"pointer",border:"none",borderBottom:undefined}}>
                       {t.label}
@@ -839,6 +889,36 @@ function App() {
                       <div style={{background:"rgba(31,41,55,0.3)",border:"1px solid rgba(55,65,81,0.3)",borderRadius:6,padding:10,marginTop:16}}>
                         <p style={{fontSize:11,color:"#4b5563",margin:0}}>Sources: G2, Capterra, TrustRadius, Shopify App Store, community reviews. All quotes marked verified. Last updated: {LAST_UPDATED}.</p>
                       </div>
+                    </div>
+                  )}
+                  {detailTab === "churn" && (
+                    <div>
+                      <p style={{fontSize:12,color:"#6b7280",marginBottom:16}}>Verified churn signals, customer losses, and attrition indicators for {selectedComp.name}</p>
+                      {(churnSignals[selectedComp.id] || []).length > 0 ? (
+                        <div>
+                          {churnSignals[selectedComp.id].map((s, i) => (
+                            <div key={i} style={{background:"rgba(17,24,39,0.5)",border:"1px solid rgba(55,65,81,0.4)",borderRadius:8,padding:14,marginBottom:10,borderLeft:`3px solid ${(churnTypeLabels[s.type]||{}).color||"#6b7280"}`}}>
+                              <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8,flexWrap:"wrap"}}>
+                                <span style={{fontSize:11,fontFamily:"monospace",color:"#9ca3af",background:"rgba(31,41,55,0.8)",padding:"2px 8px",borderRadius:4}}>{s.date}</span>
+                                <span style={{fontSize:10,fontWeight:600,padding:"2px 8px",borderRadius:4,color:"#fff",background:(churnTypeLabels[s.type]||{}).color||"#6b7280"}}>{(churnTypeLabels[s.type]||{}).label||s.type}</span>
+                              </div>
+                              <p style={{fontSize:13,color:"#e5e7eb",lineHeight:1.6,margin:"0 0 8px"}}>{s.signal}</p>
+                              <a href={s.sourceUrl} target="_blank" rel="noopener noreferrer" style={{fontSize:11,color:"#60a5fa",textDecoration:"none",display:"inline-flex",alignItems:"center",gap:4}}>
+                                {"\u{1F517}"} {s.source}
+                                <span style={{fontSize:10,color:"#4b5563"}}>{"\u2197"}</span>
+                              </a>
+                            </div>
+                          ))}
+                          <div style={{background:"rgba(31,41,55,0.3)",border:"1px solid rgba(55,65,81,0.3)",borderRadius:6,padding:10,marginTop:12}}>
+                            <p style={{fontSize:11,color:"#4b5563",margin:0}}>All churn signals are sourced from public earnings calls, review sites, case studies, and verified analyst reports. Click any source link to verify. Last updated: {LAST_UPDATED}.</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div style={{background:"rgba(17,24,39,0.4)",borderRadius:8,padding:20,textAlign:"center"}}>
+                          <p style={{fontSize:14,color:"#6b7280",margin:"0 0 4px"}}>{"\u{1F50D}"} No churn signals found for {selectedComp.name}</p>
+                          <p style={{fontSize:12,color:"#4b5563",margin:0}}>{selectedComp.id === "sphere" ? "Sphere is a newer entrant — limited public customer data available." : selectedComp.id === "fonoa" ? "Fonoa primarily serves EU/global markets — limited US churn data available." : "Check back after the next weekly refresh."}</p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
