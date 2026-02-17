@@ -95,7 +95,7 @@ const LAST_UPDATED = "February 13, 2026";
 
 const competitors = [
   {
-    id: "avalara", name: "Avalara", logo: "\u{1F3D4}\uFE0F", tagline: "Enterprise tax compliance at scale",
+    id: "avalara", name: "Avalara", logoDomain: "avalara.com", tagline: "Enterprise tax compliance at scale",
     founded: 2004, hq: "Seattle, WA", funding: "Acquired by Vista Equity for $8.4B (Oct 2022)",
     employees: "~4,700", customers: "30,000+", g2Rating: 4.0, g2Reviews: 500,
     stage: "Public/PE-backed", pricing: "Custom quotes, $5K-$100K+/yr", pricingModel: "Per-transaction + modules", threatLevel: "high",
@@ -135,7 +135,7 @@ const competitors = [
     features: { usNexus: 5, taxCalc: 5, filing: 4, exemptionCerts: 5, internationalVat: 3, saasSpecific: 2, aiFeatures: 3, easeOfUse: 2, support: 2, integrations: 5, pricing: 2 }
   },
   {
-    id: "vertex", name: "Vertex", logo: "\u{1F537}", tagline: "Enterprise-grade indirect tax technology",
+    id: "vertex", name: "Vertex", logoDomain: "vertexinc.com", tagline: "Enterprise-grade indirect tax technology",
     founded: 1978, hq: "King of Prussia, PA", funding: "Public (VERX) \u2014 $748M revenue FY2025",
     employees: "~1,900", customers: "4,867 (direct)", g2Rating: 4.2, g2Reviews: 150,
     stage: "Public", pricing: "Revenue-based, $5K+ starting", pricingModel: "Revenue-based percentage", threatLevel: "medium",
@@ -174,7 +174,7 @@ const competitors = [
     features: { usNexus: 5, taxCalc: 5, filing: 4, exemptionCerts: 4, internationalVat: 4, saasSpecific: 1, aiFeatures: 3, easeOfUse: 2, support: 3, integrations: 5, pricing: 1 }
   },
   {
-    id: "sphere", name: "Sphere", logo: "\u{1F310}", tagline: "AI-native global tax compliance",
+    id: "sphere", name: "Sphere", logoDomain: "getsphere.com", tagline: "AI-native global tax compliance",
     founded: 2023, hq: "San Francisco, CA", funding: "$21M Series A (a16z, Nov 2025)",
     employees: "~27", customers: "Growing (Replit, ElevenLabs, Heygen, Windsurf, Deel)", g2Rating: null, g2Reviews: 0,
     stage: "Series A", pricing: "$100/region/month flat", pricingModel: "Flat per-region", threatLevel: "high",
@@ -215,7 +215,7 @@ const competitors = [
     features: { usNexus: 3, taxCalc: 4, filing: 4, exemptionCerts: 2, internationalVat: 5, saasSpecific: 4, aiFeatures: 5, easeOfUse: 4, support: 4, integrations: 3, pricing: 5 }
   },
   {
-    id: "numeral", name: "Numeral", logo: "\u{1F522}", tagline: "Sales tax on autopilot for ecommerce & SaaS",
+    id: "numeral", name: "Numeral", logoDomain: "numeralhq.com", tagline: "Sales tax on autopilot for ecommerce & SaaS",
     founded: 2022, hq: "San Francisco, CA", funding: "$57M total (Series B $35M, Mayfield, Sep 2025)",
     employees: "~80-120", customers: "2,000+", g2Rating: 4.9, g2Reviews: 50,
     stage: "Series B", pricing: "$150/registration, $75/filing", pricingModel: "Per-action flat fee", threatLevel: "high",
@@ -255,7 +255,7 @@ const competitors = [
     features: { usNexus: 4, taxCalc: 4, filing: 5, exemptionCerts: 3, internationalVat: 3, saasSpecific: 3, aiFeatures: 4, easeOfUse: 5, support: 4, integrations: 4, pricing: 5 }
   },
   {
-    id: "kintsugi", name: "Kintsugi", logo: "\u{1FAD9}", tagline: "AI-powered sales tax on autopilot",
+    id: "kintsugi", name: "Kintsugi", logoDomain: "trykintsugi.com", tagline: "AI-powered sales tax on autopilot",
     founded: 2022, hq: "San Francisco, CA", funding: "~$25M total (Vertex $15M strategic, Apr 2025)",
     employees: "~95", customers: "2,400+", g2Rating: 4.5, g2Reviews: 30,
     stage: "Series A+ (Vertex-backed)", pricing: "Free + $100/mo Growth, flat-rate tiers", pricingModel: "Freemium + flat monthly tiers", threatLevel: "medium",
@@ -298,7 +298,7 @@ const competitors = [
     features: { usNexus: 4, taxCalc: 4, filing: 4, exemptionCerts: 3, internationalVat: 2, saasSpecific: 3, aiFeatures: 5, easeOfUse: 5, support: 4, integrations: 3, pricing: 4 }
   },
   {
-    id: "fonoa", name: "Fonoa", logo: "\u{1F30D}", tagline: "First global tax automation platform",
+    id: "fonoa", name: "Fonoa", logoDomain: "fonoa.com", tagline: "First global tax automation platform",
     founded: 2019, hq: "Dublin, Ireland", funding: "$85M total (Series B $60M, Coatue, Jul 2022)",
     employees: "~175", customers: "Uber, Zoom, Booking.com, Spotify, Netflix, Dell, Bolt", g2Rating: null, g2Reviews: 0,
     stage: "Series B", pricing: "Custom/commitment-based", pricingModel: "Custom commitment", threatLevel: "low",
@@ -337,7 +337,7 @@ const competitors = [
     features: { usNexus: 2, taxCalc: 4, filing: 4, exemptionCerts: 2, internationalVat: 5, saasSpecific: 3, aiFeatures: 4, easeOfUse: 4, support: 3, integrations: 3, pricing: 3 }
   },
   {
-    id: "stripetax", name: "Stripe Tax / TaxJar", logo: "\u{1F4B3}", tagline: "Tax built into Stripe payments",
+    id: "stripetax", name: "Stripe Tax / TaxJar", logoDomain: "stripe.com", tagline: "Tax built into Stripe payments",
     founded: "2013 (TaxJar) / 2021 (Stripe Tax)", hq: "San Francisco, CA", funding: "Acquired by Stripe for ~$850M (2021)",
     employees: "Part of Stripe (reduced post-acquisition)", customers: "Stripe users (millions potential)",
     g2Rating: 4.3, g2Reviews: 250, stage: "Acquired (Stripe)", pricing: "5\u00A2 per API call (Tax Basic)",
@@ -576,6 +576,17 @@ const scoreExplanations = {
   }
 };
 
+function CompanyLogo({ domain, size = 20, style = {} }) {
+  return React.createElement("img", {
+    src: "https://logo.clearbit.com/" + domain,
+    alt: "",
+    width: size,
+    height: size,
+    style: Object.assign({ borderRadius: 4, objectFit: "contain", verticalAlign: "middle", background: "#fff" }, style),
+    onError: function(e) { e.target.src = "https://www.google.com/s2/favicons?domain=" + domain + "&sz=" + (size > 32 ? 64 : 32); }
+  });
+}
+
 function FeatureBar({ label, featureKey, anrokScore, compScore, compId, onClickBar }) {
   const delta = anrokScore - compScore;
   const deltaColor = delta > 0 ? "#10B981" : delta < 0 ? "#EF4444" : "#6B7280";
@@ -624,7 +635,7 @@ function App() {
   const tabs = [{id:"overview",label:"Overview"},{id:"deepdive",label:"Deep Dive"},{id:"heatmap",label:"Feature Heatmap"},{id:"battlecard",label:"Quick Battlecard"}];
 
   const getHeatColor = (v) => (["#7F1D1D","#991B1B","#B45309","#CA8A04","#65A30D","#16A34A"])[v] || "#7F1D1D";
-  const allForHeatmap = [{id:"anrok",name:"Anrok",features:anrokData.features,logo:"\u{1F7E6}"},...competitors];
+  const allForHeatmap = [{id:"anrok",name:"Anrok",features:anrokData.features,logoDomain:"anrok.com"},...competitors];
   const sorted = [...competitors].sort((a,b) => ({high:0,medium:1,low:2})[a.threatLevel] - ({high:0,medium:1,low:2})[b.threatLevel]);
 
   return (
@@ -686,7 +697,7 @@ function App() {
                 <tbody>
                   {sorted.map(c => (
                     <tr key={c.id} style={{borderBottom:"1px solid #1f2937",cursor:"pointer"}} onClick={() => {setSelectedComp(c);setActiveTab("deepdive")}}>
-                      <td style={{padding:"12px"}}><span style={{marginRight:8}}>{c.logo}</span><span style={{fontWeight:500}}>{c.name}</span></td>
+                      <td style={{padding:"12px"}}><span style={{marginRight:8,display:"inline-flex",alignItems:"center"}}><CompanyLogo domain={c.logoDomain} size={20} /></span><span style={{fontWeight:500}}>{c.name}</span></td>
                       <td style={{padding:"12px"}}><span className={`threat-${c.threatLevel}`} style={{padding:"2px 8px",borderRadius:4,fontSize:12,fontWeight:500}}>{threatLabels[c.threatLevel]}</span></td>
                       <td style={{padding:"12px",color:"#d1d5db"}}>{c.stage}</td>
                       <td style={{padding:"12px",color:"#d1d5db",fontSize:12}}>{c.funding}</td>
@@ -714,7 +725,7 @@ function App() {
                   background: selectedComp.id===c.id ? "rgba(59,130,246,0.1)" : "rgba(31,41,55,0.5)",
                 }}>
                   <div style={{display:"flex",alignItems:"center",gap:8}}>
-                    <span>{c.logo}</span>
+                    <CompanyLogo domain={c.logoDomain} size={20} />
                     <span style={{fontWeight:600,fontSize:13,color:"#fff"}}>{c.name}</span>
                     <span className={`threat-${c.threatLevel}`} style={{marginLeft:"auto",padding:"2px 6px",borderRadius:4,fontSize:11,fontWeight:500}}>{threatLabels[c.threatLevel]}</span>
                   </div>
@@ -728,7 +739,7 @@ function App() {
                 <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:16}}>
                   <div>
                     <h2 style={{fontSize:20,fontWeight:700,margin:0,display:"flex",alignItems:"center",gap:8}}>
-                      {selectedComp.logo} {selectedComp.name}
+                      <CompanyLogo domain={selectedComp.logoDomain} size={24} /> {selectedComp.name}
                       <span className={`threat-${selectedComp.threatLevel}`} style={{padding:"2px 8px",borderRadius:4,fontSize:12,fontWeight:500}}>{threatLabels[selectedComp.threatLevel]}</span>
                     </h2>
                     <p style={{fontSize:13,color:"#9ca3af",margin:"4px 0 0"}}>{selectedComp.tagline}</p>
@@ -949,7 +960,7 @@ function App() {
                 <thead>
                   <tr>
                     <th style={{textAlign:"left",padding:"8px",color:"#9ca3af",fontWeight:500,position:"sticky",left:0,background:"#111827",zIndex:1}}>Feature</th>
-                    {allForHeatmap.map(c => <th key={c.id} style={{padding:8,textAlign:"center",color:"#9ca3af",fontWeight:500,minWidth:70}}><div>{c.logo}</div><div style={{marginTop:2}}>{c.name}</div></th>)}
+                    {allForHeatmap.map(c => <th key={c.id} style={{padding:8,textAlign:"center",color:"#9ca3af",fontWeight:500,minWidth:70}}><div style={{display:"flex",justifyContent:"center"}}><CompanyLogo domain={c.logoDomain} size={22} /></div><div style={{marginTop:4}}>{c.name}</div></th>)}
                   </tr>
                 </thead>
                 <tbody>
@@ -982,7 +993,7 @@ function App() {
             {competitors.map(comp => (
               <details key={comp.id} style={{marginBottom:8}}>
                 <summary className="card" style={{padding:16,cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
-                  <span style={{fontSize:18}}>{comp.logo}</span>
+                  <CompanyLogo domain={comp.logoDomain} size={22} />
                   <span style={{fontWeight:600,color:"#fff"}}>{comp.name}</span>
                   <span className={`threat-${comp.threatLevel}`} style={{padding:"2px 8px",borderRadius:4,fontSize:12,fontWeight:500,marginLeft:8}}>{threatLabels[comp.threatLevel]}</span>
                   <span style={{marginLeft:"auto",fontSize:12,color:"#6b7280"}}>Click to expand</span>
