@@ -91,19 +91,20 @@ function PasswordGate({ onAuth }) {
   );
 }
 
-const LAST_UPDATED = "February 17, 2026";
+const LAST_UPDATED = "February 19, 2026";
 
 const competitors = [
   {
     id: "avalara", name: "Avalara", logoDomain: "avalara.com", tagline: "Enterprise tax compliance at scale",
     founded: 2004, hq: "Seattle, WA", funding: "Acquired by Vista Equity for $8.4B (Oct 2022)",
     employees: "~4,700", customers: "30,000+", g2Rating: 4.0, g2Reviews: 500,
-    stage: "Public/PE-backed", pricing: "Custom quotes, $5K-$100K+/yr", pricingModel: "Per-transaction + modules", threatLevel: "high",
+    stage: "Public/PE-backed", pricing: "Custom quotes $5K-$100K+/yr; nexus studies $4.5K each, registrations $350/jurisdiction, Year 2 hikes 40%+", pricingModel: "Per-transaction + modules + hidden expansion", threatLevel: "high",
     recentNews: [
       { date: "Q4 2025", text: "Launched Avi \u2014 agentic AI compliance assistant embedded in workflows" },
       { date: "Q1 2025", text: "29 newly certified integrations announced including SAP, Oracle, Coupa" },
       { date: "Q2 2025", text: "Expanded e-invoicing to Iceland, Indonesia, Oman, Taiwan" },
       { date: "2025", text: "Named to G2's 2025 Best Software Awards for Accounting & Finance (3rd year)" },
+      { date: "2025", text: "Jasper switched to Anrok after Avalara failed for 6+ months; saving $7K/month in error corrections" },
     ],
     strengths: [
       "1,400+ pre-built integrations (SAP, Oracle, NetSuite, Shopify)",
@@ -114,21 +115,22 @@ const competitors = [
       "New AI agent 'Avi' for conversational compliance"
     ],
     weaknesses: [
-      "Customer support universally criticized \u2014 weeks-long response times",
-      "Opaque, expensive pricing with hidden expansion fees",
-      "Implementation requires 85% internal effort; months-long rollout",
+      "Customer support universally criticized \u2014 weeks-long response times; sales pushes $15K/yr support package post-sale",
+      "Opaque pricing with hidden expansion: nexus studies $4.5K, registrations $350/each, premium support extra, Year 2 hikes 40%+",
+      "Implementation averages 3 months with 85% internal effort; resource-intensive rollout",
       "Gap between 'one-and-done' automation promises and manual reality",
-      "Clunky reporting UI; adding manual transactions difficult",
+      "Reliability issues: two-month Chicago tax calculation failure reported; home rule jurisdiction gaps",
       "International VAT/GST coverage fragmented, relies on local advisors",
-      "Not built for SaaS billing models (subscriptions, usage-based)"
+      "Not built for SaaS billing models (subscriptions, usage-based) \u2014 90% of customers are retail/ecomm"
     ],
     anrokWins: [
-      "Anrok implements in days, not months \u2014 no professional services required",
+      "Anrok implements in days, not months \u2014 no professional services required vs Avalara\u2019s 3-month avg",
       "Anrok's SaaS-native billing integrations (Stripe, Chargebee) vs Avalara's ERP focus",
       "Anrok's HR/HRIS nexus monitoring is unique \u2014 Avalara doesn't connect to payroll systems",
       "Anrok support rated significantly higher across G2 categories",
       "Anrok pricing is transparent and predictable vs Avalara's custom quotes",
-      "Anrok purpose-built for recurring revenue models; Avalara retrofits enterprise tools"
+      "Anrok purpose-built for recurring revenue models; Avalara retrofits enterprise tools for SaaS",
+      "Proof points: Jasper ($7K/mo saved), Nutiliti ($42K in errors), Forward Networks (\u2018worst implementation ever\u2019), Trainual (\u2018legacy solution that never started working\u2019)"
     ],
     idealFor: "Large enterprises (500+ employees) with dedicated tax teams, complex multi-entity structures, legacy ERP systems",
     notIdealFor: "Fast-growing SaaS companies, teams without dedicated tax expertise, companies needing quick implementation",
@@ -144,6 +146,8 @@ const competitors = [
       { date: "Q4 2025", text: "Launched Vertex Copilot \u2014 conversational AI for tax determination" },
       { date: "Apr 2025", text: "Strategic $15M investment in Kintsugi (10% equity stake)" },
       { date: "Oct 2025", text: "Launched 'Kintsugi Powered by Vertex' AI tax automation solution" },
+      { date: "Q3 2025", text: "NRR declined to 107% (from 111%); net income down 44% YoY; stock dropped 10.87%" },
+      { date: "Nov 2025", text: "New CEO Christopher Young (ex-Microsoft) with $25M signing package; signals cloud/AI pivot" },
     ],
     strengths: [
       "19,000+ jurisdiction coverage globally",
@@ -176,8 +180,8 @@ const competitors = [
   {
     id: "sphere", name: "Sphere", logoDomain: "getsphere.com", tagline: "AI-native global tax compliance",
     founded: 2023, hq: "San Francisco, CA", funding: "$21M Series A (a16z, Nov 2025)",
-    employees: "~27", customers: "Growing (Replit, ElevenLabs, Heygen, Windsurf, Deel)", g2Rating: null, g2Reviews: 0,
-    stage: "Series A", pricing: "$100/region/month flat", pricingModel: "Flat per-region", threatLevel: "high",
+    employees: "~27", customers: "Growing (Deel, Replit, ElevenLabs, Heygen, Windsurf, Lovable, Jump, Dovetail, Roboflow, MotherDuck, OpenRouter)", g2Rating: null, g2Reviews: 0,
+    stage: "Series A", pricing: "$100/region/month + hidden $0.05/transaction fee at high volume", pricingModel: "Per-region + surprise per-transaction", threatLevel: "high",
     recentNews: [
       { date: "Nov 2025", text: "$21M Series A led by Andreessen Horowitz \u2014 major validation" },
       { date: "Dec 2024", text: "Emerged from stealth with 30%+ MoM MRR growth" },
@@ -185,22 +189,22 @@ const competitors = [
       { date: "2025", text: "Roadmap: e-invoicing and input tax automation by end of 2025" },
     ],
     strengths: [
-      "Proprietary AI model (TRAM) \u2014 monitors and auto-applies global tax law changes in real-time",
-      "True global-native coverage: 100+ tax authority direct connections",
-      "Flat, predictable pricing ($100/region/month) with no revenue percentages",
+      "Proprietary AI model (TRAM) \u2014 but TRAM ToS state customer is fully responsible for product tax classification despite marketing claims",
+      "Global-native coverage with claimed 100+ local rails (unverified)",
+      "Flat base pricing ($100/region/month) but surprise $0.05/transaction fees at higher volumes",
       "Implementation in <24 hours \u2014 fastest in market",
       "Native Stripe Billing/Checkout integration (1 of 3 vendors globally)",
-      "24/7 Slack-based support with real tax experts",
-      "End-to-end: registration, calculation, filing, AND remittance natively",
+      "24/7 Slack-based support \u2014 but enterprise tier claims \u2018CPA on demand\u2019 with no CPA actually on staff",
+      "End-to-end: registration, calculation, filing, AND remittance \u2014 though reg/filing actually completed by 3rd party",
       "a16z backing signals serious institutional confidence"
     ],
     weaknesses: [
-      "Very young platform \u2014 emerged from stealth Dec 2024, less battle-tested",
-      "No G2 presence yet \u2014 limited social proof via reviews",
-      "UI reported as needing improvement in some areas",
-      "Global remittance infrastructure still scaling, not complete everywhere",
-      "Smaller team may limit enterprise support capacity",
-      "US-only customers may find Anrok more tailored"
+      "Pivoted from education space; original technical leadership has since left the company",
+      "No G2 presence yet \u2014 limited social proof via reviews; help center content 4+ months outdated",
+      "TRAM Terms of Service state customer is fully responsible for tax classification \u2014 contradicts marketing promise of \u2018AI handles everything\u2019",
+      "Global remittance just launched Oct 2025 \u2014 unproven at scale; reg/filing actually handled by undisclosed 3rd party",
+      "Enterprise tier claims \u2018CPA on demand\u2019 but no CPA actually on staff; NetSuite integration just launched after 5+ months of development",
+      "Hidden $0.05/transaction surcharge at high volume contradicts \u2018flat pricing\u2019 positioning; \u2018100+ local rails\u2019 claim unverified"
     ],
     anrokWins: [
       "Anrok has 1,000+ customers vs Sphere's early-stage base \u2014 more proven at scale",
@@ -212,13 +216,13 @@ const competitors = [
     ],
     idealFor: "Global-first SaaS/AI companies expanding internationally, especially those on Stripe needing multi-country VAT/GST",
     notIdealFor: "US-only businesses, companies needing deep G2/review social proof, enterprises requiring proven scale",
-    features: { usNexus: 3, taxCalc: 4, filing: 4, exemptionCerts: 2, internationalVat: 5, saasSpecific: 4, aiFeatures: 5, easeOfUse: 4, support: 4, integrations: 3, pricing: 5 }
+    features: { usNexus: 3, taxCalc: 4, filing: 4, exemptionCerts: 2, internationalVat: 5, saasSpecific: 4, aiFeatures: 4, easeOfUse: 4, support: 3, integrations: 3, pricing: 4 }
   },
   {
     id: "numeral", name: "Numeral", logoDomain: "numeralhq.com", tagline: "Sales tax on autopilot for ecommerce & SaaS",
-    founded: 2022, hq: "San Francisco, CA", funding: "$57M total (Series B $35M, Mayfield, Sep 2025)",
-    employees: "~80-120", customers: "2,000+", g2Rating: 4.9, g2Reviews: 50,
-    stage: "Series B", pricing: "$150/registration, $75/filing", pricingModel: "Per-action flat fee", threatLevel: "high",
+    founded: 2023, hq: "San Francisco, CA", funding: "$57M total (Series B $35M, Mayfield, Sep 2025)",
+    employees: "~80-120", customers: "2,000+ (top logos: Ridge, Graza)", g2Rating: 4.9, g2Reviews: 50,
+    stage: "Series B", pricing: "\"Free\" monitoring + $150/registration + $75/filing + state fees", pricingModel: "Per-action flat fee + unpredictable state fees", threatLevel: "high",
     recentNews: [
       { date: "Sep 2025", text: "$35M Series B at $350M valuation (Mayfield + Benchmark)" },
       { date: "Mar 2025", text: "$18M Series A led by Benchmark Capital" },
@@ -239,11 +243,12 @@ const competitors = [
       "Missed filings & payments reported by some customers (4+ months unfiled)",
       "Service delivery gaps vs marketing claims of 'white-glove'",
       "Account access control concerns \u2014 creates state accounts without clear oversight",
-      "Primarily ecommerce-focused \u2014 SaaS features less mature than Anrok",
-      "Gets expensive at scale for multi-state operations (30+ states)"
+      "Primarily built for basic ecommerce/Shopify storefronts \u2014 no native e2e integrations, just ingests sales data after the fact",
+      "Gets expensive at scale for multi-state operations (30+ states); no SOC I/II compliance certification",
+      "RED FLAG: State tax office reported \u2018every application has wrong information\u2019 for Numeral submissions"
     ],
     anrokWins: [
-      "Anrok built specifically for SaaS \u2014 Numeral straddles ecommerce + SaaS",
+      "Anrok built specifically for SaaS \u2014 Numeral built for basic ecommerce/Shopify storefronts",
       "Anrok's HRIS nexus integration is unique, Numeral lacks this",
       "Anrok's subscription/usage-based billing support is more mature",
       "Anrok has stronger enterprise SaaS customer logos (Notion, Vanta, Anthropic)",
@@ -258,7 +263,7 @@ const competitors = [
     id: "kintsugi", name: "Kintsugi", logoDomain: "trykintsugi.com", tagline: "AI-powered sales tax on autopilot",
     founded: 2022, hq: "San Francisco, CA", funding: "~$25M total (Vertex $15M strategic, Apr 2025)",
     employees: "~95", customers: "2,400+", g2Rating: 4.5, g2Reviews: 30,
-    stage: "Series A+ (Vertex-backed)", pricing: "Free + $100/mo Growth, flat-rate tiers", pricingModel: "Freemium + flat monthly tiers", threatLevel: "medium",
+    stage: "Series A+ (Vertex-backed)", pricing: "Free tier + $100/mo Growth; $75/registration, $75/filing, 15% perpetual partner rev share", pricingModel: "Freemium + per-action + perpetual partner rev share", threatLevel: "medium",
     recentNews: [
       { date: "Oct 2025", text: "Launched 'Kintsugi Powered by Vertex' \u2014 AI-native tax solution" },
       { date: "Apr 2025", text: "Vertex invested $15M for 10% equity stake; valuation hit $150M" },
@@ -276,13 +281,14 @@ const competitors = [
       "45% of customer base is SaaS (growing segment)"
     ],
     weaknesses: [
-      "Young platform (launched Aug 2023) \u2014 limited track record",
+      "\u2018Agentic AI\u2019 makes autonomous tax decisions without human validation \u2014 risky for compliance",
       "Primarily US-focused; international expansion still early",
-      "Vertex partnership creates potential conflicts \u2014 is Kintsugi truly independent?",
+      "Vertex partnership (10% ownership) blurs accountability \u2014 who is responsible when errors occur?",
       "Smaller customer base (2,400) vs more established competitors",
       "Integration depth less mature than Avalara/Vertex",
-      "Independent AI accuracy claims not third-party verified",
-      "Strong ecommerce bias \u2014 SaaS features still catching up"
+      "Questionable review patterns: unverifiable case studies, review authenticity questioned by former employees",
+      "No verified tax-qualified experts on staff; geared toward SMB ecommerce, not mid-market SaaS",
+      "15% perpetual partner revenue share creates hidden ongoing cost for referred customers"
     ],
     anrokWins: [
       "Anrok is SaaS-first vs Kintsugi's ecommerce-first DNA",
@@ -295,7 +301,7 @@ const competitors = [
     ],
     idealFor: "Shopify-first ecommerce brands, SMB e-commerce, SaaS companies wanting AI-first approach with Vertex backing",
     notIdealFor: "Enterprise SaaS, companies concerned about Vertex acquisition risk, international-first businesses",
-    features: { usNexus: 4, taxCalc: 4, filing: 4, exemptionCerts: 3, internationalVat: 2, saasSpecific: 3, aiFeatures: 5, easeOfUse: 5, support: 4, integrations: 3, pricing: 4 }
+    features: { usNexus: 4, taxCalc: 4, filing: 4, exemptionCerts: 3, internationalVat: 2, saasSpecific: 3, aiFeatures: 4, easeOfUse: 5, support: 4, integrations: 3, pricing: 4 }
   },
   {
     id: "fonoa", name: "Fonoa", logoDomain: "fonoa.com", tagline: "First global tax automation platform",
@@ -319,10 +325,10 @@ const competitors = [
     weaknesses: [
       "Weak US domestic sales tax coverage \u2014 not robust for US-only needs",
       "Limited pre-built integrations vs Avalara's 700+ connectors",
-      "Custom pricing with limited transparency",
-      "Lower brand awareness outside tech/startup community",
+      "Opaque custom pricing with multi-year commitment contracts required",
+      "Support limited to engineers \u2014 no dedicated CSMs or tax advisors; customers manage government interactions themselves",
       "No G2 presence \u2014 hard to find independent reviews",
-      "$5.4M ARR (Oct 2024) is modest given $85M raised \u2014 burn rate questions"
+      "$5.4M ARR (Oct 2024) is modest given $85M raised \u2014 burn rate questions; acknowledged \u2018weaker\u2019 US coverage internally"
     ],
     anrokWins: [
       "Anrok dominates US sales tax for SaaS \u2014 Fonoa's US coverage is weak",
@@ -360,7 +366,7 @@ const competitors = [
       "No filing for non-Stripe transactions \u2014 incomplete compliance",
       "Post-acquisition team instability \u2014 CEO, CRO, 45-55 employees lost",
       "TaxJar product increasingly neglected in favor of Stripe Tax",
-      "No support for usage-based billing or complex SaaS models",
+      "Generic tax logic treats SaaS like physical goods \u2014 no product-specific taxability rules; delayed tax calculations reported",
       "Inflexible tax-inclusive/exclusive settings (account-wide only)",
       "No audit support, remediation workflows, or compliance documentation",
       "NetSuite integration discontinued for new users",
@@ -383,7 +389,9 @@ const competitors = [
 
 const anrokData = {
   name: "Anrok", g2Rating: 4.5, g2Reviews: 163, funding: "$100M+ (Series C, $525M valuation)",
-  customers: "1,000+", pricing: "$499-$1K/mo + ~0.4% of taxable revenue",
+  customers: "1,000+ (44% of Forbes AI Top 50; Anthropic, Notion, Cursor, Calendly, Docker, Jasper, Statsig, Meter)", pricing: "$499-$1K/mo + ~0.4% of taxable revenue; $30B+ in revenue supported across 100+ countries",
+  keyIntegrations: "Stripe, NetSuite, Chargebee, QuickBooks, Xero, Shopify, WooCommerce, Recurly, Rippling, Rillet, Metronome, Orb, Campfire",
+
   features: { usNexus: 5, taxCalc: 5, filing: 5, exemptionCerts: 4, internationalVat: 4, saasSpecific: 5, aiFeatures: 3, easeOfUse: 4, support: 4, integrations: 4, pricing: 3 }
 };
 
@@ -412,7 +420,16 @@ const competitorPainQuotes = [
   { competitor: "stripetax", quote: "Support from TaxJar has been ineffective \u2014 merchants report longer wait times and a lack of specialized tax knowledge.", source: "Reddit / Community Reviews", theme: "Declining Support", verified: true },
   { competitor: "stripetax", quote: "New features and technical optimizations are built for the Stripe-first business. TaxJar is no longer platform-neutral.", source: "Industry Analysis", theme: "Loss of Neutrality", verified: true },
   { competitor: "kintsugi", quote: "Sometimes the integration with Stripe doesn\u2019t work as intended and we had to use support to resolve integration issues.", source: "G2 Review", theme: "Integration Reliability", verified: true },
-  { competitor: "kintsugi", quote: "A couple hiccups in the early filings, but the team course-corrected quickly and we\u2019ve had no errors since.", source: "G2 Review", theme: "Early Filing Issues", verified: true }
+  { competitor: "kintsugi", quote: "A couple hiccups in the early filings, but the team course-corrected quickly and we\u2019ve had no errors since.", source: "G2 Review", theme: "Early Filing Issues", verified: true },
+  { competitor: "avalara", quote: "What Avalara couldn\u2019t accomplish in 6+ months, Anrok did in less than one month.", source: "Jasper Case Study", theme: "Implementation Failure", verified: true },
+  { competitor: "avalara", quote: "The worst implementation we have ever experienced.", source: "Forward Networks", theme: "Implementation Failure", verified: true },
+  { competitor: "avalara", quote: "A legacy solution that never started working.", source: "Trainual", theme: "Product Failure", verified: true },
+  { competitor: "avalara", quote: "Frustrated with the fragmented global compliance experience.", source: "Bloomreach", theme: "Global Fragmentation", verified: true },
+  { competitor: "avalara", quote: "We ended up redirecting internal resources from other important work just to manage Avalara.", source: "Statsig", theme: "Resource Drain", verified: true },
+  { competitor: "sphere", quote: "Terms of Service state customer is fully responsible for product tax classification despite marketing promising AI handles everything.", source: "TRAM White Paper Analysis", theme: "Marketing vs Reality", verified: true },
+  { competitor: "numeral", quote: "Every application has wrong information.", source: "State Tax Office (re: Numeral submissions)", theme: "Filing Accuracy", verified: true },
+  { competitor: "fonoa", quote: "Zero pre-built connectors. Every integration requires custom API development.", source: "Internal Battlecard", theme: "Integration Gap", verified: true },
+  { competitor: "kintsugi", quote: "No verified tax-qualified experts on staff. Agentic AI makes autonomous decisions without human validation.", source: "Internal Battlecard", theme: "Qualification Concerns", verified: true }
 ];
 
 const churnSignals = {
@@ -422,13 +439,21 @@ const churnSignals = {
     { date: "Dec 2024", signal: "Avalara retired Returns for Small Business (RSB) program \u2014 forced SMB customers to upgrade to expensive Managed Returns or leave", type: "product_retirement", sourceUrl: "https://taxcloud.com/blog/avalara-returns-for-small-business-rsb-ending/", source: "TaxCloud Analysis" },
     { date: "2024", signal: "Avalara eliminated small business API-only pricing for BigCommerce integration \u2014 all BigCommerce customers now required to use $5,000+ full service", type: "pricing_change", sourceUrl: "https://www.ceretax.com/blog/avalara-alternatives-competitors-2025", source: "CereTax Analysis" },
     { date: "2025", signal: "VP of Finance at Avanquest: \u2018We were moving away from Avalara mainly because of the pricing, but also due to bad customer service\u2019 \u2014 switched to TaxCloud, saving $70-120K/year", type: "named_churn", sourceUrl: "https://taxcloud.com/migrating-from-avalara/", source: "TaxCloud Migration Guide" },
-    { date: "2024", signal: "Telecom company switched from Avalara to TaxConnex due to inaccurate filings, lack of communication, unanswered support emails, and increasing return errors", type: "named_churn", sourceUrl: "https://www.taxconnex.com/case-study/telecom-company-switches-from-avalara", source: "TaxConnex Case Study" }
+    { date: "2024", signal: "Telecom company switched from Avalara to TaxConnex due to inaccurate filings, lack of communication, unanswered support emails, and increasing return errors", type: "named_churn", sourceUrl: "https://www.taxconnex.com/case-study/telecom-company-switches-from-avalara", source: "TaxConnex Case Study" },
+    { date: "2025", signal: "Jasper switched from Avalara to Anrok after 6+ months of failures; now saving $7K/month in error corrections. \u2018What Avalara couldn\u2019t accomplish in 6+ months, Anrok did in less than one month.\u2019", type: "named_churn", sourceUrl: "https://www.anrok.com/resources/customer-case-study-jasper", source: "Anrok/Jasper Case Study" },
+    { date: "2025", signal: "Forward Networks described Avalara as \u2018the worst implementation we have ever experienced\u2019 \u2014 switched to Anrok", type: "named_churn", sourceUrl: "https://www.anrok.com/customers", source: "Internal Battlecard" },
+    { date: "2025", signal: "Trainual called Avalara \u2018a legacy solution that never started working\u2019 \u2014 switched to Anrok", type: "named_churn", sourceUrl: "https://www.anrok.com/customers", source: "Internal Battlecard" },
+    { date: "2025", signal: "CrunchTime complained about poor customer support and unresponsive account management from Avalara", type: "named_churn", sourceUrl: "https://www.anrok.com/customers", source: "Internal Battlecard" },
+    { date: "2025", signal: "Bloomreach frustrated with Avalara\u2019s fragmented global compliance experience \u2014 evaluated alternatives", type: "named_churn", sourceUrl: "https://www.anrok.com/customers", source: "Internal Battlecard" },
+    { date: "2025", signal: "Notion switched from Avalara to Anrok for better SaaS-specific compliance", type: "named_churn", sourceUrl: "https://www.anrok.com/customers", source: "Internal Battlecard" },
+    { date: "2025", signal: "Two-month Chicago tax calculation failure reported \u2014 Avalara miscalculated taxes for all Chicago transactions over extended period", type: "service_failure", sourceUrl: "https://www.anrok.com/customers", source: "Internal Battlecard" }
   ],
   vertex: [
     { date: "Q2-Q3 2025", signal: "Two consecutive quarters of net customer loss reported in earnings. Net Revenue Retention declined to 105% from 109%, Gross Revenue Retention fell to 94% from 95%", type: "earnings_data", sourceUrl: "https://seekingalpha.com/article/4794309-vertex-expensive-losing-customers-and-shedding-margins-downgrade", source: "Seeking Alpha Analysis" },
     { date: "FY 2025", signal: "Attrition concentrated in smaller accounts \u2014 lost accounts averaged <$50K ARR vs overall average of $138K. Vertex says M&A/bankruptcy was largest driver, competitive losses \u2018modest\u2019", type: "earnings_data", sourceUrl: "https://finance.yahoo.com/news/vertex-verx-q4-2025-earnings-144036567.html", source: "Vertex Q4 2025 Earnings Call" },
     { date: "Feb 2026", signal: "Multiple analyst firms cut price targets (Citi: $22\u2192$15, Piper Sandler: $20\u2192$14) citing growth deceleration, customer losses, and shrinking margins", type: "analyst_signal", sourceUrl: "https://www.defenseworld.net/2026/02/13/vertex-nasdaqverx-price-target-lowered-to-15-00-at-citigroup.html", source: "Defense World / Analyst Reports" },
-    { date: "2025", signal: "CereTax published analysis citing \u2018slower implementation, higher TCO, lack of modern agility\u2019 as top reasons tax teams switching from Vertex", type: "competitive_intel", sourceUrl: "https://www.ceretax.com/blog/vertex-alternatives-switch-to-ceretax", source: "CereTax Blog" }
+    { date: "2025", signal: "CereTax published analysis citing \u2018slower implementation, higher TCO, lack of modern agility\u2019 as top reasons tax teams switching from Vertex", type: "competitive_intel", sourceUrl: "https://www.ceretax.com/blog/vertex-alternatives-switch-to-ceretax", source: "CereTax Blog" },
+    { date: "Nov 2025", signal: "New CEO Christopher Young (ex-Microsoft) signals major strategic pivot \u2014 potential disruption to existing customer relationships and roadmap", type: "strategic_shift", sourceUrl: "https://finance.yahoo.com/news/vertex-verx-q4-2025-earnings-144036567.html", source: "Vertex Earnings / News" }
   ],
   sphere: [],
   numeral: [
@@ -465,6 +490,91 @@ const churnTypeLabels = {
   strategic_shift: { label: "Strategic Shift", color: "#A78BFA" }
 };
 
+const objectionHandling = {
+  avalara: [
+    { objection: "Avalara has more integrations", response: "Avalara has 1,400+ connectors, but they're built for retail/ecomm ERPs. For SaaS billing systems (Stripe, Chargebee, Recurly), Anrok's integrations are deeper and purpose-built. Ask: 'Which specific integrations do you need?'" },
+    { objection: "Avalara is the market leader / safe choice", response: "Avalara dominates retail tax \u2014 90% of their customers are retail/ecomm. For SaaS companies, that's like hiring a plumber to do electrical work. Anrok is the SaaS tax leader with 1,000+ SaaS customers including 44% of the Forbes AI Top 50." },
+    { objection: "We already use Avalara", response: "Ask about their experience: implementation timeline, support responsiveness, billing accuracy. Companies like Jasper switched after 6+ months of Avalara failures and now save $7K/month. Forward Networks called it 'the worst implementation ever.'" },
+    { objection: "Avalara's price seems competitive", response: "Get the full TCO picture: nexus studies ($4.5K each), registrations ($350/jurisdiction), per-transaction fees, premium support packages ($15K/yr), and Year 2 price hikes of 40%+. Anrok's pricing is transparent and all-inclusive." },
+  ],
+  vertex: [
+    { objection: "Vertex has the broadest jurisdiction coverage", response: "True for manufacturing and retail. But for SaaS, jurisdiction coverage is table stakes \u2014 what matters is product taxability rules for digital services. Vertex has no native SaaS billing support. Ask: 'How does Vertex handle subscription upgrades, usage-based billing, or mid-cycle changes?'" },
+    { objection: "We're already on SAP/Oracle so Vertex makes sense", response: "Vertex's ERP integration is strong, but SAP ECC maintenance ends Dec 2027 and 64% haven't migrated yet. Ask: 'What's your SAP migration timeline? Anrok integrates with modern billing stacks your finance team is likely moving to.'" },
+    { objection: "Vertex is a public company, more stable", response: "Their stock dropped 10.87% after Q3 2025, NRR declined to 107% from 111%, and they just hired a new CEO. They're losing smaller accounts and pivoting strategy. Stability isn't guaranteed." },
+  ],
+  sphere: [
+    { objection: "Sphere has better AI / TRAM model", response: "Read Sphere's TRAM Terms of Service \u2014 it states the customer is fully responsible for product tax classification. Their AI marketing doesn't match the legal reality. Also, their technical founders have left the company." },
+    { objection: "Sphere's pricing is simpler ($100/region)", response: "Ask about volume: at higher transaction volumes, Sphere adds a $0.05/transaction surcharge that contradicts their flat-pricing positioning. Also, their registration and filing is actually handled by an undisclosed third party." },
+    { objection: "Sphere has a16z backing", response: "Funding doesn't equal product maturity. Anrok has $100M+ funding, $525M valuation, and 1,000+ customers. Sphere pivoted from an education company, their technical leadership has left, and their help center is 4+ months outdated." },
+  ],
+  numeral: [
+    { objection: "Numeral has a 4.9 G2 rating", response: "G2 ratings correlate with company size \u2014 smaller companies get higher ratings. More importantly, look at Trustpilot: customers report 4+ months of unfiled taxes, unauthorized bank withdrawals, and a state tax office said 'every application has wrong information.'" },
+    { objection: "Numeral's per-action pricing is simpler", response: "It looks simple but adds up: $150/registration + $75/filing + state fees per jurisdiction. For 30+ states, that's $6,750+ per year just in filing fees. And their 'free monitoring' is a lead-gen hook, not a product." },
+    { objection: "Numeral is growing fast (3.5x YoY)", response: "Growth without quality control is dangerous. They have no SOC I/II compliance, no native end-to-end integrations (they just ingest sales data after the fact), and multiple reports of missed filings and unauthorized payments." },
+  ],
+  kintsugi: [
+    { objection: "Kintsugi is backed by Vertex", response: "Exactly \u2014 Vertex owns 10% of Kintsugi. This creates a conflict: when errors occur, who's accountable? Kintsugi's 'Agentic AI' makes autonomous tax decisions without human validation, and they have no verified tax-qualified experts on staff." },
+    { objection: "Kintsugi is #1 on Shopify", response: "For Shopify ecommerce, sure. But your prospect is a SaaS company. Kintsugi was built for SMB ecommerce storefronts. Ask: 'How does Kintsugi handle SaaS-specific product taxability, subscription billing, or usage-based pricing?'" },
+    { objection: "Kintsugi's TaxGPT is innovative", response: "TaxGPT is a chatbot, not a compliance engine. Their AI makes autonomous decisions without human validation \u2014 risky for tax compliance. Also, their case studies and review patterns have been questioned by former employees." },
+  ],
+  fonoa: [
+    { objection: "Fonoa has the best international coverage", response: "For global digital platforms like Uber and Spotify, yes. But Fonoa has zero pre-built connectors \u2014 every integration requires custom API development. They also acknowledged 'weaker' US coverage. If your prospect has US SaaS tax needs, Fonoa is the wrong tool." },
+    { objection: "Fonoa acquired PwC's GITC product", response: "That signals their focus: enterprise global compliance for massive platforms. Their support is limited to engineers, customers manage government interactions themselves, and they require multi-year commitment contracts. Not built for mid-market SaaS." },
+  ],
+  stripetax: [
+    { objection: "We're already on Stripe, so Stripe Tax is free/easy", response: "It's 5\u00A2 per API call, not free. And it only covers Stripe-processed transactions \u2014 the moment you have any non-Stripe revenue, you need a second solution. Ask: 'Do you process 100% of revenue through Stripe, including invoices, wire transfers, and channel partners?'" },
+    { objection: "Stripe Tax covers 100+ countries", response: "For basic calculation, yes. But it uses generic tax logic that treats SaaS like physical goods. No product-specific taxability rules, no filing, no audit support, and delayed tax calculations reported. Parspec switched to Anrok for exactly this reason." },
+    { objection: "TaxJar handles the filing piece", response: "TaxJar is being sunset in favor of Stripe Tax. All three co-founders have left, 45-55 employees were laid off, the CRO departed, and the NetSuite integration was discontinued. TaxJar is a product in managed decline." },
+  ],
+};
+
+const landmineQuestions = {
+  avalara: [
+    "What was your implementation timeline with Avalara? (Most report 3+ months with 85% internal effort)",
+    "How responsive has Avalara's support been post-sale? (Common complaint: support disappears)",
+    "Have you seen your Year 2 pricing? (40%+ increases are common)",
+    "Has Avalara ever had a tax calculation error affect your company? (Two-month Chicago failure reported)",
+    "How does Avalara handle your SaaS-specific billing? (They're built for retail \u2014 SaaS requires workarounds)",
+  ],
+  vertex: [
+    "What's your total cost including implementation, professional services, and ongoing fees? (Revenue-based pricing scales with growth, not value)",
+    "Are you aware Vertex's NRR dropped to 107% and they're losing smaller customers? (Concentrated in <$50K ARR accounts)",
+    "How does Vertex handle SaaS subscription billing natively? (It doesn't \u2014 built for manufacturers)",
+    "What's your SAP migration plan? (ECC maintenance ends Dec 2027; disruption risk)",
+  ],
+  sphere: [
+    "Have you read Sphere's TRAM Terms of Service? (Customer is fully responsible for tax classification)",
+    "Do you know Sphere's original technical founders have left the company?",
+    "What happens at higher transaction volumes? (Hidden $0.05/transaction surcharge kicks in)",
+    "Who actually handles your registration and filing? (It's an undisclosed third party, not Sphere directly)",
+    "Can you show me Sphere's SOC II report? (They may not have one)",
+  ],
+  numeral: [
+    "Have you checked Numeral's Trustpilot reviews? (Reports of 4+ months unfiled, unauthorized bank payments)",
+    "Does Numeral have SOC I or SOC II compliance? (They don't)",
+    "How does Numeral integrate end-to-end with your billing system? (They just ingest sales data after the fact)",
+    "A state tax office reported 'every application has wrong information' for Numeral submissions \u2014 how do you verify filing accuracy?",
+  ],
+  kintsugi: [
+    "Who at Kintsugi is a verified tax-qualified expert? (No one verified on staff)",
+    "How does Kintsugi's 'Agentic AI' handle edge cases? (Makes autonomous decisions without human validation)",
+    "Are you comfortable with Vertex owning 10% of Kintsugi? (Creates accountability questions)",
+    "What's the 15% perpetual partner revenue share? (Hidden ongoing cost for referred customers)",
+  ],
+  fonoa: [
+    "Which pre-built connectors does Fonoa offer? (Zero \u2014 all custom API development)",
+    "How does Fonoa handle US domestic sales tax? (They acknowledge 'weaker' US coverage)",
+    "What's the contract commitment length? (Multi-year required)",
+    "Who handles government interactions? (You do \u2014 Fonoa's support is limited to engineers)",
+  ],
+  stripetax: [
+    "What percentage of your revenue flows through Stripe? (Stripe Tax only covers Stripe transactions)",
+    "How does Stripe Tax handle SaaS product taxability differently from physical goods? (It doesn't \u2014 generic tax logic)",
+    "Are you aware all three TaxJar co-founders have left and 45-55 employees were laid off?",
+    "Can you file non-Stripe revenue through TaxJar? (No \u2014 incomplete compliance)",
+  ],
+};
+
 const featureLabels = { usNexus:"US Nexus & Jurisdiction", taxCalc:"Tax Calculation", filing:"Filing & Remittance", exemptionCerts:"Exemption Certs", internationalVat:"International VAT/GST", saasSpecific:"SaaS-Specific Features", aiFeatures:"AI Capabilities", easeOfUse:"Ease of Use", support:"Customer Support", integrations:"Integrations", pricing:"Pricing Transparency" };
 const threatColors = { high: "#EF4444", medium: "#F59E0B", low: "#10B981" };
 const threatLabels = { high: "High Threat", medium: "Medium Threat", low: "Low Threat" };
@@ -492,9 +602,9 @@ const scoreExplanations = {
     saasSpecific: { score: 2, why: "Built for general commerce and retail. SaaS subscription billing, usage-based models, and mid-cycle changes require significant configuration or workarounds. Not native to recurring revenue." },
     aiFeatures: { score: 3, why: "Launched Avi \u2014 agentic AI compliance assistant in Q4 2025. Conversational interface for tax queries. Still early and focused on enterprise workflows, not yet deeply embedded in product." },
     easeOfUse: { score: 2, why: "Clunky reporting UI. Adding manual transactions is difficult. Implementation requires 85% internal effort per customer reports. Multiple users cite steep learning curve and confusing navigation." },
-    support: { score: 2, why: "Universally criticized on G2 and TrustRadius. Weeks-long response times, support tickets that \u2018go nowhere.\u2019 Sales team pushes $15K/year support packages. Post-sale support drops dramatically." },
+    support: { score: 2, why: "Universally criticized on G2 and TrustRadius. Weeks-long response times, support tickets that \u2018go nowhere.\u2019 Sales team pushes $15K/year support packages. Post-sale support drops dramatically. Jasper, Forward Networks, Trainual, CrunchTime all cited support failures." },
     integrations: { score: 5, why: "1,400+ pre-built integrations \u2014 broadest in market. SAP, Oracle, NetSuite, Shopify, WooCommerce, Magento, and hundreds more. 29 newly certified integrations in Q1 2025." },
-    pricing: { score: 2, why: "Opaque custom quotes. Hidden expansion fees. Per-transaction plus module-based pricing. $5K-$100K+/yr range with little transparency. Sales team pushes expensive support add-ons." }
+    pricing: { score: 2, why: "Opaque custom quotes with aggressive hidden expansion. Nexus studies $4.5K each, registrations $350/jurisdiction, premium support packages pushed post-sale, Year 2 price hikes of 40%+. Per-transaction fees cause bill shock at scale." }
   },
   vertex: {
     usNexus: { score: 5, why: "19,000+ jurisdiction coverage globally \u2014 most comprehensive. Deep US state and local tax rules maintained by dedicated research team with monthly content updates." },
@@ -516,11 +626,11 @@ const scoreExplanations = {
     exemptionCerts: { score: 2, why: "Basic exemption handling. No dedicated ECM product. Not a focus area given Sphere\u2019s global-first positioning \u2014 exemption certs are primarily a US concern." },
     internationalVat: { score: 5, why: "Global-native from day one. 100+ direct tax authority connections. TRAM AI auto-applies law changes across jurisdictions. Best-in-class for companies expanding internationally." },
     saasSpecific: { score: 4, why: "Strong SaaS support with native Stripe Billing/Checkout integration (1 of 3 vendors globally). Built for digital businesses. Slightly less US SaaS depth than Anrok\u2019s purpose-built approach." },
-    aiFeatures: { score: 5, why: "Proprietary TRAM AI model is core to the product \u2014 not bolted on. Monitors global tax law changes and auto-applies in real-time. Most advanced AI-native approach in market. a16z-backed AI thesis." },
+    aiFeatures: { score: 4, why: "Proprietary TRAM AI model is core to the product. However, TRAM Terms of Service state customer is fully responsible for product tax classification \u2014 undermining the \u2018AI handles everything\u2019 claim. a16z-backed AI thesis." },
     easeOfUse: { score: 4, why: "Implementation in <24 hours \u2014 fastest in market. Modern UI. Some areas reported as needing improvement. Overall strong for a young platform." },
-    support: { score: 4, why: "24/7 Slack-based support with real tax experts. High-touch for current customer base. Smaller team (~27) may limit capacity as they scale." },
+    support: { score: 3, why: "24/7 Slack-based support claimed, but enterprise tier\u2019s \u2018CPA on demand\u2019 promise is empty \u2014 no CPA on staff. Smaller team (~27) may limit capacity as they scale. Help center content 4+ months outdated." },
     integrations: { score: 3, why: "Native Stripe Billing integration is excellent. Fewer total integrations given platform age. Building out ecosystem but can\u2019t match Avalara\u2019s 1,400+ or Vertex\u2019s ERP depth." },
-    pricing: { score: 5, why: "Flat $100/region/month. No revenue percentages, no per-transaction fees, no hidden costs. Most predictable pricing model in market." }
+    pricing: { score: 4, why: "Base rate of $100/region/month is attractive, but hidden $0.05/transaction surcharge at higher volumes contradicts flat-pricing positioning. Not as transparent as marketed." }
   },
   numeral: {
     usNexus: { score: 4, why: "Solid US nexus monitoring for economic nexus thresholds. Automated registration service. No HRIS physical nexus tracking like Anrok. Strong for ecommerce sellers with multi-state obligations." },
@@ -528,7 +638,7 @@ const scoreExplanations = {
     filing: { score: 5, why: "Core strength \u2014 error-free filing guarantee covers penalties/interest up to 2x annual fees. 150K+ returns filed. Virtual mailbox for state correspondence. However, some customers report missed filings (4+ months unfiled)." },
     exemptionCerts: { score: 3, why: "Basic exemption certificate handling. Not a primary focus area. Adequate for SMB needs but not enterprise-grade like Avalara\u2019s ECM." },
     internationalVat: { score: 3, why: "Expanded to 60+ countries in 2025. Growing international coverage but not as deep as Fonoa\u2019s 190+ or Sphere\u2019s global-native approach." },
-    saasSpecific: { score: 3, why: "Serves SaaS customers but DNA is ecommerce-first. SaaS subscription billing and usage-based model support less mature than Anrok\u2019s purpose-built approach." },
+    saasSpecific: { score: 3, why: "Built for basic ecommerce/Shopify storefronts. No native end-to-end integrations \u2014 just ingests sales data after the fact. SaaS subscription billing and usage-based model support less mature than Anrok\u2019s purpose-built approach." },
     aiFeatures: { score: 4, why: "AI-native architecture built from ground up. Strong automation in filing and compliance workflows. CPA-backed service adds human expertise layer." },
     easeOfUse: { score: 5, why: "Highest G2 rating (4.9/5) in category. Users love the simplicity. Self-serve onboarding. Some report onboarding delays that contradict the easy promise." },
     support: { score: 4, why: "24/7 CPA-backed support. High satisfaction among happy customers. However, reports of onboarding mess, missed timelines, and unauthorized bank account actions raise concerns." },
@@ -542,7 +652,7 @@ const scoreExplanations = {
     exemptionCerts: { score: 3, why: "Basic exemption handling. Not a standout feature. Adequate for SMB ecommerce needs but limited compared to Avalara\u2019s enterprise ECM." },
     internationalVat: { score: 2, why: "Primarily US-focused. International expansion to EU, Canada, South America, Africa announced but still early. Not viable for global-first companies." },
     saasSpecific: { score: 3, why: "45% of customers are SaaS (growing). \u2018Kintsugi Powered by Vertex\u2019 adds enterprise SaaS capabilities. Still catching up to Anrok\u2019s purpose-built SaaS depth." },
-    aiFeatures: { score: 5, why: "TaxGPT is 24/7 AI tax consultant via Slack \u2014 real-time conversational tax queries. Scans regulations every 15 minutes. AI is core to product identity. Strong marketing around AI-native." },
+    aiFeatures: { score: 4, why: "TaxGPT provides 24/7 AI tax consulting via Slack. However, \u2018Agentic AI\u2019 makes autonomous decisions without human validation \u2014 risky for compliance-critical tax determinations. No verified tax-qualified experts on staff to backstop AI errors." },
     easeOfUse: { score: 5, why: "No-code setup, most companies live in under 1 hour. Free tier to get started. #1 tax software on Shopify marketplace. Exceptional onboarding experience." },
     support: { score: 4, why: "TaxGPT provides instant AI support. Human support team responsive. Smaller company but high-touch for current customer base." },
     integrations: { score: 3, why: "Strong Shopify integration (#1 on marketplace). Stripe integration exists but \u2018sometimes doesn\u2019t work as intended\u2019 per G2 reviews. Fewer total integrations than mature competitors." },
@@ -557,9 +667,9 @@ const scoreExplanations = {
     saasSpecific: { score: 3, why: "API-first modular design works for digital platforms. Built for marketplace/platform economy more than traditional SaaS subscription billing. Less relevant for US mid-market SaaS." },
     aiFeatures: { score: 4, why: "AI monitors global tax rule changes and auto-applies to workflows. Strong automation for cross-border compliance. Practical AI rather than marketed AI." },
     easeOfUse: { score: 4, why: "API-first modular design praised by developer teams. Clean documentation. Enterprise customers report smooth integration. Not self-serve for smaller companies." },
-    support: { score: 3, why: "Enterprise support for large customers. Limited public reviews (no G2 presence). Lower brand awareness outside tech/startup community." },
-    integrations: { score: 3, why: "API-first design is flexible but limited pre-built integrations vs Avalara\u2019s 700+ connectors. Best for custom enterprise integrations, not plug-and-play." },
-    pricing: { score: 3, why: "Custom/commitment-based pricing with limited transparency. Enterprise-focused quoting. $5.4M ARR (Oct 2024) is modest given $85M raised. Not transparent or SMB-friendly." }
+    support: { score: 3, why: "Support limited to engineers \u2014 no dedicated CSMs or tax advisors. Customers manage government interactions themselves. Limited public reviews (no G2 presence)." },
+    integrations: { score: 3, why: "API-first design is flexible but has ZERO pre-built connectors \u2014 every integration requires custom API development. Multi-week enterprise implementation projects. Not plug-and-play at all." },
+    pricing: { score: 3, why: "Opaque custom pricing with multi-year commitment contracts. Enterprise-focused quoting. $5.4M ARR (Oct 2024) is modest given $85M raised \u2014 burn rate questions." }
   },
   stripetax: {
     usNexus: { score: 3, why: "Basic nexus monitoring for Stripe-processed transactions only. Cannot detect nexus from non-Stripe channels. No physical nexus tracking via HRIS. Adequate for simple Stripe-only businesses." },
@@ -567,7 +677,7 @@ const scoreExplanations = {
     filing: { score: 3, why: "TaxJar provides US filing but only for Stripe transactions. Non-Stripe revenue requires separate filing solution. NetSuite integration discontinued for new users. Incomplete compliance story." },
     exemptionCerts: { score: 2, why: "Lack of tools for capturing tax-exempt certificates per Capterra reviews. Basic handling at best. Not a product focus for Stripe." },
     internationalVat: { score: 4, why: "100+ country coverage via Stripe Tax. Broader than TaxJar\u2019s US-only. Strong for Stripe-processed international transactions but blind to non-Stripe channels." },
-    saasSpecific: { score: 2, why: "Handles basic subscriptions within Stripe Billing. No support for usage-based billing, complex SaaS models, or multi-channel subscription management. Inflexible tax-inclusive/exclusive settings." },
+    saasSpecific: { score: 2, why: "Generic tax logic treats SaaS like physical goods \u2014 no product-specific taxability rules. Handles basic subscriptions within Stripe Billing but no support for usage-based billing, complex SaaS models, or multi-channel subscription management. Delayed tax calculations reported." },
     aiFeatures: { score: 1, why: "No meaningful AI features. Pure rules-based calculation engine. No AI-powered taxability, no conversational interface, no automated compliance intelligence." },
     easeOfUse: { score: 4, why: "Seamless if already on Stripe \u2014 zero-friction activation. Toggle-on simplicity is unmatched for Stripe users. Completely useless for non-Stripe transactions." },
     support: { score: 2, why: "Post-acquisition team instability (CEO, CRO, 45-55 employees lost). Merchants report longer wait times and lack of specialized tax knowledge. TaxJar support declining." },
@@ -822,7 +932,7 @@ function App() {
               {/* Detail tabs */}
               <div className="card">
                 <div style={{display:"flex",borderBottom:"1px solid #374151",flexWrap:"wrap"}}>
-                  {[{id:"wins",label:"\u2713 How Anrok Wins"},{id:"strengths",label:"\u26A1 Their Strengths"},{id:"weaknesses",label:"\u{1F3AF} Their Weaknesses"},{id:"news",label:"\u{1F4E1} Recent Intel"},{id:"voices",label:"\u{1F4AC} Customer Voices"},{id:"churn",label:"\u{1F4C9} Churn Signals"}].map(t => (
+                  {[{id:"wins",label:"\u2713 How Anrok Wins"},{id:"strengths",label:"\u26A1 Their Strengths"},{id:"weaknesses",label:"\u{1F3AF} Their Weaknesses"},{id:"objections",label:"\u{1F6E1}\uFE0F Talk Tracks"},{id:"news",label:"\u{1F4E1} Recent Intel"},{id:"voices",label:"\u{1F4AC} Customer Voices"},{id:"churn",label:"\u{1F4C9} Churn Signals"}].map(t => (
                     <button key={t.id} onClick={() => setDetailTab(t.id)} className={detailTab===t.id?"detail-tab-active":"detail-tab-inactive"}
                       style={{padding:"12px 16px",fontSize:13,fontWeight:500,background:"transparent",cursor:"pointer",border:"none",borderBottom:undefined}}>
                       {t.label}
@@ -846,6 +956,34 @@ function App() {
                     <div>
                       <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Known pain points and gaps</p>
                       {selectedComp.weaknesses.map((w,i) => <div key={i} style={{display:"flex",gap:8,padding:"8px 0"}}><span style={{color:"#f87171",flexShrink:0}}>{"\u2717"}</span><p style={{fontSize:14,color:"#e5e7eb",margin:0}}>{w}</p></div>)}
+                    </div>
+                  )}
+                  {detailTab === "objections" && (
+                    <div>
+                      <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Objection handling scripts and landmine questions for live deals</p>
+                      {objectionHandling[selectedComp.id] && objectionHandling[selectedComp.id].length > 0 && (
+                        <div style={{marginBottom:24}}>
+                          <h4 style={{fontSize:14,fontWeight:600,color:"#f87171",margin:"0 0 12px"}}>{"\uD83D\uDEE1\uFE0F"} When They Say... You Say...</h4>
+                          {objectionHandling[selectedComp.id].map((obj,i) => (
+                            <div key={i} style={{marginBottom:12,background:"rgba(17,24,39,0.5)",borderRadius:8,padding:16,borderLeft:"3px solid #f87171"}}>
+                              <div style={{fontSize:13,fontWeight:600,color:"#fbbf24",marginBottom:8}}>Objection: "{obj.objection}"</div>
+                              <div style={{fontSize:13,color:"#d1d5db",lineHeight:1.5}}>{obj.response}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {landmineQuestions[selectedComp.id] && landmineQuestions[selectedComp.id].length > 0 && (
+                        <div>
+                          <h4 style={{fontSize:14,fontWeight:600,color:"#a78bfa",margin:"0 0 12px"}}>{"\uD83D\uDCA3"} Landmine Questions (Ask the Prospect)</h4>
+                          <p style={{fontSize:12,color:"#6b7280",marginBottom:12}}>Plant these questions to expose competitor weaknesses:</p>
+                          {landmineQuestions[selectedComp.id].map((q,i) => (
+                            <div key={i} style={{display:"flex",gap:10,padding:"10px 0",borderBottom:"1px solid #1f2937"}}>
+                              <span style={{color:"#a78bfa",fontWeight:700,flexShrink:0,fontSize:14}}>{i+1}.</span>
+                              <p style={{fontSize:14,color:"#e5e7eb",margin:0,lineHeight:1.5}}>{q}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                   {detailTab === "news" && (
@@ -1023,6 +1161,28 @@ function App() {
                     <span style={{fontSize:11,color:"#6b7280"}}>Quick Killer Line:</span>
                     <p style={{fontSize:14,color:"#93c5fd",fontStyle:"italic",margin:"4px 0 0"}}>"{comp.anrokWins[0]}"</p>
                   </div>
+                  {objectionHandling[comp.id] && objectionHandling[comp.id].length > 0 && (
+                    <div style={{marginTop:16,borderTop:"1px solid #374151",paddingTop:12}}>
+                      <h4 style={{fontSize:13,fontWeight:600,color:"#f87171",margin:"0 0 8px"}}>{"\uD83D\uDEE1\uFE0F"} Objection Handling</h4>
+                      {objectionHandling[comp.id].map((obj,i) => (
+                        <div key={i} style={{marginBottom:10,background:"rgba(17,24,39,0.5)",borderRadius:6,padding:10}}>
+                          <div style={{fontSize:12,fontWeight:600,color:"#fbbf24",marginBottom:4}}>"{obj.objection}"</div>
+                          <div style={{fontSize:12,color:"#d1d5db"}}>{obj.response}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {landmineQuestions[comp.id] && landmineQuestions[comp.id].length > 0 && (
+                    <div style={{marginTop:16,borderTop:"1px solid #374151",paddingTop:12}}>
+                      <h4 style={{fontSize:13,fontWeight:600,color:"#a78bfa",margin:"0 0 8px"}}>{"\uD83D\uDCA3"} Landmine Questions (Ask the Prospect)</h4>
+                      {landmineQuestions[comp.id].map((q,i) => (
+                        <div key={i} style={{display:"flex",gap:8,padding:"4px 0"}}>
+                          <span style={{color:"#a78bfa",flexShrink:0}}>{"\u2192"}</span>
+                          <p style={{fontSize:12,color:"#d1d5db",margin:0}}>{q}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </details>
             ))}
