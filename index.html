@@ -91,24 +91,25 @@ function PasswordGate({ onAuth }) {
   );
 }
 
-const LAST_UPDATED = "February 23, 2026";
+const LAST_UPDATED = "March 03, 2026";
 
 const competitors = [
   {
     id: "avalara", name: "Avalara", logoDomain: "avalara.com", tagline: "Enterprise tax compliance at scale",
     founded: 2004, hq: "Seattle, WA", funding: "Acquired by Vista Equity for $8.4B (Oct 2022)",
-    employees: "~4,700", customers: "30,000+", g2Rating: 4.0, g2Reviews: 500,
+    employees: "~4,700", customers: "30,000+", g2Rating: 4.0, g2Reviews: 775,
     stage: "Public/PE-backed", pricing: "Custom quotes $5K-$100K+/yr; nexus studies $4.5K each, registrations $350/jurisdiction, Year 2 hikes 40%+", pricingModel: "Per-transaction + modules + hidden expansion", threatLevel: "high",
     recentNews: [
-      { date: "Jan 2026", text: "G2 data: Anrok mindshare up 54% YoY (17.4%) while Avalara declined 45% (13.5%); Anrok rated higher on ease of use (8.9 vs 7.9) and support (8.8 vs 6.7)" },
-      { date: "Jan 2026", text: "Avalara Tax Changes 2026 report: 60+ countries now requiring e-invoicing; expanding compliance landscape" },
-      { date: "Mar 2026", text: "Avalara NEXT conference scheduled \u2014 expected product announcements" },
-      { date: "Q4 2025", text: "Launched Avi \u2014 agentic AI compliance assistant; rebranded as 'Agentic Tax and Compliance\u2122'" },
+      { date: "Mar 2, 2026", text: "Acquired Versori \u2014 AI-native integration platform for automated connector development; accelerates 'Agentic Tax' strategy" },
+      { date: "Feb 23, 2026", text: "AvaTax now available in Microsoft Marketplace \u2014 enterprise deployment via Microsoft ecosystem" },
+      { date: "Feb 18, 2026", text: "Named to G2's 2026 Best Software Awards for Accounting & Finance (4th consecutive year); G2 rating 4.0/5 (775 reviews)" },
+      { date: "Jan 2026", text: "G2 mindshare down 45% YoY to 13.5% while Anrok up 54% to 17.4%; Anrok rated higher on ease of use (8.9 vs 7.9) and support (8.8 vs 6.7)" },
+      { date: "Q4 2025", text: "Launched Avi \u2014 agentic AI compliance assistant; rebranded as 'Agentic Tax and Compliance'" },
       { date: "2025", text: "Jasper switched to Anrok after Avalara failed for 6+ months; saving $7K/month in error corrections" },
       { date: "2025", text: "BBB rating 1.1/5.0 (31 reviews); billing disputes and support quality complaints escalating" },
     ],
     strengths: [
-      "1,400+ pre-built integrations (SAP, Oracle, NetSuite, Shopify)",
+      "1,400+ pre-built integrations (SAP, Oracle, NetSuite, Shopify) \u2014 Versori acquisition will expand AI-native connector development",
       "Broadest US jurisdiction coverage (13,000+)",
       "Strong exemption certificate management (ECM Pro/Premium)",
       "Deep ERP integration with legacy enterprise systems",
@@ -140,15 +141,15 @@ const competitors = [
   {
     id: "vertex", name: "Vertex", logoDomain: "vertexinc.com", tagline: "Enterprise-grade indirect tax technology",
     founded: 1978, hq: "King of Prussia, PA", funding: "Public (VERX) \u2014 $748M revenue FY2025",
-    employees: "~1,900", customers: "4,867 (direct)", g2Rating: 4.2, g2Reviews: 150,
+    employees: "~1,900", customers: "4,867 (direct)", g2Rating: 4.4, g2Reviews: 459,
     stage: "Public", pricing: "Revenue-based, $5K+ starting", pricingModel: "Revenue-based percentage", threatLevel: "medium",
     recentNews: [
-      { date: "Feb 2026", text: "Q4 2025 earnings beat: EPS $0.17 vs $0.14 guidance (+21%); Non-GAAP OpInc $36.1M; new logo revenue up 20% in 2025" },
-      { date: "Feb 2026", text: "2026 guidance: $823-831M revenue, $188-192M adjusted EBITDA; continued double-digit growth" },
+      { date: "Feb 20, 2026", text: "Director Eric Andersen bought 40K shares at $12.91 \u2014 insider confidence after stock rose 13.7% on Q4 beat" },
+      { date: "Feb 11, 2026", text: "Q4 2025: revenue $194.7M (+9.1% YoY), EPS $0.17 vs $0.14 (+21% beat); announced $150M share buyback" },
+      { date: "Feb 11, 2026", text: "2026 guidance: $823-831M revenue, cloud growth 25%, adj EBITDA $188-192M; disclosed higher small-customer churn" },
       { date: "Nov 2025", text: "New CEO Christopher Young (ex-Microsoft EVP, ex-McAfee CEO) with $25M RSU; Qualcomm + AmEx board seats" },
       { date: "Oct 2025", text: "Launched 'Kintsugi Powered by Vertex' AI tax automation solution" },
       { date: "Q3 2025", text: "NRR declined to 107% (from 111%); net income down 44% YoY; stock dropped 10.87%" },
-      { date: "Apr 2025", text: "Strategic $15M investment in Kintsugi (10% equity stake)" },
     ],
     strengths: [
       "19,000+ jurisdiction coverage globally",
@@ -184,11 +185,11 @@ const competitors = [
     employees: "~27", customers: "Growing (Deel, Replit, ElevenLabs, Heygen, Windsurf, Lovable, Jump, Dovetail, Roboflow, MotherDuck, OpenRouter)", g2Rating: null, g2Reviews: 0,
     stage: "Series A", pricing: "$100/region/month + hidden $0.05/transaction fee at high volume", pricingModel: "Per-region + surprise per-transaction", threatLevel: "high",
     recentNews: [
-      { date: "2026", text: "Roadmap: withholding tax and import duties \u2014 expanding from indirect tax to full revenue-based compliance" },
-      { date: "Nov 2025", text: "$21M Series A led by a16z + Felicis Ventures \u2014 major validation" },
-      { date: "2025", text: "Customer base growing: Lovable, Replit, Deel, Eleven Labs, Runway AI, Weaviate, Codeium, Windsurf" },
-      { date: "2025", text: "Released e-invoicing and input tax capabilities" },
-      { date: "2025", text: "Became 1 of only 3 vendors globally with native Stripe Billing integration" },
+      { date: "H1 2026", text: "Roadmap: withholding tax + import duties launching 2026; treaty functionality (SKU-to-withholding mapping) in H2 2026" },
+      { date: "2026", text: "G2 reviews: praise for automated compliance and responsive support; criticism of clunky UI and no direct tax payment capabilities" },
+      { date: "Nov 2025", text: "$21M Series A led by a16z + Felicis + Y Combinator \u2014 building 'first AI-native cross-border compliance engine'" },
+      { date: "2025", text: "Customer base growing: Lovable, Replit, Deel, ElevenLabs, Runway AI, Weaviate, Codeium, Windsurf" },
+      { date: "2025", text: "Released e-invoicing and input tax capabilities; native Stripe Billing integration" },
     ],
     strengths: [
       "Proprietary AI model (TRAM) \u2014 but TRAM ToS state customer is fully responsible for product tax classification despite marketing claims",
@@ -226,9 +227,10 @@ const competitors = [
     employees: "~80-120", customers: "2,000+ (top logos: Ridge, Graza)", g2Rating: 4.9, g2Reviews: 50,
     stage: "Series B", pricing: "\"Free\" monitoring + $150/registration + $75/filing + state fees", pricingModel: "Per-action flat fee + unpredictable state fees", threatLevel: "high",
     recentNews: [
+      { date: "2026", text: "G2 reviews flag struggles with complex tax scenarios; reviewers report being 'ghosted' on promised integrations that were roadmapped" },
       { date: "Sep 2025", text: "$35M Series B at $350M valuation (Mayfield + Benchmark); 3.5x revenue growth" },
-      { date: "2025", text: "Surpassed 2,000+ customers including EightSleep, Graza, Manus; 150K returns filed, $5B+ processed" },
-      { date: "2025", text: "Expanded to 60+ countries with VAT/GST automation" },
+      { date: "2025", text: "Surpassed 2,000+ customers including EightSleep, Graza, Manus, Nomad Goods; 150K returns filed, $5B+ processed" },
+      { date: "2025", text: "Rutter partnership saves engineering ~$180K+ annually and 20+ hours/month per customer" },
       { date: "Mar 2025", text: "$18M Series A led by Benchmark Capital" },
     ],
     strengths: [
@@ -312,8 +314,9 @@ const competitors = [
     employees: "~175", customers: "Uber, Zoom, Booking.com, Spotify, Netflix, Dell, Bolt", g2Rating: null, g2Reviews: 0,
     stage: "Series B", pricing: "Custom/commitment-based", pricingModel: "Custom commitment", threatLevel: "low",
     recentNews: [
-      { date: "Feb 2026", text: "SYNAPSE 2026 conference in London (Feb 24) + NY, SF, Seattle events; major thought leadership push" },
-      { date: "2025", text: "Released global e-invoicing mandate guides for Latvia (2025-2026) and UAE Peppol (Jul 2026)" },
+      { date: "Feb 24, 2026", text: "SYNAPSE 2026 London event completed; SF workshop May 12 \u2014 major thought leadership push on e-invoicing mandates" },
+      { date: "Jan 2026", text: "Belgium B2B e-invoicing mandate took effect Jan 1 (grace period through Mar 31); Fonoa helping clients comply" },
+      { date: "2026", text: "Tracking major mandates: Brazil dual VAT reform, France e-invoicing, Mexico Rule 2.9.21 (Apr 30 deadline)" },
       { date: "2025", text: "Ranked in Sifted's B2B SaaS Rising 100 for 4th consecutive year" },
       { date: "Oct 2024", text: "Acquired PwC's Global Indirect Tax Compliance (GITC) product" },
     ],
@@ -352,10 +355,10 @@ const competitors = [
     g2Rating: 4.3, g2Reviews: 250, stage: "Acquired (Stripe)", pricing: "5\u00A2 per API call (Tax Basic)",
     pricingModel: "Per-transaction", threatLevel: "medium",
     recentNews: [
-      { date: "2026", text: "IRS 1099 reporting threshold increases from $600 to $2,000 \u2014 benefits Stripe ecosystem" },
+      { date: "Jan 2026", text: "IRS 1099-K threshold: $2,000 minimum starting 2026 tax year; 1099-NEC filing deadline Jan 31, 2026" },
+      { date: "2026", text: "Only 18 states still use transaction thresholds (Utah + Illinois dropped in 2025); nexus landscape simplifying toward revenue-only" },
       { date: "Sep 2025", text: "Avalara launched enhanced tax app for Stripe Billing/Checkout \u2014 competing for Stripe's own users" },
-      { date: "2025", text: "Enhanced Stripe Tax API: faster performance, broader object support, new integration capabilities" },
-      { date: "2025", text: "Taxually partnership via Stripe App Marketplace for filing streamlining" },
+      { date: "2025", text: "Enhanced Stripe Tax API: 100+ countries, 600+ product categories, 99.999% historical uptime" },
       { date: "2025", text: "TaxJar increasingly positioned as Stripe Tax's US filing component only" },
     ],
     strengths: [
@@ -438,6 +441,7 @@ const competitorPainQuotes = [
 
 const churnSignals = {
   avalara: [
+    { date: "Mar 2026", signal: "Acquired Versori (AI integration platform) signaling pivot to 'Agentic Tax' strategy \u2014 may disrupt existing integration partnerships as Avalara builds proprietary connector layer", type: "strategic_shift", sourceUrl: "https://newsroom.avalara.com/2026-03-02-Avalara-Acquires-Versori-to-Accelerate-AI-Native,-Enterprise-Grade-Integration-at-Global-Scale", source: "Avalara Newsroom" },
     { date: "Q1 2025", signal: "Nutiliti (SaaS startup) switched from Avalara to Anrok after $42,000 in tax errors and 4 months of failed support calls", type: "named_churn", sourceUrl: "https://www.anrok.com/resources/customer-case-study-nutiliti", source: "Anrok Case Study" },
     { date: "Apr 2025", signal: "Shopify deprecated legacy AvaTax integration \u2014 all merchants forced to choose between Shopify Tax or new Avalara app. Merchants who didn\u2019t act were auto-migrated to Shopify Tax", type: "forced_migration", sourceUrl: "https://changelog.shopify.com/posts/avatax-deprecation-us-only-shops", source: "Shopify Changelog" },
     { date: "Dec 2024", signal: "Avalara retired Returns for Small Business (RSB) program \u2014 forced SMB customers to upgrade to expensive Managed Returns or leave", type: "product_retirement", sourceUrl: "https://taxcloud.com/blog/avalara-returns-for-small-business-rsb-ending/", source: "TaxCloud Analysis" },
@@ -453,6 +457,7 @@ const churnSignals = {
     { date: "2025", signal: "Two-month Chicago tax calculation failure reported \u2014 Avalara miscalculated taxes for all Chicago transactions over extended period", type: "service_failure", sourceUrl: "https://www.anrok.com/customers", source: "Internal Battlecard" }
   ],
   vertex: [
+    { date: "Feb 2026", signal: "Q4 2025 earnings disclosed higher churn among small customers and lower entitlement growth; management says winning more ARR from competitors than losing but SMB segment bleeding", type: "earnings_data", sourceUrl: "https://finance.yahoo.com/news/vertex-verx-q4-2025-earnings-144036567.html", source: "Vertex Q4 2025 Earnings" },
     { date: "Q2-Q3 2025", signal: "Two consecutive quarters of net customer loss reported in earnings. Net Revenue Retention declined to 105% from 109%, Gross Revenue Retention fell to 94% from 95%", type: "earnings_data", sourceUrl: "https://seekingalpha.com/article/4794309-vertex-expensive-losing-customers-and-shedding-margins-downgrade", source: "Seeking Alpha Analysis" },
     { date: "FY 2025", signal: "Attrition concentrated in smaller accounts \u2014 lost accounts averaged <$50K ARR vs overall average of $138K. Vertex says M&A/bankruptcy was largest driver, competitive losses \u2018modest\u2019", type: "earnings_data", sourceUrl: "https://finance.yahoo.com/news/vertex-verx-q4-2025-earnings-144036567.html", source: "Vertex Q4 2025 Earnings Call" },
     { date: "Feb 2026", signal: "Multiple analyst firms cut price targets (Citi: $22\u2192$15, Piper Sandler: $20\u2192$14) citing growth deceleration, customer losses, and shrinking margins", type: "analyst_signal", sourceUrl: "https://www.defenseworld.net/2026/02/13/vertex-nasdaqverx-price-target-lowered-to-15-00-at-citigroup.html", source: "Defense World / Analyst Reports" },
@@ -461,6 +466,7 @@ const churnSignals = {
   ],
   sphere: [],
   numeral: [
+    { date: "2026", signal: "G2 reviewers report Numeral struggles with complex tax scenarios and 'completely ghosted' on promised integrations that were roadmapped", type: "review_complaint", sourceUrl: "https://www.g2.com/products/numeral-sales-tax-platform-numeral/reviews", source: "G2 Reviews 2026" },
     { date: "Feb-Jun 2025", signal: "Trustpilot reviewer: signed up in August, found in January that Numeral had not filed taxes for 4+ months. \u2018Billed to file, but CPA found nothing had been filed\u2019", type: "service_failure", sourceUrl: "https://www.trustpilot.com/review/numeralhq.com", source: "Trustpilot Review" },
     { date: "2025", signal: "Multiple Trustpilot reviews report late/incorrect filings leading to delinquency notices from tax authorities, slow support response times", type: "service_failure", sourceUrl: "https://www.trustpilot.com/review/numeralhq.com", source: "Trustpilot Reviews" },
     { date: "2025", signal: "Customer reported Numeral filing returns and authorizing bank payments without customer review or approval \u2014 \u2018Buyer beware\u2019", type: "service_failure", sourceUrl: "https://www.trustpilot.com/review/numeralhq.com", source: "Trustpilot Review" }
