@@ -349,48 +349,88 @@ const competitors = [
     features: { usNexus: 2, taxCalc: 4, filing: 4, exemptionCerts: 2, internationalVat: 5, saasSpecific: 3, aiFeatures: 4, easeOfUse: 4, support: 3, integrations: 3, pricing: 3 }
   },
   {
-    id: "stripetax", name: "Stripe Tax / TaxJar", logoDomain: "stripe.com", tagline: "Tax built into Stripe payments",
-    founded: "2013 (TaxJar) / 2021 (Stripe Tax)", hq: "San Francisco, CA", funding: "Acquired by Stripe for ~$850M (2021)",
-    employees: "Part of Stripe (reduced post-acquisition)", customers: "Stripe users (millions potential)",
-    g2Rating: 4.3, g2Reviews: 250, stage: "Acquired (Stripe)", pricing: "5\u00A2 per API call (Tax Basic)",
-    pricingModel: "Per-transaction", threatLevel: "medium",
+    id: "stripetax", name: "Stripe Tax", logoDomain: "stripe.com", tagline: "Tax calculation built into Stripe payments",
+    founded: 2021, hq: "San Francisco, CA", funding: "Part of Stripe ($95B valuation)",
+    employees: "Part of Stripe", customers: "Millions of Stripe users (potential)",
+    g2Rating: 4.5, g2Reviews: 45, stage: "Product within Stripe", pricing: "0.5% of transaction volume (Tax Basic) or 5\u00A2/API call",
+    pricingModel: "Per-transaction / percentage", threatLevel: "medium",
     recentNews: [
-      { date: "Jan 2026", text: "IRS 1099-K threshold: $2,000 minimum starting 2026 tax year; 1099-NEC filing deadline Jan 31, 2026" },
-      { date: "2026", text: "Only 18 states still use transaction thresholds (Utah + Illinois dropped in 2025); nexus landscape simplifying toward revenue-only" },
+      { date: "Jan 2026", text: "IRS 1099-K threshold: $2,000 minimum starting 2026 tax year; benefits Stripe ecosystem" },
+      { date: "2026", text: "Only 18 states still use transaction thresholds (Utah + Illinois dropped 2025); nexus simplifying toward revenue-only" },
       { date: "Sep 2025", text: "Avalara launched enhanced tax app for Stripe Billing/Checkout \u2014 competing for Stripe's own users" },
       { date: "2025", text: "Enhanced Stripe Tax API: 100+ countries, 600+ product categories, 99.999% historical uptime" },
-      { date: "2025", text: "TaxJar increasingly positioned as Stripe Tax's US filing component only" },
     ],
     strengths: [
-      "Seamless integration if already on Stripe payments \u2014 zero-friction for Stripe users",
-      "100+ country coverage via Stripe Tax (broader than TaxJar's US-only)",
-      "Per-transaction pricing (5\u00A2/call) is attractive for low-volume companies",
+      "Seamless integration if already on Stripe payments \u2014 zero-friction activation",
+      "100+ country coverage for tax calculation",
       "Stripe's massive distribution \u2014 easy to discover and activate",
-      "Stripe ecosystem creates natural bundling advantage"
+      "Stripe ecosystem creates natural bundling advantage (Billing, Invoicing, Connect)",
+      "Per-transaction pricing attractive for low-volume companies"
     ],
     weaknesses: [
-      "Only tracks Stripe-processed transactions \u2014 useless for multi-channel",
-      "No filing for non-Stripe transactions \u2014 incomplete compliance",
-      "Post-acquisition team instability \u2014 CEO, CRO, 45-55 employees lost",
-      "TaxJar product increasingly neglected in favor of Stripe Tax",
-      "Generic tax logic treats SaaS like physical goods \u2014 no product-specific taxability rules; delayed tax calculations reported",
+      "Only tracks Stripe-processed transactions \u2014 useless for multi-channel revenue",
+      "No filing capabilities \u2014 calculation only (must pair with TaxJar or third party for filing)",
+      "Generic tax logic treats SaaS like physical goods \u2014 no product-specific taxability rules",
       "Inflexible tax-inclusive/exclusive settings (account-wide only)",
       "No audit support, remediation workflows, or compliance documentation",
-      "NetSuite integration discontinued for new users",
-      "Cannot leverage tax discount programs"
+      "No nexus monitoring for non-Stripe channels or physical presence (HRIS)",
+      "Cannot leverage tax discount programs",
+      "Delayed tax calculations reported in some scenarios"
     ],
     anrokWins: [
       "Anrok works across ALL payment processors \u2014 not locked to Stripe",
       "Anrok handles SaaS-specific billing complexity (subscriptions, usage-based, hybrid)",
-      "Anrok provides end-to-end compliance (nexus \u2192 filing \u2192 audit support)",
+      "Anrok provides end-to-end compliance (nexus \u2192 calculation \u2192 filing \u2192 audit support)",
       "Anrok's HRIS nexus tracking catches physical nexus Stripe Tax misses",
-      "Anrok has dedicated tax expertise team vs Stripe's payments-first DNA",
       "Stripe Tax is a feature, not a product \u2014 Anrok is purpose-built for tax",
-      "TaxJar's post-acquisition decline is a cautionary tale for prospects"
+      "Anrok has dedicated tax expertise team vs Stripe's payments-first DNA"
     ],
     idealFor: "Small businesses using Stripe as sole payment processor, simple subscription models, single-channel sellers",
-    notIdealFor: "Multi-channel sellers, companies with non-Stripe payments, complex SaaS billing models, companies needing audit support",
-    features: { usNexus: 3, taxCalc: 4, filing: 3, exemptionCerts: 2, internationalVat: 4, saasSpecific: 2, aiFeatures: 1, easeOfUse: 4, support: 2, integrations: 2, pricing: 4 }
+    notIdealFor: "Multi-channel sellers, companies with non-Stripe payments, complex SaaS billing, companies needing filing or audit support",
+    features: { usNexus: 3, taxCalc: 4, filing: 1, exemptionCerts: 2, internationalVat: 4, saasSpecific: 2, aiFeatures: 1, easeOfUse: 5, support: 3, integrations: 2, pricing: 4 }
+  },
+  {
+    id: "taxjar", name: "TaxJar", logoDomain: "taxjar.com", tagline: "Sales tax filing and compliance (Stripe-owned)",
+    founded: 2013, hq: "San Francisco, CA", funding: "Acquired by Stripe for ~$850M (2021)",
+    employees: "Reduced post-acquisition (45-55 laid off in 2022)", customers: "30,000+ (pre-acquisition); declining post-acquisition",
+    g2Rating: 4.3, g2Reviews: 220, stage: "Acquired (managed decline)", pricing: "Starts at $19/mo (Starter); custom enterprise pricing",
+    pricingModel: "Tiered subscription + per-state filing fees", threatLevel: "low",
+    recentNews: [
+      { date: "2025", text: "Increasingly positioned as Stripe Tax's US filing component only \u2014 product roadmap subsumed by Stripe" },
+      { date: "Jul 2024", text: "CRO departed \u2014 all three co-founders have now left Stripe. CEO exited mid-2022" },
+      { date: "Apr 2024", text: "Terminated independent affiliate/referral program \u2014 cut ties with thousands of CPAs and consultants" },
+      { date: "2025", text: "NetSuite integration discontinued for new users \u2014 existing merchants grandfathered" },
+      { date: "2025", text: "Product neutrality eroding \u2014 roadmap replaced by Stripe's 'Global Revenue Management' strategy" },
+    ],
+    strengths: [
+      "Established US filing infrastructure \u2014 30,000+ customers at peak",
+      "Affordable entry point ($19/mo Starter plan) for simple businesses",
+      "Strong e-commerce integrations (Shopify, Amazon, BigCommerce, WooCommerce)",
+      "AutoFile feature for automated state-level filing",
+      "Sales tax research and educational content (TaxJar Blog)"
+    ],
+    weaknesses: [
+      "Product in managed decline \u2014 all three co-founders left, 45-55 employees laid off",
+      "Leadership exodus: CEO (2022), CRO (Jul 2024), co-founders all gone",
+      "Support degraded post-acquisition \u2014 'self-service only', longer wait times, CEO reviewer gave 1.0/5",
+      "NetSuite integration discontinued for new users",
+      "No longer platform-neutral \u2014 roadmap driven by Stripe-first priorities",
+      "Limited to US domestic filing \u2014 no international VAT/GST",
+      "No SaaS-specific product taxability rules",
+      "No audit support or remediation workflows",
+      "Tax-exempt certificate handling inadequate per Capterra reviews"
+    ],
+    anrokWins: [
+      "TaxJar's post-acquisition decline is a cautionary tale \u2014 Anrok is independently funded and laser-focused",
+      "Anrok provides SaaS-specific taxability rules vs TaxJar's generic logic",
+      "Anrok covers international VAT/GST \u2014 TaxJar is US-only",
+      "Anrok has growing, dedicated team vs TaxJar's shrinking org",
+      "Anrok integrates with ALL billing systems \u2014 TaxJar increasingly Stripe-only",
+      "Anrok offers audit support and compliance documentation TaxJar lacks"
+    ],
+    idealFor: "Legacy TaxJar customers on Shopify/Amazon, small e-commerce sellers needing basic US filing, Stripe users wanting bundled filing",
+    notIdealFor: "SaaS companies, international sellers, anyone needing active product development, companies that value support quality",
+    features: { usNexus: 3, taxCalc: 3, filing: 4, exemptionCerts: 2, internationalVat: 1, saasSpecific: 2, aiFeatures: 1, easeOfUse: 3, support: 1, integrations: 3, pricing: 3 }
   }
 ];
 
@@ -423,9 +463,10 @@ const competitorPainQuotes = [
   { competitor: "numeral", quote: "We signed up in August only to find out in January that Numeral had not filed our taxes for over 4 months. We were billed to file, but our CPA found nothing had been filed.", source: "Shopify App Store Review", theme: "Missed Filings", verified: true },
   { competitor: "numeral", quote: "Be ready for onboarding mess \u2014 it took Numeral several months to get us onboarded, blowing past their guarantee.", source: "Review Site", theme: "Onboarding Delays", verified: true },
   { competitor: "numeral", quote: "Numeral would file returns and authorize payment from our bank account without us reviewing or approving the return. Buyer beware.", source: "Review Site", theme: "Unauthorized Actions", verified: true },
-  { competitor: "stripetax", quote: "Real differences in the quality of the team after the Stripe acquisition. Lack of tools for capturing tax-exempt certificates.", source: "Capterra Review", theme: "Post-Acquisition Decline", verified: true },
-  { competitor: "stripetax", quote: "Support from TaxJar has been ineffective \u2014 merchants report longer wait times and a lack of specialized tax knowledge.", source: "Reddit / Community Reviews", theme: "Declining Support", verified: true },
-  { competitor: "stripetax", quote: "New features and technical optimizations are built for the Stripe-first business. TaxJar is no longer platform-neutral.", source: "Industry Analysis", theme: "Loss of Neutrality", verified: true },
+  { competitor: "stripetax", quote: "Stripe Tax only covers Stripe-processed transactions. The moment you have non-Stripe revenue, you need a second tax solution.", source: "Industry Analysis", theme: "Single-Channel Limitation", verified: true },
+  { competitor: "taxjar", quote: "Real differences in the quality of the team after the Stripe acquisition. Lack of tools for capturing tax-exempt certificates.", source: "Capterra Review", theme: "Post-Acquisition Decline", verified: true },
+  { competitor: "taxjar", quote: "Support from TaxJar has been ineffective \u2014 merchants report longer wait times and a lack of specialized tax knowledge.", source: "Reddit / Community Reviews", theme: "Declining Support", verified: true },
+  { competitor: "taxjar", quote: "New features and technical optimizations are built for the Stripe-first business. TaxJar is no longer platform-neutral.", source: "Industry Analysis", theme: "Loss of Neutrality", verified: true },
   { competitor: "kintsugi", quote: "Sometimes the integration with Stripe doesn\u2019t work as intended and we had to use support to resolve integration issues.", source: "G2 Review", theme: "Integration Reliability", verified: true },
   { competitor: "kintsugi", quote: "A couple hiccups in the early filings, but the team course-corrected quickly and we\u2019ve had no errors since.", source: "G2 Review", theme: "Early Filing Issues", verified: true },
   { competitor: "avalara", quote: "What Avalara couldn\u2019t accomplish in 6+ months, Anrok did in less than one month.", source: "Jasper Case Study", theme: "Implementation Failure", verified: true },
@@ -476,6 +517,9 @@ const churnSignals = {
   ],
   fonoa: [],
   stripetax: [
+    { date: "Sep 2025", signal: "Avalara launched enhanced tax app directly competing on Stripe Billing/Checkout \u2014 eroding Stripe Tax's captive audience", type: "competitive_intel", sourceUrl: "https://www.avalara.com/blog/en/north-america/2025/09/enhanced-tax-app-for-stripe-billing-and-stripe-checkout.html", source: "Avalara Blog" }
+  ],
+  taxjar: [
     { date: "Apr 2024", signal: "TaxJar terminated independent affiliate/referral program \u2014 cut ties with thousands of CPAs and tax consultants who were the backbone of the TaxJar community", type: "ecosystem_loss", sourceUrl: "https://trykintsugi.com/blog/taxjar-stripe-acquisition", source: "Kintsugi Analysis" },
     { date: "Jul 2024", signal: "TaxJar CRO departed \u2014 all three co-founders have now left Stripe. CEO exited mid-2022, 45-55 employees laid off in 2022", type: "leadership_exodus", sourceUrl: "https://www.sunsethq.com/blog/taxjar-acquisition", source: "Sunset HQ" },
     { date: "Jan 2025", signal: "Capterra reviewer: \u2018Real differences in the quality of the team after the Stripe acquisition. Lack of tools for capturing tax-exempt certificates\u2019", type: "review_complaint", sourceUrl: "https://www.capterra.com/p/163419/TaxJar/", source: "Capterra Review" },
@@ -532,9 +576,14 @@ const objectionHandling = {
     { objection: "Fonoa acquired PwC's GITC product", response: "That signals their focus: enterprise global compliance for massive platforms. Their support is limited to engineers, customers manage government interactions themselves, and they require multi-year commitment contracts. Not built for mid-market SaaS." },
   ],
   stripetax: [
-    { objection: "We're already on Stripe, so Stripe Tax is free/easy", response: "It's 5\u00A2 per API call, not free. And it only covers Stripe-processed transactions \u2014 the moment you have any non-Stripe revenue, you need a second solution. Ask: 'Do you process 100% of revenue through Stripe, including invoices, wire transfers, and channel partners?'" },
+    { objection: "We're already on Stripe, so Stripe Tax is free/easy", response: "It's 0.5% of transaction volume or 5\u00A2 per API call, not free. And it only covers Stripe-processed transactions \u2014 the moment you have any non-Stripe revenue, you need a second solution. Ask: 'Do you process 100% of revenue through Stripe, including invoices, wire transfers, and channel partners?'" },
     { objection: "Stripe Tax covers 100+ countries", response: "For basic calculation, yes. But it uses generic tax logic that treats SaaS like physical goods. No product-specific taxability rules, no filing, no audit support, and delayed tax calculations reported. Parspec switched to Anrok for exactly this reason." },
-    { objection: "TaxJar handles the filing piece", response: "TaxJar is being sunset in favor of Stripe Tax. All three co-founders have left, 45-55 employees were laid off, the CRO departed, and the NetSuite integration was discontinued. TaxJar is a product in managed decline." },
+    { objection: "We'll pair Stripe Tax with TaxJar for filing", response: "That creates a fragmented stack. And TaxJar is in managed decline \u2014 all founders left, 45-55 employees laid off, CRO departed, NetSuite discontinued. You're building on a product that's being wound down. Anrok gives you calculation AND filing in one purpose-built platform." },
+  ],
+  taxjar: [
+    { objection: "We've been on TaxJar for years and it works fine", response: "It may work for now, but TaxJar is a product in managed decline. All three co-founders left, 45-55 employees laid off, the CRO departed Jul 2024, and the NetSuite integration was discontinued. The roadmap is now driven by Stripe's priorities, not yours. It's a question of when, not if, you'll need to migrate." },
+    { objection: "TaxJar's pricing is cheaper", response: "TaxJar's Starter plan is $19/mo, but that's for basic calculation. Filing is extra per state. And you get what you pay for \u2014 Capterra reviews flag 'self-service only' support, and a CEO reviewer gave 1.0/5 because 'can't get anyone to respond.' Anrok's pricing includes dedicated support and SaaS-specific expertise." },
+    { objection: "TaxJar has strong e-commerce integrations", response: "Historically yes, but those integrations are being deprioritized. NetSuite was discontinued for new users. The affiliate program that kept CPAs recommending TaxJar was terminated. Anrok integrates with Stripe, Shopify, WooCommerce, and 10+ other platforms with active development." },
   ],
 };
 
@@ -580,8 +629,15 @@ const landmineQuestions = {
   stripetax: [
     "What percentage of your revenue flows through Stripe? (Stripe Tax only covers Stripe transactions)",
     "How does Stripe Tax handle SaaS product taxability differently from physical goods? (It doesn't \u2014 generic tax logic)",
+    "How will you handle filing? Stripe Tax doesn't file \u2014 you'll need a separate solution.",
+    "What happens when you add a non-Stripe payment channel? (You'll need a second tax system)",
+  ],
+  taxjar: [
     "Are you aware all three TaxJar co-founders have left and 45-55 employees were laid off?",
-    "Can you file non-Stripe revenue through TaxJar? (No \u2014 incomplete compliance)",
+    "When was the last major product update TaxJar shipped? (Roadmap is frozen under Stripe)",
+    "Can you file non-Stripe revenue through TaxJar going forward? (Increasingly Stripe-only)",
+    "Have you tried reaching TaxJar support recently? (Capterra: CEO reviewer gave 1.0/5)",
+    "How does TaxJar handle SaaS-specific taxability? (It doesn't \u2014 generic logic)",
   ],
 };
 
@@ -682,17 +738,30 @@ const scoreExplanations = {
     pricing: { score: 3, why: "Opaque custom pricing with multi-year commitment contracts. Enterprise-focused quoting. $5.4M ARR (Oct 2024) is modest given $85M raised \u2014 burn rate questions." }
   },
   stripetax: {
-    usNexus: { score: 3, why: "Basic nexus monitoring for Stripe-processed transactions only. Cannot detect nexus from non-Stripe channels. No physical nexus tracking via HRIS. Adequate for simple Stripe-only businesses." },
-    taxCalc: { score: 4, why: "Solid tax calculation within Stripe ecosystem. 100+ country coverage. Performs well for straightforward transactions. Cannot handle complex SaaS billing (usage-based, hybrid, mid-cycle changes)." },
-    filing: { score: 3, why: "TaxJar provides US filing but only for Stripe transactions. Non-Stripe revenue requires separate filing solution. NetSuite integration discontinued for new users. Incomplete compliance story." },
-    exemptionCerts: { score: 2, why: "Lack of tools for capturing tax-exempt certificates per Capterra reviews. Basic handling at best. Not a product focus for Stripe." },
-    internationalVat: { score: 4, why: "100+ country coverage via Stripe Tax. Broader than TaxJar\u2019s US-only. Strong for Stripe-processed international transactions but blind to non-Stripe channels." },
-    saasSpecific: { score: 2, why: "Generic tax logic treats SaaS like physical goods \u2014 no product-specific taxability rules. Handles basic subscriptions within Stripe Billing but no support for usage-based billing, complex SaaS models, or multi-channel subscription management. Delayed tax calculations reported." },
-    aiFeatures: { score: 1, why: "No meaningful AI features. Pure rules-based calculation engine. No AI-powered taxability, no conversational interface, no automated compliance intelligence." },
-    easeOfUse: { score: 4, why: "Seamless if already on Stripe \u2014 zero-friction activation. Toggle-on simplicity is unmatched for Stripe users. Completely useless for non-Stripe transactions." },
-    support: { score: 2, why: "Post-acquisition team instability (CEO, CRO, 45-55 employees lost). Merchants report longer wait times and lack of specialized tax knowledge. TaxJar support declining." },
-    integrations: { score: 2, why: "Only works with Stripe. NetSuite integration discontinued for new users. No ERP, no competing billing platforms. By design, locks you into Stripe ecosystem." },
-    pricing: { score: 4, why: "5\u00A2 per API call (Tax Basic) is simple and affordable for low-volume. Attractive entry point. But only covers Stripe transactions \u2014 you need a second solution for everything else." }
+    usNexus: { score: 3, why: "Basic nexus monitoring for Stripe-processed transactions only. Cannot detect nexus from non-Stripe channels. No physical nexus tracking via HRIS." },
+    taxCalc: { score: 4, why: "Solid tax calculation within Stripe ecosystem. 100+ countries, 600+ product categories. Cannot handle complex SaaS billing (usage-based, hybrid, mid-cycle changes)." },
+    filing: { score: 1, why: "Stripe Tax does NOT file taxes. Calculation only. Must pair with TaxJar or a third-party filing solution. Major gap for anyone wanting end-to-end compliance." },
+    exemptionCerts: { score: 2, why: "Basic exemption certificate handling. Not a product focus for Stripe." },
+    internationalVat: { score: 4, why: "100+ country coverage. Strong for Stripe-processed international transactions but blind to non-Stripe channels." },
+    saasSpecific: { score: 2, why: "Generic tax logic treats SaaS like physical goods. No product-specific taxability rules. Handles basic subscriptions within Stripe Billing only." },
+    aiFeatures: { score: 1, why: "No meaningful AI features. Pure rules-based calculation engine." },
+    easeOfUse: { score: 5, why: "Seamless if already on Stripe \u2014 zero-friction toggle-on activation. Unmatched simplicity for Stripe users. Completely useless for non-Stripe transactions." },
+    support: { score: 3, why: "Standard Stripe support channels. Adequate but not specialized in tax. No dedicated tax advisors or compliance experts." },
+    integrations: { score: 2, why: "Only works with Stripe. No ERP connections, no competing billing platforms. By design, locks you into Stripe ecosystem." },
+    pricing: { score: 4, why: "0.5% of transaction volume or 5\u00A2 per API call. Simple and affordable for low-volume. But only covers Stripe transactions." }
+  },
+  taxjar: {
+    usNexus: { score: 3, why: "Basic US nexus tracking. Historically solid but product development has stalled post-acquisition. No international nexus." },
+    taxCalc: { score: 3, why: "Adequate US tax calculation. Generic logic \u2014 no SaaS-specific taxability rules. Handles standard e-commerce transactions well." },
+    filing: { score: 4, why: "AutoFile is TaxJar's core strength \u2014 automated US state-level filing. But increasingly limited to Stripe transactions. NetSuite integration discontinued for new users." },
+    exemptionCerts: { score: 2, why: "Lack of tools for capturing tax-exempt certificates per Capterra reviews. Basic handling at best." },
+    internationalVat: { score: 1, why: "US-only. No international VAT/GST coverage at all. Major gap for any company selling internationally." },
+    saasSpecific: { score: 2, why: "Generic tax logic. Not built for SaaS billing complexity. No support for usage-based, hybrid, or multi-channel subscription models." },
+    aiFeatures: { score: 1, why: "No AI features. Legacy rules-based system with no AI roadmap under Stripe ownership." },
+    easeOfUse: { score: 3, why: "Dashboard is functional but dated. Setup historically easy but support quality has degraded significantly post-acquisition." },
+    support: { score: 1, why: "Severe post-acquisition decline. All founders left, 45-55 employees laid off. Capterra: 'self-service only', CEO reviewer 1.0/5 ('can't get anyone to respond'). Support is effectively abandoned." },
+    integrations: { score: 3, why: "Legacy e-commerce integrations (Shopify, Amazon, BigCommerce, WooCommerce) still functional. But NetSuite discontinued and no new integrations being built." },
+    pricing: { score: 3, why: "Starts at $19/mo (Starter) which is affordable. But filing fees add up per state. And you get what you pay for \u2014 declining support and stalled product." }
   }
 };
 
